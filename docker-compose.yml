@@ -1,0 +1,34 @@
+version: "3"
+
+volumes:
+  postgres_data:
+
+services:
+  postgres_db:
+    image: postgres:12
+    container_name: "postgres-fltshr"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+  backend-fltshr:
+    build: backend-fltshr
+    image: backend-fltshr:latest
+    container_name: "backend-fltshr"
+    depends_on:
+      - postgres_db
+    ports:
+      - "81:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db/postgres
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+  frontend-fltshr:
+    build: frontend-fltshr
+    image: frontend-fltshr:latest
+    container_name: "frontend-fltshr"
+    ports:
+      - '80:80'
