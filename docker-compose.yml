@@ -23,12 +23,12 @@ services:
     ports:
       - "81:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://172.17.0.1:5432/postgres
       SPRING_DATASOURCE_USERNAME: ${DATABASE_USER}
       SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
-  frontend-fltshr:
-    build: frontend-fltshr
-    image: frontend-fltshr:latest
-    container_name: "frontend-fltshr"
-    ports:
-      - '80:80'
+#  frontend-fltshr:
+#    build: frontend-fltshr
+#    image: frontend-fltshr:latest
+#    container_name: "frontend-fltshr"
+#    ports:
+#      - '80:80'
