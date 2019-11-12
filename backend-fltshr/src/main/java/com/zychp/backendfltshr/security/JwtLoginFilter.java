@@ -2,7 +2,7 @@ package com.zychp.backendfltshr.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zychp.backendfltshr.domain.security.AuthConstants;
-import com.zychp.backendfltshr.domain.user.UserCredentialsDTO;
+import com.zychp.backendfltshr.domain.user.UserLoginDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +31,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(final HttpServletRequest request,
                                                 final HttpServletResponse response) throws AuthenticationException {
         try {
-            UserCredentialsDTO user = new ObjectMapper().readValue(request.getInputStream(), UserCredentialsDTO.class);
+            UserLoginDTO user = new ObjectMapper().readValue(request.getInputStream(), UserLoginDTO.class);
             return authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
