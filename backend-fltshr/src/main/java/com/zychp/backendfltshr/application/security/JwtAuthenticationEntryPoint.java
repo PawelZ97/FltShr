@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.security;
+package com.zychp.backendfltshr.application.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

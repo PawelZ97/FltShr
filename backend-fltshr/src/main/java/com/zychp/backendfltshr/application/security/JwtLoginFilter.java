@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.security;
+package com.zychp.backendfltshr.application.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zychp.backendfltshr.domain.security.AuthConstants;

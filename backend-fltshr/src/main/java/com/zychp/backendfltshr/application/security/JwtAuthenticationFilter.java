@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.security;
+package com.zychp.backendfltshr.application.security;
 
 import com.zychp.backendfltshr.domain.security.AuthConstants;
 import io.jsonwebtoken.Claims;

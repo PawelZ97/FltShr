@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.security;
+package com.zychp.backendfltshr.application.security;
 
 import com.zychp.backendfltshr.domain.user.Role;
 import com.zychp.backendfltshr.domain.user.User;

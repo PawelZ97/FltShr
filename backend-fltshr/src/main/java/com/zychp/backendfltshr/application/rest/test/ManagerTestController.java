@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.rest.test;
+package com.zychp.backendfltshr.application.rest.test;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
