@@ -35,7 +35,7 @@ INSERT INTO shopping(shopping_list, item, bought, bought_date)
 VALUES ( 1, 2, false, null );
 
 INSERT INTO shopping(shopping_list, item, bought, bought_date)
-VALUES ( 1, 2, false, null );
+VALUES ( 1, 3, false, null );
 
 INSERT INTO shopping(shopping_list, item, bought, bought_date)
 VALUES ( 2, 3, false, null );

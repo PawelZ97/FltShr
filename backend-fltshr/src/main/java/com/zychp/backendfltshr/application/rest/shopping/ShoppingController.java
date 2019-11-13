@@ -12,14 +12,9 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/shopping")
 @RequiredArgsConstructor
 public class ShoppingController {
-    @Autowired
-    private ShoppingListRepository shoppingListRepository;
-
-    @Autowired
-    private ShoppingItemRepository shoppingItemRepository;
-
-    @Autowired
-    private ShoppingRepository shoppingRepository;
+    private final ShoppingListRepository shoppingListRepository;
+    private final ShoppingItemRepository shoppingItemRepository;
+    private final ShoppingRepository shoppingRepository;
 
     @GetMapping("/lists")
     List<ShoppingListDTO> getShoppingLists() {
@@ -31,5 +26,11 @@ public class ShoppingController {
     List<ShoppingItemDTO> getShoppingItems() {
         List<ShoppingItem> shoppingItems = (List<ShoppingItem>) shoppingItemRepository.findAll();
         return shoppingItems.stream().map(e -> ShoppingItemDTO.valueOf(e)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/listitems")
+    List<ShoppingItemDTO> getShoppingListItems(@RequestBody ShoppingListDTO shoppingListDTO) {
+        List<Shopping> shoppings =  shoppingRepository.findByShoppingList_Id(shoppingListDTO.getId());
+        return shoppings.stream().map(e -> ShoppingItemDTO.valueOf(e.getShoppingItem())).collect(Collectors.toList());
     }
 }
