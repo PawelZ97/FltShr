@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.user;
+package com.zychp.backendfltshr.domain.user.dto;
 
 import lombok.Data;
 

@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.domain.shopping;
 
+import com.zychp.backendfltshr.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,10 @@ public class Shopping {
     @ManyToOne
     @JoinColumn(name = "item", nullable = false)
     private ShoppingItem shoppingItem;
+
+    @ManyToOne
+    @JoinColumn(name = "bought_by")
+    private User user;
 
     @Column(name = "bought")
     private Boolean isBought;

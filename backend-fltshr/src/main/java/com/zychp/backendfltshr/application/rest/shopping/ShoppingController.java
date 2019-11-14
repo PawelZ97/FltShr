@@ -2,7 +2,6 @@ package com.zychp.backendfltshr.application.rest.shopping;
 
 import com.zychp.backendfltshr.domain.shopping.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,9 +27,9 @@ public class ShoppingController {
         return shoppingItems.stream().map(e -> ShoppingItemDTO.valueOf(e)).collect(Collectors.toList());
     }
 
-    @GetMapping("/listitems")
-    List<ShoppingItemDTO> getShoppingListItems(@RequestBody ShoppingListDTO shoppingListDTO) {
+    @GetMapping("/list/items")
+    List<ShoppingDTO> getShoppingListItems(@RequestBody ShoppingListDTO shoppingListDTO) {
         List<Shopping> shoppings =  shoppingRepository.findByShoppingList_Id(shoppingListDTO.getId());
-        return shoppings.stream().map(e -> ShoppingItemDTO.valueOf(e.getShoppingItem())).collect(Collectors.toList());
+        return shoppings.stream().map(e -> ShoppingDTO.valueOf(e)).collect(Collectors.toList());
     }
 }

@@ -28,14 +28,14 @@ INSERT INTO shopping_lists(description) VALUES ( 'Actual' );
 
 INSERT INTO shopping_lists(description) VALUES ( 'For Printing' );
 
-INSERT INTO shopping(shopping_list, item, bought, bought_date)
-VALUES ( 1, 1, false, null );
+INSERT INTO shopping(shopping_list, item, bought, bought_by, bought_date)
+VALUES ( 1, 1, true, 2, null );
 
-INSERT INTO shopping(shopping_list, item, bought, bought_date)
-VALUES ( 1, 2, false, null );
+INSERT INTO shopping(shopping_list, item, bought, bought_by, bought_date)
+VALUES ( 1, 2, true, 1, null );
 
-INSERT INTO shopping(shopping_list, item, bought, bought_date)
-VALUES ( 1, 3, false, null );
+INSERT INTO shopping(shopping_list, item, bought, bought_by, bought_date)
+VALUES ( 1, 3, true, 2, null );
 
-INSERT INTO shopping(shopping_list, item, bought, bought_date)
-VALUES ( 2, 3, false, null );
+INSERT INTO shopping(shopping_list, item, bought, bought_by, bought_date)
+VALUES ( 2, 3, false, null, null );

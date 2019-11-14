@@ -2,7 +2,7 @@ package com.zychp.backendfltshr.application.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zychp.backendfltshr.domain.security.AuthConstants;
-import com.zychp.backendfltshr.domain.user.UserLoginDTO;
+import com.zychp.backendfltshr.domain.user.dto.UserLoginDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
