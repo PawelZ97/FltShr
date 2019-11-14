@@ -22,5 +22,16 @@ public class ShoppingItem {
     private String description;
 
     @OneToMany(mappedBy = "shoppingItem")
-    Set<Shopping> shoppings;
+    Set<ShoppingEntry> shoppingEntries;
+
+    public ShoppingItem(String description) {
+        this.description = description;
+    }
+
+    public static ShoppingItem valueOf(ShoppingItemDTO dto) {
+        ShoppingItem entity = new ShoppingItem();
+        entity.setId(dto.getId());
+        entity.setDescription(dto.getDescription());
+        return entity;
+    }
 }

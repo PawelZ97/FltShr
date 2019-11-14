@@ -106,9 +106,8 @@ paths:
         201:
           description: "Created"
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/ShoppingListDTO"
+            type: object
+            $ref: "#/definitions/ShoppingListDTO"
   /shopping/list/{listId}:
     delete:
       tags:
@@ -123,10 +122,6 @@ paths:
       responses:
         200:
           description: "OK"
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/ShoppingListDTO"
   /shopping/items:
     get:
       tags:
@@ -168,6 +163,7 @@ paths:
       tags:
         - shopping
       summary: Create shopping info
+      description: Assign item for list or create new item if not exist and then assign.
       parameters:
         - name: id
           in: path
@@ -186,29 +182,11 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/ShoppingItemDTO"
+  /shopping/list/{listId}/item/{itemId}:
     delete:
       tags:
         - shopping
       summary: Delete shopping info
-      parameters:
-        - in: body
-          name: ShoppingListDTO
-          description: Shopping item to delete from list.
-          schema:
-            type: object
-            $ref: "#/definitions/ShoppingItemDTO"
-      responses:
-        200:
-          description: OK
-          schema:
-            type: object
-            $ref: "#/definitions/ShoppingItemDTO"
-
-  /shopping/list/{listId}/item/{itemId}/{setBought}:
-    put:
-      tags:
-        - shopping
-      summary: Update bought info
       parameters:
         - name: listId
           in: path
@@ -220,20 +198,30 @@ paths:
           description: Shopping Item
           type: integer
           required: true
-        - name: setBought
+      responses:
+        200:
+          description: OK
+    patch:
+      tags:
+        - shopping
+      summary: Update bought info
+      description: Set Item as Bought.
+      parameters:
+        - name: listId
           in: path
-          description: Shopping Item is Bought
-          type: boolean
+          description: Shopping List Id
+          type: integer
+          required: true
+        - name: itemId
+          in: path
+          description: Shopping Item
+          type: integer
           required: true
       responses:
         200:
           description: OK
           schema:
-            type: object
-            properties:
-              boughtStatus:
-                type: boolean
-
+            type: boolean
 
 definitions:
   ShoppingListDTO:

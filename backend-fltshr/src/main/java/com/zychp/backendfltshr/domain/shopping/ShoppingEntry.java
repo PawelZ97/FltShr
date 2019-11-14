@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "shopping")
-public class Shopping {
+public class ShoppingEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,4 +36,10 @@ public class Shopping {
 
     @Column(name = "bought_date")
     private Timestamp boughtDate;
+
+
+    public ShoppingEntry(ShoppingList shoppingList, ShoppingItem shoppingItem) {
+        this.shoppingList = shoppingList;
+        this.shoppingItem = shoppingItem;
+    }
 }

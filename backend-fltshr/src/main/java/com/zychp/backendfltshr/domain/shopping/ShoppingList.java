@@ -22,5 +22,9 @@ public class ShoppingList {
     private String description;
 
     @OneToMany(mappedBy = "shoppingList")
-    Set<Shopping> shoppings;
+    Set<ShoppingEntry> shoppingEntries;
+
+    public ShoppingList(String description) {
+        this.description = description;
+    }
 }
