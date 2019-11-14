@@ -1,6 +1,7 @@
-package com.zychp.backendfltshr.application.rest.shopping;
+package com.zychp.backendfltshr.application.rest;
 
 import com.zychp.backendfltshr.domain.shopping.*;
+import com.zychp.backendfltshr.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class ShoppingController {
     private final ShoppingListRepository shoppingListRepository;
     private final ShoppingItemRepository shoppingItemRepository;
     private final ShoppingEntryRepository shoppingEntryRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/lists")
     List<ShoppingListDTO> getShoppingLists() {
@@ -68,10 +70,9 @@ public class ShoppingController {
         ShoppingEntry shoppingEntry = shoppingEntryRepository.findByShoppingListIdAndShoppingItemId(listId, itemId);
         shoppingEntry.setIsBought(true);
         shoppingEntry.setBoughtDate(new Timestamp(System.currentTimeMillis()));
-        Object user = SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        System.out.println("user = " + user);
-        shoppingEntry.setUser(null);
+        String userName = SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal().toString();
+        shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));
         shoppingEntryRepository.save(shoppingEntry);
         return true;
     }

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Data
@@ -20,9 +19,6 @@ public class ShoppingList {
 
     @Column(name = "description")
     private String description;
-
-    @OneToMany(mappedBy = "shoppingList")
-    Set<ShoppingEntry> shoppingEntries;
 
     public ShoppingList(String description) {
         this.description = description;
