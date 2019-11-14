@@ -1,0 +1,184 @@
+swagger: "2.0"
+info:
+  description: "Api documentation for FltShr"
+  version: "1.0.0"
+  title: "FltShr_API"
+host: "localhost:81"
+schemes:
+  - "http"
+
+paths:
+  /login:
+    post:
+      tags:
+        - "login"
+      summary: "Login endpoint"
+      parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            $ref: "#/definitions/UserLoginDTO"
+      consumes:
+        - "application/json"
+
+      responses:
+        200:
+          description: OK
+          headers:
+            Authorization:
+              type: "string"
+              description: Bearer Token JWT
+
+  /test/all:
+    get:
+      tags:
+        - "test"
+      summary: "Testing public endpoint"
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "string"
+  /test/user:
+    get:
+      tags:
+        - "test"
+      summary: "Testing endpoint for logged in users"
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "string"
+  /test/manager:
+    get:
+      tags:
+        - "test"
+      summary: "Testing endpoint for ROLE_MANAGER"
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "string"
+  /test/admin:
+    get:
+      tags:
+        - "test"
+      summary: "Testing endpoint for ROLE_ADMIN"
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
+
+  /shopping/lists:
+    get:
+      tags:
+        - shopping
+      summary: Get all shopping lists
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ShoppingListDTO"
+  /shopping/items:
+    get:
+      tags:
+        - shopping
+      summary: Get all shopping items
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ShoppingItemDTO"
+
+  /shopping/list/items:
+    get:
+      tags:
+        - shopping
+      summary: Get all shopping items
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: ShoppingListDTO
+          description: Items of specified list.
+          schema:
+            $ref: "#/definitions/ShoppingListDTO"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                shoppingItem:
+                  $ref: "#/definitions/ShoppingItemDTO"
+                user:
+                  $ref: "#/definitions/UserNameDTO"
+                isBought:
+                  type: boolean
+
+
+
+
+
+
+definitions:
+  ShoppingListDTO:
+    type:  object
+    properties:
+      id:
+        type:  integer
+      description:
+        type:  string
+
+  ShoppingItemDTO:
+    type:  object
+    properties:
+      id:
+        type:  integer
+      description:
+        type:  string
+
+  UserNameDTO:
+    type:  object
+    properties:
+      id:
+        type:  integer
+      username:
+        type:  string
+
+  UserLoginDTO:
+    type:  object
+    properties:
+      username:
+        type:  string
+      password:
+        type:  string
+
