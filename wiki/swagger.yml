@@ -11,8 +11,8 @@ paths:
   /login:
     post:
       tags:
-        - "login"
-      summary: "Login endpoint"
+        - login
+      summary: Login endpoint
       parameters:
         - in: body
           name: user
@@ -27,26 +27,26 @@ paths:
           description: OK
           headers:
             Authorization:
-              type: "string"
+              type: string
               description: Bearer Token JWT
 
   /test/all:
     get:
       tags:
-        - "test"
-      summary: "Testing public endpoint"
+        - test
+      summary: Testing public endpoint
       produces:
         - "text/plain"
       responses:
         200:
           description: OK
           schema:
-            type: "string"
+            type: string
   /test/user:
     get:
       tags:
-        - "test"
-      summary: "Testing endpoint for logged in users"
+        - test
+      summary: Testing endpoint for logged in users
       produces:
         - "text/plain"
       responses:
@@ -57,8 +57,8 @@ paths:
   /test/manager:
     get:
       tags:
-        - "test"
-      summary: "Testing endpoint for ROLE_MANAGER"
+        - test
+      summary: Testing endpoint for ROLE_MANAGER
       produces:
         - "text/plain"
       responses:
@@ -69,8 +69,8 @@ paths:
   /test/admin:
     get:
       tags:
-        - "test"
-      summary: "Testing endpoint for ROLE_ADMIN"
+        - test
+      summary: Testing endpoint for ROLE_ADMIN
       produces:
         - "text/plain"
       responses:
@@ -104,7 +104,7 @@ paths:
             $ref: "#/definitions/ShoppingListDTO"
       responses:
         201:
-          description: "Created"
+          description: Created
           schema:
             type: object
             $ref: "#/definitions/ShoppingListDTO"
@@ -143,7 +143,7 @@ paths:
     get:
       tags:
         - shopping
-      summary: Get all shopping info for list
+      summary: Get all shopping entries
       parameters:
         - name: id
           in: path
@@ -162,7 +162,7 @@ paths:
     post:
       tags:
         - shopping
-      summary: Create shopping info
+      summary: Create shopping entry
       description: Assign item for list or create new item if not exist and then assign.
       parameters:
         - name: id
@@ -186,7 +186,7 @@ paths:
     delete:
       tags:
         - shopping
-      summary: Delete shopping info
+      summary: Delete shopping entry by Item
       parameters:
         - name: listId
           in: path
@@ -204,8 +204,7 @@ paths:
     patch:
       tags:
         - shopping
-      summary: Update bought info
-      description: Set Item as Bought.
+      summary: Set shopping entry as Bought by Item
       parameters:
         - name: listId
           in: path
