@@ -84,13 +84,45 @@ paths:
       tags:
         - shopping
       summary: Get all shopping lists
-      consumes:
-        - application/json
-      produces:
-        - application/json
       responses:
         200:
           description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ShoppingListDTO"
+  /shopping/list:
+    post:
+      tags:
+        - shopping
+      summary: Crate new shopping list
+      parameters:
+        - in: body
+          name: ShoppingListDTO
+          description: Shopping list to create.
+          schema:
+            $ref: "#/definitions/ShoppingListDTO"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ShoppingListDTO"
+  /shopping/list/{listId}:
+    delete:
+      tags:
+        - shopping
+      summary: Delete shopping list
+      parameters:
+        - name: id
+          in: path
+          description: Shopping List Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
           schema:
             type: array
             items:
@@ -112,41 +144,95 @@ paths:
             items:
               $ref: "#/definitions/ShoppingItemDTO"
 
-  /shopping/list/items:
+  /shopping/list/{listId}/entries:
     get:
       tags:
         - shopping
-      summary: Get all shopping items
-      consumes:
-        - application/json
-      produces:
-        - application/json
+      summary: Get all shopping info for list
       parameters:
-        - in: body
-          name: ShoppingListDTO
-          description: Items of specified list.
-          schema:
-            $ref: "#/definitions/ShoppingListDTO"
+        - name: id
+          in: path
+          description: Shopping List Id
+          type: integer
+          required: true
       responses:
         200:
           description: OK
           schema:
             type: array
             items:
-              type: object
-              properties:
-                id:
-                  type: integer
-                shoppingItem:
-                  $ref: "#/definitions/ShoppingItemDTO"
-                user:
-                  $ref: "#/definitions/UserNameDTO"
-                isBought:
-                  type: boolean
+              $ref: "#/definitions/ShoppingEntryDTO"
 
+  /shopping/list/{listId}/item:
+    post:
+      tags:
+        - shopping
+      summary: Create shopping info
+      parameters:
+        - name: id
+          in: path
+          description: Shopping List Id
+          type: integer
+          required: true
+        - in: body
+          name: ShoppingListDTO
+          description: Shopping item to create in list.
+          schema:
+            type: object
+            $ref: "#/definitions/ShoppingItemDTO"
+      responses:
+        201:
+          description: Created
+          schema:
+            type: object
+            $ref: "#/definitions/ShoppingItemDTO"
+    delete:
+      tags:
+        - shopping
+      summary: Delete shopping info
+      parameters:
+        - in: body
+          name: ShoppingListDTO
+          description: Shopping item to delete from list.
+          schema:
+            type: object
+            $ref: "#/definitions/ShoppingItemDTO"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            $ref: "#/definitions/ShoppingItemDTO"
 
-
-
+  /shopping/list/{listId}/item/{itemId}/{setBought}:
+    put:
+      tags:
+        - shopping
+      summary: Update bought info
+      parameters:
+        - name: listId
+          in: path
+          description: Shopping List Id
+          type: integer
+          required: true
+        - name: itemId
+          in: path
+          description: Shopping Item
+          type: integer
+          required: true
+        - name: setBought
+          in: path
+          description: Shopping Item is Bought
+          type: boolean
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              boughtStatus:
+                type: boolean
 
 
 definitions:
@@ -165,6 +251,18 @@ definitions:
         type:  integer
       description:
         type:  string
+
+  ShoppingEntryDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+      shoppingItem:
+        $ref: "#/definitions/ShoppingItemDTO"
+      user:
+        $ref: "#/definitions/UserNameDTO"
+      isBought:
+        type: boolean
 
   UserNameDTO:
     type:  object
