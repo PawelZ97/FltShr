@@ -1,5 +1,6 @@
-package com.zychp.backendfltshr.domain.expenses;
+package com.zychp.backendfltshr.domain.expenses.expenseunequal;
 
+import com.zychp.backendfltshr.domain.expenses.expense.Expense;
 import com.zychp.backendfltshr.domain.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "expense_usages")
+@Table(name = "expense_unequal")
 public class ExpenseUnequal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

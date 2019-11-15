@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.expenses;
+package com.zychp.backendfltshr.domain.expenses.expenselist;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +17,7 @@ public class ExpenseList {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "is_settled")
+    private Boolean isSettled;
 }

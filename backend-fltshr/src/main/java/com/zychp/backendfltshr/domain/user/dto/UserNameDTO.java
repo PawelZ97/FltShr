@@ -17,4 +17,11 @@ public class UserNameDTO {
         dto.setUsername(entity.getUsername());
         return dto;
     }
+
+    public static User valueOf(UserNameDTO dto) {
+        User entity = new User();
+        entity.setId(dto.getId());
+        entity.setUsername(dto.getUsername());
+        return entity;
+    }
 }

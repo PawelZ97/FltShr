@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.expenses;
+package com.zychp.backendfltshr.domain.expenses.expenselist;
 
 import org.springframework.data.repository.CrudRepository;
 

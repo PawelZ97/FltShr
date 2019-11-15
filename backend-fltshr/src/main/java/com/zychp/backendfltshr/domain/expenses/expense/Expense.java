@@ -1,13 +1,17 @@
-package com.zychp.backendfltshr.domain.expenses;
+package com.zychp.backendfltshr.domain.expenses.expense;
 
+import com.zychp.backendfltshr.domain.expenses.expenselist.ExpenseList;
+import com.zychp.backendfltshr.domain.expenses.expenseunequal.ExpenseUnequal;
 import com.zychp.backendfltshr.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Data
@@ -37,9 +41,13 @@ public class Expense {
     @JoinColumn(name = "paid_by", nullable = false)
     private User paidBy;
 
+    @CreationTimestamp
     @Column(name = "bought_date")
     private Timestamp boughtDate;
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "Expense")
+    private Set<ExpenseUnequal> expenseUnequals;
 }
