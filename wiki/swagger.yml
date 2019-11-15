@@ -21,7 +21,6 @@ paths:
             $ref: "#/definitions/UserLoginDTO"
       consumes:
         - "application/json"
-
       responses:
         200:
           description: OK
@@ -29,7 +28,18 @@ paths:
             Authorization:
               type: string
               description: Bearer Token JWT
-
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get all Users lists
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserNameDTO"
   /test/all:
     get:
       tags:
@@ -138,7 +148,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/ShoppingItemDTO"
-
   /shopping/list/{listId}/entries:
     get:
       tags:
@@ -222,7 +231,195 @@ paths:
           schema:
             type: boolean
 
+  /expense/lists:
+    get:
+      tags:
+        - expenses
+      summary: Get all ExpenseLists
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ExpenseListDTO"
+  /expense/list:
+    post:
+      tags:
+        - expenses
+      summary: Create new ExpenseList
+      parameters:
+        - in: body
+          name: ExpenseListCDTO
+          description: ExpenseList Creation DTO
+          schema:
+            $ref: "#/definitions/ExpenseListCDTO"
+      responses:
+        201:
+          description: Created
+          schema:
+            type: object
+            $ref: "#/definitions/ExpenseListDTO"
+  /expense/list/{listId}/expenses:
+    get:
+      tags:
+        - expenses
+      summary: Get all Expenses of a ExpenseList
+      parameters:
+        - name: listId
+          in: path
+          description: ExpenseList Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ExpenseDTO"
+  /expense/list/{listId}/expense:
+    post:
+      tags:
+        - expenses
+      summary: Create new Expense
+      parameters:
+        - name: listId
+          in: path
+          description: ExpenseList Id
+          type: integer
+          required: true
+        - in: body
+          name: ExpenseCDTO
+          description: Expense Creation DTO
+          schema:
+            $ref: "#/definitions/ExpenseCDTO"
+      responses:
+        201:
+          description: Created
+          schema:
+            type: object
+            $ref: "#/definitions/ExpenseDTO"
+  /expense/list/{listId}/expense/{expenseId}:
+    delete:
+      tags:
+        - expenses
+      summary: Delete Expense
+      parameters:
+        - name: listId
+          in: path
+          description: ExpenseList Id
+          type: integer
+          required: true
+        - name: expenseId
+          in: path
+          description: Expense Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+  /manager/expense/list/{listId}:
+    patch:
+      tags:
+        - expenses
+      summary: Settle list (change isSettled)
+      parameters:
+        - name: listId
+          in: path
+          description: ExpenseList Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    delete:
+      tags:
+        - expenses
+      summary: Delete list
+      parameters:
+        - name: listId
+          in: path
+          description: ExpenseList Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+
 definitions:
+  ExpenseListDTO:
+    type:  object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      isSettled:
+        type: boolean
+  ExpenseListCDTO:
+    type:  object
+    properties:
+      name:
+        type: string
+  ExpenseDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      total:
+        type: integer
+      isEqual:
+        type: boolean
+      paidBy:
+        $ref: "#/definitions/UserNameDTO"
+      boughtDate:
+        type: string
+      description:
+        type: string
+      expenseUnequals:
+        type: array
+        items:
+          $ref: "#/definitions/ExpenseUnequalDTO"
+  ExpenseCDTO:
+    type: object
+    properties:
+      name:
+        type: string
+      total:
+        type: integer
+      isEqual:
+        type: boolean
+      description:
+        type: string
+      expenseUnequals:
+        type: array
+        items:
+          $ref: "#/definitions/ExpenseUnequalCDTO"
+  ExpenseUnequalDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+      units:
+        type: integer
+      percent:
+        type: integer
+      usedBy:
+        $ref: "#/definitions/UserNameDTO"
+  ExpenseUnequalCDTO:
+    type: object
+    properties:
+      usedBy:
+        $ref: "#/definitions/UserNameDTO"
+      units:
+        type: integer
+      percent:
+        type: integer
+
+
   ShoppingListDTO:
     type:  object
     properties:
@@ -255,15 +452,15 @@ definitions:
     type:  object
     properties:
       id:
-        type:  integer
+        type: integer
       username:
-        type:  string
+        type: string
 
   UserLoginDTO:
-    type:  object
+    type: object
     properties:
       username:
-        type:  string
+        type: string
       password:
-        type:  string
+        type: string
 
