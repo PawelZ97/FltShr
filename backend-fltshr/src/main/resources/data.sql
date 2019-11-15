@@ -41,9 +41,9 @@ VALUES ( 1, 3, true, 2, null );
 INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
 VALUES ( 2, 3, false, null, null );
 
-INSERT INTO expenses_lists(name) VALUES ( 'Środki czystości' );
-INSERT INTO expenses_lists(name) VALUES ( 'Jedzonko' );
-INSERT INTO expenses_lists(name) VALUES ( 'Drukowanie' );
+INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Środki czystości' , false);
+INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Jedzonko' , false);
+INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Drukowanie' , false);
 
 INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
 VALUES ('2019-11-08 08:08:08', 'Mydełko kupione', true, 'Mydełko', 13.80, 1, 2);
@@ -60,22 +60,22 @@ VALUES ('2019-11-09 10:10:10', 'Kebsiki z wilanowa', false, 'Kebsiki', 40.00, 2,
 INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
 VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', false, 'Tusze do Drukarki', 38.00, 3, 1);
 
-INSERT INTO expense_usages("percent", "units", "expense", "used_by")
+INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
 VALUES ( 40, null, 4, 1);
 
-INSERT INTO expense_usages("percent", "units", "expense", "used_by")
+INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
 VALUES ( 60, null, 4, 2);
 
-INSERT INTO expense_usages("percent", "units", "expense", "used_by")
+INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
 VALUES ( null, 10, 5, 1);
 
-INSERT INTO expense_usages("percent", "units", "expense", "used_by")
+INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
 VALUES ( null, 18, 5, 2);
 
-INSERT INTO expense_usages("percent", "units", "expense", "used_by")
+INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
 VALUES ( null, 10, 5, 3);
 
-INSERT INTO expense_usages("percent", "units", "expense", "used_by")
+INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
 VALUES ( null, 14, 5, 3);
 
 
