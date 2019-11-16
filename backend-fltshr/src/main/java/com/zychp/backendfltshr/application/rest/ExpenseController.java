@@ -69,7 +69,7 @@ public class ExpenseController {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
         if(!requestUsername.equals(paidByUsername)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Can't delete others expense");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can't delete others expense");
         }
         expenseRepsitory.deleteById(expenseId);
         return ResponseEntity.accepted().build();
