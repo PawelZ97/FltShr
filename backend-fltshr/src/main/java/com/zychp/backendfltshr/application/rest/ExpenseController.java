@@ -8,7 +8,6 @@ import com.zychp.backendfltshr.domain.expenses.expenselist.ExpenseList;
 import com.zychp.backendfltshr.domain.expenses.expenselist.ExpenseListCDTO;
 import com.zychp.backendfltshr.domain.expenses.expenselist.ExpenseListDTO;
 import com.zychp.backendfltshr.domain.expenses.expenselist.ExpenseListRepository;
-import com.zychp.backendfltshr.domain.expenses.expenseunequal.ExpenseUnequal;
 import com.zychp.backendfltshr.domain.expenses.expenseunequal.ExpenseUnequalRepsitory;
 import com.zychp.backendfltshr.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -53,25 +51,15 @@ public class ExpenseController {
 
     @PostMapping("/list/{expenseListId}/expense")
     ResponseEntity<ExpenseDTO> createExpense(@PathVariable Long expenseListId,
-                                             @RequestBody ExpenseCDTO expenseDTO) {
-        Expense received = ExpenseCDTO.valueOf(expenseDTO);
+                                             @RequestBody ExpenseCDTO expenseCDTO) {
+        Expense received = ExpenseCDTO.valueOf(expenseCDTO);
         String requestUsername = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal().toString();
         received.setExpenseList(expenseListRepository.findById(expenseListId).orElseThrow());
         received.setPaidBy(userRepository.findByUsername(requestUsername).orElseThrow());
         received.setBoughtDate(new Timestamp(System.currentTimeMillis()));
-
-        if (received.getIsEqual()) {
-            Expense created = expenseRepsitory.save(received);
-            return ResponseEntity.accepted().body(ExpenseDTO.valueOf(created));
-        }
-
-        Set<ExpenseUnequal> expenseUnequals = received.getExpenseUnequals();
-        System.out.println("expenseUnequals = " + expenseUnequals);
-//        expenseUnequalRepsitory.saveAll(expenseUnequals);
-//        Expense created = expenseRepsitory.save(received);
-//        return ResponseEntity.accepted().body(ExpenseDTO.valueOf(created));
-        return ResponseEntity.ok().build();
+        Expense created = expenseRepsitory.save(received);
+        return ResponseEntity.accepted().body(ExpenseDTO.valueOf(created));
     }
 
     @DeleteMapping("/list/{expenseListId}/expense/{expenseId}")
@@ -83,8 +71,6 @@ public class ExpenseController {
         if(!requestUsername.equals(paidByUsername)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Can't delete others expense");
         }
-        Set<ExpenseUnequal> unequalsToDelete = expense.getExpenseUnequals();
-        expenseUnequalRepsitory.deleteAll(unequalsToDelete);
         expenseRepsitory.deleteById(expenseId);
         return ResponseEntity.accepted().build();
     }

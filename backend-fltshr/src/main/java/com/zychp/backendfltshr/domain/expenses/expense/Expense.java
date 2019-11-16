@@ -48,7 +48,7 @@ public class Expense {
     @Column(name = "description")
     private String description;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "expense", nullable = false)
     private Set<ExpenseUnequal> expenseUnequals;
 }
