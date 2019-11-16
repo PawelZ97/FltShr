@@ -22,13 +22,22 @@ CREATE TABLE "bills" (
                          "created_date" timestamp NOT NULL
 );
 
-CREATE TABLE "chores_assigned" (
-                                   "id" bigint PRIMARY KEY NOT NULL,
-                                   "user" bigint NOT NULL,
-                                   "chore" bigint NOT NULL,
-                                   "assign_date" timestamp NOT NULL,
-                                   "done" boolean NOT NULL,
-                                   "done_date" timestamp NOT NULL
+CREATE TABLE "queue_chores_assigned" (
+                                         "id" bigint PRIMARY KEY NOT NULL,
+                                         "user" bigint NOT NULL,
+                                         "chore" bigint NOT NULL,
+                                         "assign_date" timestamp NOT NULL,
+                                         "done" boolean NOT NULL,
+                                         "done_date" timestamp NOT NULL
+);
+
+CREATE TABLE "frequent_chores_assigned" (
+                                            "id" bigint PRIMARY KEY NOT NULL,
+                                            "user" bigint NOT NULL,
+                                            "chore" bigint NOT NULL,
+                                            "assign_date" timestamp NOT NULL,
+                                            "done" boolean NOT NULL,
+                                            "done_date" timestamp NOT NULL
 );
 
 CREATE TABLE "expense_unequal" (
@@ -103,7 +112,7 @@ ALTER TABLE "advertisements" ADD FOREIGN KEY ("creator") REFERENCES "users" ("id
 
 ALTER TABLE "bills" ADD FOREIGN KEY ("created_by") REFERENCES "users" ("id");
 
-ALTER TABLE "chores_assigned" ADD FOREIGN KEY ("chore") REFERENCES "frequent_chores" ("id");
+ALTER TABLE "frequent_chores_assigned" ADD FOREIGN KEY ("chore") REFERENCES "frequent_chores" ("id");
 
 ALTER TABLE "expense_unequal" ADD FOREIGN KEY ("expense") REFERENCES "expenses" ("id");
 
@@ -111,14 +120,16 @@ ALTER TABLE "expense_unequal" ADD FOREIGN KEY ("used_by") REFERENCES "users" ("i
 
 ALTER TABLE "expenses" ADD FOREIGN KEY ("paid_by") REFERENCES "users" ("id");
 
-ALTER TABLE "chores_assigned" ADD FOREIGN KEY ("chore") REFERENCES "queue_chores" ("id");
+ALTER TABLE "queue_chores_assigned" ADD FOREIGN KEY ("chore") REFERENCES "queue_chores" ("id");
 
 ALTER TABLE "shopping_entries" ADD FOREIGN KEY ("item") REFERENCES "shopping_items" ("id");
 
 ALTER TABLE "shopping_entries" ADD FOREIGN KEY ("shopping_list") REFERENCES "shopping_lists" ("id");
 
-ALTER TABLE "chores_assigned" ADD FOREIGN KEY ("user") REFERENCES "users" ("id");
+ALTER TABLE "queue_chores_assigned" ADD FOREIGN KEY ("user") REFERENCES "users" ("id");
 
 ALTER TABLE "shopping_entries" ADD FOREIGN KEY ("buyer") REFERENCES "users" ("id");
 
 ALTER TABLE "expenses" ADD FOREIGN KEY ("list") REFERENCES "expenses_lists" ("id");
+
+ALTER TABLE "frequent_chores_assigned" ADD FOREIGN KEY ("user") REFERENCES "users" ("id");
