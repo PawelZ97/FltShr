@@ -347,7 +347,177 @@ paths:
         200:
           description: "OK"
 
+
+  /assignedqueues:
+    get:
+      tags:
+        - chores
+      summary: Get all QueueChoresAssigned of All Users
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/QueueChoreAssignedDTO"
+
+  /assignedqueues/me:
+    get:
+      tags:
+        - chores
+      summary: Get all QueueChoresAssigned of User
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/QueueChoreAssignedDTO"
+
+  /assignedqueue/{queueChoreId}:
+    patch:
+      tags:
+        - chores
+      summary: Set QueueChore as Done and autoassign next
+      parameters:
+        - name: queueChoreId
+          in: path
+          description: QueueChore Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            $ref: "#/definitions/QueueChoreAssignedDTO"
+
+  /manager/queuechores:
+    get:
+      tags:
+        - chores
+      summary: Get all QueueChores
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/QueueChoreDTO"
+
+  /manager/queuechore/user/{userId}:
+    post:
+      tags:
+        - chores
+      summary: Create new QueueChore and assign to first User
+      parameters:
+        - name: userId
+          in: path
+          description: user Id
+          type: integer
+          required: true
+        - in: body
+          name: ExpenseCDTO
+          description: Expense Creation DTO
+          schema:
+            $ref: "#/definitions/QueueChoreCDTO"
+      responses:
+        201:
+          description: Created
+          schema:
+            type: object
+            $ref: "#/definitions/QueueChoreDTO"
+  /manager/queuechore/{queueChoreId}:
+    delete:
+      tags:
+        - chores
+      summary: Delete QueueChore and all it's history
+      parameters:
+        - name: queueChoreId
+          in: path
+          description: QueueChore Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: "Ok"
+
+#  /manager/assignedqueue/{queueChoreId}:
+#    patch:
+#      tags:
+#        - chores
+#      summary: Revert Currert assign and Create for previous User
+#      parameters:
+#        - name: queueChoreId
+#          in: path
+#          description: QueueChore Id
+#          type: integer
+#          required: true
+#      responses:
+#        200:
+#          description: "OK"
+
 definitions:
+  QueueChoreDTO:
+    type:  object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+
+  QueueChoreCDTO:
+    type:  object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+
+  QueueChoreAssignedDTO:
+    type:  object
+    properties:
+      id:
+        type: integer
+      user:
+        $ref: '#/definitions/UserNameDTO'
+      chore:
+        $ref: '#/definitions/QueueChoreDTO'
+      assignDate:
+        type: string
+      done:
+        type: boolean
+      doneDate:
+        type: string
+
+  FrequentChoreDTO:
+    type:  object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      durationDays:
+        type: integer
+      freqencyDays:
+        type: integer
+
+  FrequentChoreCDTO:
+    type:  object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      durationDays:
+        type: integer
+      freqencyDays:
+        type: integer
+
   ExpenseListDTO:
     type:  object
     properties:
