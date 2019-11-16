@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.chores;
+package com.zychp.backendfltshr.domain.chores.queuechores;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

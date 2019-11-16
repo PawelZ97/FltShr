@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.domain.chores;
 
+import com.zychp.backendfltshr.domain.chores.queuechores.QueueChore;
 import com.zychp.backendfltshr.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;

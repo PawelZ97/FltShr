@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.chores;
+package com.zychp.backendfltshr.domain.chores.queuechores;
 
 import com.zychp.backendfltshr.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "queue_chores_assifned")
-public class QueueChoreAssigned {
+public class AssignedQueueChore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
