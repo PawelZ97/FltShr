@@ -22,7 +22,6 @@ public class ExpenseUnequal {
     private User usedBy;
 
     @ManyToOne
-    @JoinColumn(name = "expense", nullable = false)
     private Expense expense;
 
     @Column(name = "percent")

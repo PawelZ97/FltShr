@@ -48,6 +48,7 @@ public class Expense {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "expense")
+    @OneToMany
+    @JoinColumn(name = "expense", nullable = false)
     private Set<ExpenseUnequal> expenseUnequals;
 }

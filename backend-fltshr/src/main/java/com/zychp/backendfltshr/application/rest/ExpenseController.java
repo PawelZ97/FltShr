@@ -67,9 +67,11 @@ public class ExpenseController {
         }
 
         Set<ExpenseUnequal> expenseUnequals = received.getExpenseUnequals();
-        expenseUnequalRepsitory.saveAll(expenseUnequals);
-        Expense created = expenseRepsitory.save(received);
-        return ResponseEntity.accepted().body(ExpenseDTO.valueOf(created));
+        System.out.println("expenseUnequals = " + expenseUnequals);
+//        expenseUnequalRepsitory.saveAll(expenseUnequals);
+//        Expense created = expenseRepsitory.save(received);
+//        return ResponseEntity.accepted().body(ExpenseDTO.valueOf(created));
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/list/{expenseListId}/expense/{expenseId}")
@@ -81,7 +83,7 @@ public class ExpenseController {
         if(!requestUsername.equals(paidByUsername)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Can't delete others expense");
         }
-        List<ExpenseUnequal> unequalsToDelete = expenseUnequalRepsitory.findAllByExpenseId(expenseId);
+        Set<ExpenseUnequal> unequalsToDelete = expense.getExpenseUnequals();
         expenseUnequalRepsitory.deleteAll(unequalsToDelete);
         expenseRepsitory.deleteById(expenseId);
         return ResponseEntity.accepted().build();
