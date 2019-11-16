@@ -359,7 +359,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/QueueChoreAssignedDTO"
+              $ref: "#/definitions/AssignedQueueChoreDTO"
 
   /assignedqueues/me:
     get:
@@ -372,7 +372,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/QueueChoreAssignedDTO"
+              $ref: "#/definitions/AssignedQueueChoreDTO"
 
   /assignedqueue/{queueChoreId}:
     patch:
@@ -390,7 +390,7 @@ paths:
           description: OK
           schema:
             type: object
-            $ref: "#/definitions/QueueChoreAssignedDTO"
+            $ref: "#/definitions/AssignedQueueChoreDTO"
 
   /manager/queuechores:
     get:
@@ -476,7 +476,7 @@ definitions:
       description:
         type: string
 
-  QueueChoreAssignedDTO:
+  AssignedQueueChoreDTO:
     type:  object
     properties:
       id:
