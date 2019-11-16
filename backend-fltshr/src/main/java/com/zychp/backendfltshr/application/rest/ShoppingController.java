@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/shopping")
 @RequiredArgsConstructor
 public class ShoppingController {
+    //TODO Hard Refactoring To Standard of Other Endpoints
+
     private final ShoppingListRepository shoppingListRepository;
     private final ShoppingItemRepository shoppingItemRepository;
     private final ShoppingEntryRepository shoppingEntryRepository;
