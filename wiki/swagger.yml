@@ -348,7 +348,7 @@ paths:
           description: "OK"
 
 
-  /assignedqueues:
+  /chores/assignedqueues:
     get:
       tags:
         - chores
@@ -361,7 +361,7 @@ paths:
             items:
               $ref: "#/definitions/AssignedQueueChoreDTO"
 
-  /assignedqueues/me:
+  /chores/assignedqueues/me:
     get:
       tags:
         - chores
@@ -374,7 +374,7 @@ paths:
             items:
               $ref: "#/definitions/AssignedQueueChoreDTO"
 
-  /assignedqueue/{queueChoreId}:
+  /chores/assignedqueue/{queueChoreId}:
     patch:
       tags:
         - chores
@@ -392,7 +392,7 @@ paths:
             type: object
             $ref: "#/definitions/AssignedQueueChoreDTO"
 
-  /manager/queuechores:
+  /chores/manager/queuechores:
     get:
       tags:
         - chores
@@ -405,7 +405,7 @@ paths:
             items:
               $ref: "#/definitions/QueueChoreDTO"
 
-  /manager/queuechore/user/{userId}:
+  /chores/manager/queuechore/user/{userId}:
     post:
       tags:
         - chores
@@ -427,7 +427,7 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/QueueChoreDTO"
-  /manager/queuechore/{queueChoreId}:
+  /chores/manager/queuechore/{queueChoreId}:
     delete:
       tags:
         - chores
@@ -442,7 +442,7 @@ paths:
         200:
           description: "Ok"
 
-#  /manager/assignedqueue/{queueChoreId}:
+#  chores/manager/assignedqueue/{queueChoreId}:
 #    patch:
 #      tags:
 #        - chores

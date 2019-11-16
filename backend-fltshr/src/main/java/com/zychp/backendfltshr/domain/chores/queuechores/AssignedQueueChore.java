@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "queue_chores_assifned")
+@Table(name = "assigned_queue_chore")
 public class AssignedQueueChore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class AssignedQueueChore {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user", nullable = false)
-    private User user;
+    @JoinColumn(name = "assigned_user", nullable = false)
+    private User assignedUser;
 
     @ManyToOne
     @JoinColumn(name = "chore", nullable = false)

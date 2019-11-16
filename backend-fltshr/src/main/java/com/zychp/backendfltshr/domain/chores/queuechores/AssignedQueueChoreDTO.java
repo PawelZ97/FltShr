@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Data
 public class AssignedQueueChoreDTO {
     private Long id;
-    private UserNameDTO user;
+    private UserNameDTO assignedUser;
     private QueueChoreDTO queueChore;
     private Timestamp assignDate;
     private Boolean done;
@@ -17,7 +17,7 @@ public class AssignedQueueChoreDTO {
     public static AssignedQueueChoreDTO valueOf(AssignedQueueChore entity) {
         AssignedQueueChoreDTO dto = new AssignedQueueChoreDTO();
         dto.setId(entity.getId());
-        dto.setUser(UserNameDTO.valueOf(entity.getUser()));
+        dto.setAssignedUser(UserNameDTO.valueOf(entity.getAssignedUser()));
         dto.setQueueChore(QueueChoreDTO.valueOf(entity.getQueueChore()));
         dto.setAssignDate(entity.getAssignDate());
         dto.setDone(entity.getDone());

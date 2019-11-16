@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "queue_chores_assigned")
+@Table(name = "assigned_frequent_chores")
 public class FrequentChoreAssigned {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,12 @@ public class FrequentChoreAssigned {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user", nullable = false)
-    private User user;
+    @JoinColumn(name = "user_assigned", nullable = false)
+    private User userAssigned;
 
     @ManyToOne
-    @JoinColumn(name = "chore", nullable = false)
-    private QueueChore queueChore;
+    @JoinColumn(name = "frequent_chore", nullable = false)
+    private FrequentChore frequentChore;
 
     @CreationTimestamp
     @Column(name = "assign_date")
