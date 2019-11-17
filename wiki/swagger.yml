@@ -11,7 +11,7 @@ paths:
   /login:
     post:
       tags:
-        - login
+        - Login
       summary: Login endpoint
       parameters:
         - in: body
@@ -31,7 +31,7 @@ paths:
   /users:
     get:
       tags:
-        - users
+        - Users
       summary: Get all Users lists
       responses:
         200:
@@ -40,59 +40,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/UserNameDTO"
-  /test/all:
-    get:
-      tags:
-        - test
-      summary: Testing public endpoint
-      produces:
-        - "text/plain"
-      responses:
-        200:
-          description: OK
-          schema:
-            type: string
-  /test/user:
-    get:
-      tags:
-        - test
-      summary: Testing endpoint for logged in users
-      produces:
-        - "text/plain"
-      responses:
-        200:
-          description: OK
-          schema:
-            type: "string"
-  /test/manager:
-    get:
-      tags:
-        - test
-      summary: Testing endpoint for ROLE_MANAGER
-      produces:
-        - "text/plain"
-      responses:
-        200:
-          description: OK
-          schema:
-            type: "string"
-  /test/admin:
-    get:
-      tags:
-        - test
-      summary: Testing endpoint for ROLE_ADMIN
-      produces:
-        - "text/plain"
-      responses:
-        200:
-          description: OK
-          schema:
-            type: string
-
   /shopping/lists:
     get:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Get all shopping lists
       responses:
         200:
@@ -104,7 +55,7 @@ paths:
   /shopping/list:
     post:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Crate new shopping list
       parameters:
         - in: body
@@ -121,7 +72,7 @@ paths:
   /shopping/list/{listId}:
     delete:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Delete shopping list
       parameters:
         - name: id
@@ -135,7 +86,7 @@ paths:
   /shopping/items:
     get:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Get all shopping items
       consumes:
         - application/json
@@ -151,7 +102,7 @@ paths:
   /shopping/list/{listId}/entries:
     get:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Get all shopping entries
       parameters:
         - name: id
@@ -170,7 +121,7 @@ paths:
   /shopping/list/{listId}/item:
     post:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Create shopping entry
       description: Assign item for list or create new item if not exist and then assign.
       parameters:
@@ -194,7 +145,7 @@ paths:
   /shopping/list/{listId}/item/{itemId}:
     delete:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Delete shopping entry by Item
       parameters:
         - name: listId
@@ -212,7 +163,7 @@ paths:
           description: OK
     patch:
       tags:
-        - shopping
+        - Shopping_Lists
       summary: Set shopping entry as Bought by Item
       parameters:
         - name: listId
@@ -234,7 +185,7 @@ paths:
   /expense/lists:
     get:
       tags:
-        - expenses
+        - Expenses
       summary: Get all ExpenseLists
       responses:
         200:
@@ -246,7 +197,7 @@ paths:
   /expense/list:
     post:
       tags:
-        - expenses
+        - Expenses
       summary: Create new ExpenseList
       parameters:
         - in: body
@@ -263,7 +214,7 @@ paths:
   /expense/list/{listId}/expenses:
     get:
       tags:
-        - expenses
+        - Expenses
       summary: Get all Expenses of a ExpenseList
       parameters:
         - name: listId
@@ -281,7 +232,7 @@ paths:
   /expense/list/{listId}/expense:
     post:
       tags:
-        - expenses
+        - Expenses
       summary: Create new Expense
       parameters:
         - name: listId
@@ -303,7 +254,7 @@ paths:
   /expense/list/{listId}/expense/{expenseId}:
     delete:
       tags:
-        - expenses
+        - Expenses
       summary: Delete Expense
       parameters:
         - name: listId
@@ -322,7 +273,7 @@ paths:
   /manager/expense/list/{listId}:
     patch:
       tags:
-        - expenses
+        - Expenses
       summary: Settle list (change isSettled)
       parameters:
         - name: listId
@@ -335,7 +286,7 @@ paths:
           description: "OK"
     delete:
       tags:
-        - expenses
+        - Expenses
       summary: Delete list
       parameters:
         - name: listId
@@ -351,7 +302,7 @@ paths:
   /chores/assignedqueues:
     get:
       tags:
-        - chores
+        - Queue_Chores
       summary: Get all QueueChoresAssigned of All Users
       responses:
         200:
@@ -364,7 +315,7 @@ paths:
   /chores/assignedqueues/me:
     get:
       tags:
-        - chores
+        - Queue_Chores
       summary: Get all QueueChoresAssigned of User
       responses:
         200:
@@ -377,7 +328,7 @@ paths:
   /chores/assignedqueue/{queueChoreId}:
     patch:
       tags:
-        - chores
+        - Queue_Chores
       summary: Set QueueChore as Done and autoassign next
       parameters:
         - name: queueChoreId
@@ -395,7 +346,7 @@ paths:
   /manager/chores/queuechores:
     get:
       tags:
-        - chores
+        - Queue_Chores
       summary: Get all QueueChores
       responses:
         200:
@@ -408,7 +359,7 @@ paths:
   /manager/chores/queuechore/user/{userId}:
     post:
       tags:
-        - chores
+        - Queue_Chores
       summary: Create new QueueChore and assign to first User
       parameters:
         - name: userId
@@ -427,11 +378,11 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/QueueChoreDTO"
-  /manager/chores/queuechore/{queueChoreId}:
+  /manager/chores/queuechore/archive/{queueChoreId}:
     delete:
       tags:
-        - chores
-      summary: Delete QueueChore and all it's history
+        - Queue_Chores
+      summary: Archive QueueChore
       parameters:
         - name: queueChoreId
           in: path
@@ -445,7 +396,7 @@ paths:
 #  /manager/assignedqueue/{queueChoreId}:
 #    patch:
 #      tags:
-#        - chores
+#        - Queue_Chores
 #      summary: Revert Currert assign and Create for previous User
 #      parameters:
 #        - name: queueChoreId
@@ -456,6 +407,145 @@ paths:
 #      responses:
 #        200:
 #          description: "OK"
+
+  /chores/assignedfrequents:
+    get:
+      tags:
+        - Frequent_Chores
+      summary: Get all AssignedFrequentChores of All Users
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/AssignedFrequentChoreDTO"
+  /chores/assignedfrequents/me:
+    get:
+      tags:
+        - Frequent_Chores
+      summary: Get all AssignedFrequentChores of User
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/AssignedFrequentChoreDTO"
+  /chores/assignedfrequent/{frequentChoreId}:
+    patch:
+      tags:
+        - Frequent_Chores
+      summary: Set FreqentChore as Done
+      parameters:
+        - name: frequentChoreId
+          in: path
+          description: FrequentChore Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            $ref: "#/definitions/AssignedFrequentChoreDTO"
+  /manager/chores/frequentchores:
+    get:
+      tags:
+        - Frequent_Chores
+      summary: Get all FrequentChores
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/FrequentChoreDTO"
+  /manager/chores/frequentchore/user/{userId}:
+    post:
+      tags:
+        - Frequent_Chores
+      summary: Create new FrequentChores and assign to User
+      parameters:
+        - name: userId
+          in: path
+          description: user Id
+          type: integer
+          required: true
+        - in: body
+          name: FrequentChoreCDTO
+          description: FrequentChore creation DTO
+          schema:
+            $ref: "#/definitions/FrequentChoreCDTO"
+      responses:
+        201:
+          description: Created
+          schema:
+            type: object
+            $ref: "#/definitions/FrequentChoreDTO"
+  /manager/chores/frequentchore/archive/{frequentChoreId}:
+    delete:
+      tags:
+        - Frequent_Chores
+      summary: Archive FrequentChore
+      parameters:
+        - name: frequentChoreId
+          in: path
+          description: FrequentChore Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: "Ok"
+
+  /test/all:
+    get:
+      tags:
+        - Role_Test
+      summary: Testing public endpoint
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
+  /test/user:
+    get:
+      tags:
+        - Role_Test
+      summary: Testing endpoint for logged in users
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "string"
+  /test/manager:
+    get:
+      tags:
+        - Role_Test
+      summary: Testing endpoint for ROLE_MANAGER
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "string"
+  /test/admin:
+    get:
+      tags:
+        - Role_Test
+      summary: Testing endpoint for ROLE_ADMIN
+      produces:
+        - "text/plain"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
 
 definitions:
   QueueChoreDTO:
@@ -475,6 +565,8 @@ definitions:
         type: string
       description:
         type: string
+      archived:
+        type: boolean
 
   AssignedQueueChoreDTO:
     type:  object
@@ -505,6 +597,8 @@ definitions:
         type: integer
       freqencyDays:
         type: integer
+      archived:
+        type: boolean
 
   FrequentChoreCDTO:
     type:  object
@@ -517,6 +611,22 @@ definitions:
         type: integer
       freqencyDays:
         type: integer
+
+  AssignedFrequentChoreDTO:
+    type:  object
+    properties:
+      id:
+        type: integer
+      user:
+        $ref: '#/definitions/UserNameDTO'
+      chore:
+        $ref: '#/definitions/FrequentChoreDTO'
+      assignDate:
+        type: string
+      done:
+        type: boolean
+      doneDate:
+        type: string
 
   ExpenseListDTO:
     type:  object
