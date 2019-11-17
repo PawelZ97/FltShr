@@ -88,3 +88,19 @@ VALUES ( 3, 1,  '2019-11-01 22:00:00', true, '2019-11-03 10:00:00');
 INSERT INTO assigned_queue_chore("assigned_user","chore", "assign_date", "done", "done_date")
 VALUES ( 4, 1,  '2019-11-03 10:00:00', false, null);
 
+
+INSERT INTO frequent_chores("name","description","duration_days","frequency_days", "active")
+VALUES ( 'Sprzątanie łazienki', 'Cotygodniowe sprzątanie łazienki', 7, 21, true);
+INSERT INTO frequent_chores("name","description","duration_days","frequency_days", "active")
+VALUES ( 'Sprzątanie kuchni', 'Cotygodniowe sprzątanie kuchni', 7, 21 , true);
+INSERT INTO frequent_chores("name","description","duration_days","frequency_days", "active")
+VALUES ( 'Sprzątanie korytarza', 'Cotygodniowe sprzątanie korytarza', 7, 21 , true);
+
+INSERT INTO assigned_frequent_chores("user_assigned","frequent_chore", "assign_date", "reassigned", "done", "done_date")
+VALUES ( 5, 1,  '2019-10-14 01:00:00', true ,  true, '2019-10-19 18:00:00');
+INSERT INTO assigned_frequent_chores("user_assigned","frequent_chore", "assign_date", "reassigned", "done", "done_date")
+VALUES ( 3, 1,  '2019-10-21 01:00:00', true ,  true, '2019-10-26 15:30:00');
+INSERT INTO assigned_frequent_chores("user_assigned","frequent_chore", "assign_date", "reassigned", "done", "done_date")
+VALUES ( 5, 1,  '2019-11-04 01:00:00', false , true, '2019-11-09 17:00:00');
+INSERT INTO assigned_frequent_chores("user_assigned","frequent_chore", "assign_date", "reassigned", "done", "done_date")
+VALUES ( 3, 1,  '2019-11-11 01:00:00', false , false , null);

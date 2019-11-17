@@ -316,7 +316,7 @@ paths:
     get:
       tags:
         - Queue_Chores
-      summary: Get all QueueChoresAssigned of User
+      summary: Get all QueueChoresAssigned of User that aren't Done
       responses:
         200:
           description: OK
@@ -420,11 +420,23 @@ paths:
             type: array
             items:
               $ref: "#/definitions/AssignedFrequentChoreDTO"
-  /chores/assignedfrequents/me:
+  /chores/assignedfrequents/todo:
     get:
       tags:
         - Frequent_Chores
-      summary: Get all AssignedFrequentChores of User
+      summary: Get all AssignedFrequentChores of User that aren't Done
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/AssignedFrequentChoreDTO"
+  /chores/assignedfrequents/my:
+    get:
+      tags:
+        - Frequent_Chores
+      summary: Get all AssignedFrequentChores of User that aren't Reassigned
       responses:
         200:
           description: OK
@@ -461,7 +473,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/FrequentChoreDTO"
-  /manager/chores/frequentchore/user/{userId}:
+  /manager/chores/frequentchore/user/{userId}/date/{dateAssigned}:
     post:
       tags:
         - Frequent_Chores
@@ -470,6 +482,11 @@ paths:
         - name: userId
           in: path
           description: user Id
+          type: integer
+          required: true
+        - name: dateAssigned
+          in: path
+          description: Assign Date String "yyyy-MM-dd hh:mm:ss"
           type: integer
           required: true
         - in: body
@@ -495,8 +512,11 @@ paths:
           type: integer
           required: true
       responses:
-        200:
-          description: "Ok"
+        202:
+          description: "Archived"
+          schema:
+            type: object
+            $ref: "#/definitions/FrequentChoreDTO"
 
   /test/all:
     get:
@@ -593,12 +613,12 @@ definitions:
         type: string
       description:
         type: string
+      active:
+        type: boolean
       durationDays:
         type: integer
       freqencyDays:
         type: integer
-      archived:
-        type: boolean
 
   FrequentChoreCDTO:
     type:  object
@@ -623,6 +643,8 @@ definitions:
         $ref: '#/definitions/FrequentChoreDTO'
       assignDate:
         type: string
+      reassigned:
+          type: boolean
       done:
         type: boolean
       doneDate:

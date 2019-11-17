@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(path = "manager/chores")
 @RequiredArgsConstructor
-public class ManagerChoreController {
+public class ManagerQueueChoreController {
     private final QueueChoreRepository queueChoreRepository;
     private final AssignedQueueChoreRepository assignedQueueChoreRepository;
     private final UserRepository userRepository;

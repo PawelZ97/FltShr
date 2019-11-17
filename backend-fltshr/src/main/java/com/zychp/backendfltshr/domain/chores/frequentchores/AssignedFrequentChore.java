@@ -29,7 +29,6 @@ public class AssignedFrequentChore {
     @JoinColumn(name = "frequent_chore", nullable = false)
     private FrequentChore frequentChore;
 
-    @CreationTimestamp
     @Column(name = "assign_date")
     private Timestamp assignDate;
 
