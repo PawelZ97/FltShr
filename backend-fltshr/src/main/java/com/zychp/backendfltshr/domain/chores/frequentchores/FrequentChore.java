@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.domain.chores;
+package com.zychp.backendfltshr.domain.chores.frequentchores;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +22,9 @@ public class FrequentChore {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "active")
+    private Boolean active;
 
     @Column(name = "duration_days")
     private Long durationDays;

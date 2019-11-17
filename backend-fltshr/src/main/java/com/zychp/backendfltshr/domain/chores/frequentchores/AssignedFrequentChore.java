@@ -1,6 +1,6 @@
-package com.zychp.backendfltshr.domain.chores;
+package com.zychp.backendfltshr.domain.chores.frequentchores;
 
-import com.zychp.backendfltshr.domain.chores.queuechores.QueueChore;
+import com.zychp.backendfltshr.domain.chores.frequentchores.FrequentChore;
 import com.zychp.backendfltshr.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "assigned_frequent_chores")
-public class FrequentChoreAssigned {
+public class AssignedFrequentChore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,6 +32,9 @@ public class FrequentChoreAssigned {
     @CreationTimestamp
     @Column(name = "assign_date")
     private Timestamp assignDate;
+
+    @Column(name = "reassigned")
+    private Boolean reassigned;
 
     @Column(name = "done")
     private Boolean done;
