@@ -36,6 +36,7 @@ CREATE TABLE "frequent_chores_assigned" (
                                             "user" bigint NOT NULL,
                                             "chore" bigint NOT NULL,
                                             "assign_date" timestamp NOT NULL,
+                                            "reAssigned" boolean NOT NULL,
                                             "done" boolean NOT NULL,
                                             "done_date" timestamp NOT NULL
 );
@@ -67,13 +68,15 @@ CREATE TABLE "expenses_lists" (
 CREATE TABLE "frequent_chores" (
                                    "id" bigint PRIMARY KEY NOT NULL,
                                    "description" varchar(100) NOT NULL,
+                                   "active" boolean NOT NULL,
                                    "duration_days" bigint NOT NULL,
                                    "frequency_days" bigint NOT NULL
 );
 
 CREATE TABLE "queue_chores" (
                                 "id" bigint PRIMARY KEY NOT NULL,
-                                "description" varchar(100) NOT NULL
+                                "description" varchar(100) NOT NULL,
+                                "active" boolean NOT NULL
 );
 
 CREATE TABLE "shopping_entries" (
