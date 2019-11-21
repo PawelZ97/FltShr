@@ -1,0 +1,110 @@
+package com.zychp.backendfltshr.services;
+
+import com.zychp.backendfltshr.model.chore.frequentchores.*;
+import com.zychp.backendfltshr.model.user.User;
+import com.zychp.backendfltshr.repos.UserRepository;
+import com.zychp.backendfltshr.repos.chore.AssignedFrequentChoreRepository;
+import com.zychp.backendfltshr.repos.chore.FrequentChoreRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class FrequetChoreService {
+    private final AssignedFrequentChoreRepository assignedFrequentChoreRepository;
+    private final FrequentChoreRepository frequentChoreRepository;
+    private final UserRepository userRepository;
+
+    //TODO Cron for AutoCreating New Assigments
+
+    public List<AssignedFrequentChoreDTO> getAssignedFrequentChores() {
+        List<AssignedFrequentChore> assignedFrequentChores = (List<AssignedFrequentChore>)
+                assignedFrequentChoreRepository.findAll();
+        return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
+    }
+
+    public List<AssignedFrequentChoreDTO> getAssignedFrequentChoresTodo() {
+        String requestUsername = SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal().toString();
+        List<AssignedFrequentChore> assignedFrequentChores =
+                assignedFrequentChoreRepository.findByUserAssigned_UsernameAndDoneIsFalse(requestUsername);
+        return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
+    }
+
+    public List<AssignedFrequentChoreDTO> getAssignedFrequentChoresMe() {
+        String requestUsername = SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal().toString();
+        List<AssignedFrequentChore> assignedFrequentChores =
+                assignedFrequentChoreRepository.findByUserAssigned_UsernameAndReassignedIsFalse(requestUsername);
+        return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
+    }
+
+    public AssignedFrequentChoreDTO setDone(Long queueChoreId) {
+        String requestUsername = SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal().toString();
+
+        AssignedFrequentChore doneChore = assignedFrequentChoreRepository.findById(queueChoreId).orElseThrow();
+        if (!doneChore.getUserAssigned().getUsername().equals(requestUsername)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chore not yours");
+        }
+        if (doneChore.getDone()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chore already done");
+        }
+        doneChore.setDone(true);
+        doneChore.setDoneDate(new Timestamp(System.currentTimeMillis()));
+        AssignedFrequentChore responseChore = assignedFrequentChoreRepository.save(doneChore);
+
+        return AssignedFrequentChoreDTO.valueOf(responseChore);
+    }
+
+
+    public List<FrequentChoreDTO> getFrequentChores() {
+        List<FrequentChore> found = (List<FrequentChore>) frequentChoreRepository.findAll();
+        return found.stream().map(FrequentChoreDTO::valueOf).collect(Collectors.toList());
+    }
+
+    public FrequentChoreDTO createFrequentChore(Long userId,
+                                                String dateFirstAssign,
+                                                FrequentChoreCDTO frequentChoreCDTO) {
+        User userRecieved = userRepository.findById(userId).orElseThrow();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date parsed;
+        try {
+            parsed = dateFormat.parse(dateFirstAssign);
+        } catch (ParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong date format: use \"yyyy-MM-dd hh:mm:ss\"");
+        }
+
+        FrequentChore received = FrequentChoreCDTO.valueOf(frequentChoreCDTO);
+        received.setActive(true);
+        FrequentChore created = frequentChoreRepository.save(received);
+
+        AssignedFrequentChore firstCreated = new AssignedFrequentChore();
+        firstCreated.setUserAssigned(userRecieved);
+        firstCreated.setFrequentChore(created);
+        firstCreated.setAssignDate(new Timestamp(parsed.getTime()));
+        firstCreated.setReassigned(false);
+        firstCreated.setDone(false);
+        firstCreated.setDoneDate(null);
+        assignedFrequentChoreRepository.save(firstCreated);
+        return FrequentChoreDTO.valueOf(created);
+    }
+
+    public FrequentChoreDTO deleteFrequentChore(@PathVariable Long frequentChoreId) {
+        FrequentChore frequentChore = frequentChoreRepository.findById(frequentChoreId).orElseThrow();
+        frequentChore.setActive(false);
+        FrequentChore archived = frequentChoreRepository.save(frequentChore);
+        return FrequentChoreDTO.valueOf(archived);
+    }
+}
