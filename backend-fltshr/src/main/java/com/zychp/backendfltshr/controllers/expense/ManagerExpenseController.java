@@ -1,7 +1,6 @@
 package com.zychp.backendfltshr.controllers.expense;
 
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseList;
-import com.zychp.backendfltshr.repos.expense.ExpenseListRepository;
+import com.zychp.backendfltshr.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,19 +9,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "manager/expense")
 @RequiredArgsConstructor
 public class ManagerExpenseController {
-    private final ExpenseListRepository expenseListRepository;
+    private final ExpenseService expenseService;
 
     @DeleteMapping("/list/{expenseListId}")
     ResponseEntity deleteExpenseList(@PathVariable Long expenseListId) {
-        expenseListRepository.deleteById(expenseListId);
+        expenseService.deleteExpenseList(expenseListId);
         return ResponseEntity.accepted().build();
     }
 
     @PatchMapping("/list/{expenseListId}")
     ResponseEntity setSetteled(@PathVariable Long expenseListId) {
-        ExpenseList expenseList = expenseListRepository.findById(expenseListId).orElseThrow();
-        expenseList.setIsSettled(true);
-        expenseListRepository.save(expenseList);
+        expenseService.setSetteled(expenseListId);
         return ResponseEntity.accepted().build();
     }
 }
