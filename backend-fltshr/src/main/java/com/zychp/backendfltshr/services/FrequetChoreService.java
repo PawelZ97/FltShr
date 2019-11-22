@@ -6,31 +6,57 @@ import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.chore.AssignedFrequentChoreRepository;
 import com.zychp.backendfltshr.repos.chore.FrequentChoreRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FrequetChoreService {
     private final AssignedFrequentChoreRepository assignedFrequentChoreRepository;
     private final FrequentChoreRepository frequentChoreRepository;
     private final UserRepository userRepository;
 
-    //TODO Cron for AutoCreating New Assigments
+    @Scheduled(cron = "0 0 1 * * *") // Every day at 1.00 am
+    public void cronAutoAssign() {
+        List<AssignedFrequentChore> choresNotReassigned = assignedFrequentChoreRepository.findByReassignedIsFalse();
+        LocalDateTime now = LocalDateTime.now().withNano(0);
+        for(AssignedFrequentChore readChore: choresNotReassigned) {
+            LocalDateTime assignTimeDate = readChore.getAssignDate().toLocalDateTime();
+            assignTimeDate = assignTimeDate.plusDays(readChore.getFrequentChore().getFrequencyDays()).minusMinutes(5);
+            if (assignTimeDate.isBefore(now)) {
+                readChore.setReassigned(true);
+                assignedFrequentChoreRepository.save(readChore);
+
+                AssignedFrequentChore newChore = new AssignedFrequentChore();
+                newChore.setUserAssigned(readChore.getUserAssigned());
+                newChore.setFrequentChore(readChore.getFrequentChore());
+                newChore.setAssignDate(Timestamp.valueOf(assignTimeDate));
+                newChore.setReassigned(false);
+                newChore.setDone(false);
+                newChore.setDoneDate(null);
+                assignedFrequentChoreRepository.save(newChore);
+                log.info("Reassigning chore: {}, at : {}", readChore, now);
+            }
+        }
+    }
 
     public List<AssignedFrequentChoreDTO> getAssignedFrequentChores() {
         List<AssignedFrequentChore> assignedFrequentChores = (List<AssignedFrequentChore>)
                 assignedFrequentChoreRepository.findAll();
+        log.info("getAssignedFrequentChores()");
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -39,6 +65,7 @@ public class FrequetChoreService {
                 .getPrincipal().toString();
         List<AssignedFrequentChore> assignedFrequentChores =
                 assignedFrequentChoreRepository.findByUserAssigned_UsernameAndDoneIsFalse(requestUsername);
+        log.info("getAssignedFrequentChoresTodo() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -47,6 +74,7 @@ public class FrequetChoreService {
                 .getPrincipal().toString();
         List<AssignedFrequentChore> assignedFrequentChores =
                 assignedFrequentChoreRepository.findByUserAssigned_UsernameAndReassignedIsFalse(requestUsername);
+        log.info("getAssignedFrequentChoresMe() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -65,12 +93,14 @@ public class FrequetChoreService {
         doneChore.setDoneDate(new Timestamp(System.currentTimeMillis()));
         AssignedFrequentChore responseChore = assignedFrequentChoreRepository.save(doneChore);
 
+        log.info("setDone() queueChoreId: {}", queueChoreId);
         return AssignedFrequentChoreDTO.valueOf(responseChore);
     }
 
 
     public List<FrequentChoreDTO> getFrequentChores() {
         List<FrequentChore> found = (List<FrequentChore>) frequentChoreRepository.findAll();
+        log.info("getFrequentChores()");
         return found.stream().map(FrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -98,13 +128,15 @@ public class FrequetChoreService {
         firstCreated.setDone(false);
         firstCreated.setDoneDate(null);
         assignedFrequentChoreRepository.save(firstCreated);
+        log.info("setDone() frequentChoreCDTO: {}", frequentChoreCDTO);
         return FrequentChoreDTO.valueOf(created);
     }
 
-    public FrequentChoreDTO deleteFrequentChore(@PathVariable Long frequentChoreId) {
+    public FrequentChoreDTO deleteFrequentChore(Long frequentChoreId) {
         FrequentChore frequentChore = frequentChoreRepository.findById(frequentChoreId).orElseThrow();
         frequentChore.setActive(false);
         FrequentChore archived = frequentChoreRepository.save(frequentChore);
+        log.info("deleteFrequentChore() frequentChoreId: {}", frequentChoreId);
         return FrequentChoreDTO.valueOf(archived);
     }
 }

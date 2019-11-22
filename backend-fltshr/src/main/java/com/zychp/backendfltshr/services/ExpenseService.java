@@ -10,6 +10,7 @@ import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseListRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseRepsitory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExpenseService {
     private final ExpenseListRepository expenseListRepository;
     private final ExpenseRepsitory expenseRepsitory;
@@ -28,6 +30,7 @@ public class ExpenseService {
 
     public List<ExpenseListDTO> getAllExpenseLists() {
         List<ExpenseList> expenseList = (List<ExpenseList>) expenseListRepository.findAll();
+        log.info("getAllExpenseLists()");
         return expenseList.stream().map(ExpenseListDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -35,11 +38,13 @@ public class ExpenseService {
         ExpenseList expenseList = ExpenseListCDTO.valueOf(expenseListCDTO);
         expenseList.setIsSettled(false);
         ExpenseList createdList = expenseListRepository.save(expenseList);
+        log.info("createExpenseList() expenseListCDTO: {}", expenseListCDTO);
         return ExpenseListDTO.valueOf(createdList);
     }
 
     public List<ExpenseDTO> getExpenses(Long expenseListId) {
         List<Expense> expenses = expenseRepsitory.findByExpenseListId(expenseListId);
+        log.info("getExpenses() expenseListId: {}", expenseListId);
         return expenses.stream().map(ExpenseDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -51,6 +56,7 @@ public class ExpenseService {
         received.setPaidBy(userRepository.findByUsername(requestUsername).orElseThrow());
         received.setBoughtDate(new Timestamp(System.currentTimeMillis()));
         Expense created = expenseRepsitory.save(received);
+        log.info("createExpense() expenseListId: {}, expenseCDTO: {}", expenseListId, expenseCDTO);
         return ExpenseDTO.valueOf(created);
     }
 
@@ -63,15 +69,18 @@ public class ExpenseService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't delete others expense");
         }
         expenseRepsitory.deleteById(expenseId);
+        log.info("deleteExpense() expenseId: {}", expenseId);
     }
 
-    public void deleteExpenseList( Long expenseListId) {
-        expenseListRepository.deleteById(expenseListId);
-    }
+//    public void deleteExpenseList( Long expenseListId) {
+//        expenseListRepository.deleteById(expenseListId);
+//        log.info("deleteExpenseList() expenseListId: {}", expenseListId);
+//    }
 
     public void setSetteled(Long expenseListId) {
         ExpenseList expenseList = expenseListRepository.findById(expenseListId).orElseThrow();
         expenseList.setIsSettled(true);
         expenseListRepository.save(expenseList);
+        log.info("setSetteled() expenseListId: {}", expenseListId);
     }
 }

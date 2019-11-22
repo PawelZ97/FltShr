@@ -73,7 +73,7 @@ paths:
     delete:
       tags:
         - Shopping_Lists
-      summary: Delete shopping list
+      summary: Archive shopping list
       parameters:
         - name: id
           in: path
@@ -286,20 +286,20 @@ paths:
       responses:
         200:
           description: "OK"
-  /manager/expense/list/{listId}/archive:
-    delete:
-      tags:
-        - Expenses
-      summary: Archive list
-      parameters:
-        - name: listId
-          in: path
-          description: ExpenseList Id
-          type: integer
-          required: true
-      responses:
-        202:
-          description: "Archived"
+#  /manager/expense/list/{listId}/archive:
+#    delete:
+#      tags:
+#        - Expenses
+#      summary: Archive list
+#      parameters:
+#        - name: listId
+#          in: path
+#          description: ExpenseList Id
+#          type: integer
+#          required: true
+#      responses:
+#        202:
+#          description: "Archived"
 
 
   /chores/assignedqueues:
@@ -395,21 +395,6 @@ paths:
       responses:
         202:
           description: "Archived"
-
-#  /manager/assignedqueue/{queueChoreId}:
-#    patch:
-#      tags:
-#        - Queue_Chores
-#      summary: Revert Currert assign and Create for previous User
-#      parameters:
-#        - name: queueChoreId
-#          in: path
-#          description: QueueChore Id
-#          type: integer
-#          required: true
-#      responses:
-#        200:
-#          description: "OK"
 
   /chores/assignedfrequents:
     get:

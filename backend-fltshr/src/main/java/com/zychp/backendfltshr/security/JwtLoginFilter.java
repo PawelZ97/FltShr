@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zychp.backendfltshr.model.user.UserLoginDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
@@ -66,5 +68,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         response.setContentType("application/json");
         response.addHeader(AuthConstants.HEADER, AuthConstants.TOKEN_PREFIX + token);
+        log.info("successfulAuthentication: {}", username);
     }
 }

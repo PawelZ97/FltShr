@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 public class ManagerExpenseController {
     private final ExpenseService expenseService;
 
-    @DeleteMapping("/list/{expenseListId}")
-    ResponseEntity deleteExpenseList(@PathVariable Long expenseListId) {
-        expenseService.deleteExpenseList(expenseListId);
-        return ResponseEntity.accepted().build();
-    }
+//    @DeleteMapping("/list/{expenseListId}")
+//    ResponseEntity deleteExpenseList(@PathVariable Long expenseListId) {
+//        expenseService.deleteExpenseList(expenseListId);
+//        return ResponseEntity.accepted().build();
+//    }
 
     @PatchMapping("/list/{expenseListId}")
     ResponseEntity setSetteled(@PathVariable Long expenseListId) {

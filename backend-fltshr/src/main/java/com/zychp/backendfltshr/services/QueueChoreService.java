@@ -6,6 +6,7 @@ import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.chore.AssignedQueueChoreRepository;
 import com.zychp.backendfltshr.repos.chore.QueueChoreRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class QueueChoreService {
     private final AssignedQueueChoreRepository assignedQueueChoreRepository;
     private final QueueChoreRepository queueChoreRepository;
@@ -24,7 +26,7 @@ public class QueueChoreService {
 
     public List<AssignedQueueChoreDTO> getAssignedQueueChores() {
         List<AssignedQueueChore> assignedQueueChores = (List<AssignedQueueChore>) assignedQueueChoreRepository.findAll();
-        System.out.println("assignedQueueChores = " + assignedQueueChores);
+        log.info("getAssignedQueueChores()");
         return assignedQueueChores.stream().map(AssignedQueueChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -33,6 +35,7 @@ public class QueueChoreService {
                 .getPrincipal().toString();
         List<AssignedQueueChore> assignedQueueChores =
                 assignedQueueChoreRepository.findByAssignedUser_UsernameAndAndDoneIsFalse(requestUsername);
+        log.info("getAssignedQueueChoresMe()");
         return assignedQueueChores.stream().map(AssignedQueueChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -59,12 +62,14 @@ public class QueueChoreService {
         autoAssign.setAssignedUser(userRepository.findById(newUserId).orElseThrow());
 
         assignedQueueChoreRepository.save(autoAssign);
+        log.info("setDone() queueChoreId: {}", queueChoreId);
         return AssignedQueueChoreDTO.valueOf(responseChore);
     }
 
 
     public List<QueueChoreDTO> getQueueChores() {
         List<QueueChore> found = (List<QueueChore>) queueChoreRepository.findAll();
+        log.info("getQueueChores()");
         return found.stream().map(QueueChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -80,6 +85,7 @@ public class QueueChoreService {
         firstCreated.setAssignedUser(user);
         assignedQueueChoreRepository.save(firstCreated);
 
+        log.info("createQueueChore() userId: {}, queueChoreCDTO: {}", userId, queueChoreCDTO);
         return QueueChoreDTO.valueOf(created);
     }
 
@@ -87,5 +93,6 @@ public class QueueChoreService {
     public void deleteQueueChore(Long queueChoreId) {
         //TODO Fix delete when queueChore assigned (relation inversion)
         queueChoreRepository.deleteById(queueChoreId);
+        log.info("deleteQueueChore() queueChoreId: {}", queueChoreId);
     }
 }

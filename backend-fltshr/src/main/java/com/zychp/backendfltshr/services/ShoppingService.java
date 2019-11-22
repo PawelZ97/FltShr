@@ -6,6 +6,7 @@ import com.zychp.backendfltshr.repos.shopping.ShoppingEntryRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingItemRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingListRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ShoppingService {
     private final ShoppingListRepository shoppingListRepository;
     private final ShoppingItemRepository shoppingItemRepository;
@@ -25,7 +27,7 @@ public class ShoppingService {
 
     public List<ShoppingListDTO> getShoppingLists() {
         List<ShoppingList> shoppingLists = shoppingListRepository.findByArchivedFalse();
-        System.out.println("shoppingLists = " + shoppingLists);
+        log.info("getShoppingLists()");
         return shoppingLists.stream().map(ShoppingListDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -33,6 +35,7 @@ public class ShoppingService {
         ShoppingList toCreate = ShoppingListCDTO.valueOf(shoppingListCDTO);
         toCreate.setArchived(false);
         ShoppingList saved = shoppingListRepository.save(toCreate);
+        log.info("createNewShoppingList() shoppingListCDTO: {}", shoppingListCDTO);
         return ShoppingListDTO.valueOf(saved);
     }
 
@@ -40,15 +43,18 @@ public class ShoppingService {
         ShoppingList toArchive = shoppingListRepository.findById(listId).orElseThrow();
         toArchive.setArchived(true);
         shoppingListRepository.save(toArchive);
+        log.info("archiveShoppingList() listId: {}", listId);
     }
 
     public List<ShoppingItemDTO> getShoppingItems() {
         List<ShoppingItem> shoppingItems = (List<ShoppingItem>) shoppingItemRepository.findAll();
+        log.info("getShoppingItems()");
         return shoppingItems.stream().map(ShoppingItemDTO::valueOf).collect(Collectors.toList());
     }
 
     public List<ShoppingEntryDTO> getShoppingListItems(Long listId) {
         List<ShoppingEntry> shoppingEntries = shoppingEntryRepository.findByShoppingListId(listId);
+        log.info("getShoppingListItems() listId: {}", listId);
         return shoppingEntries.stream().map(ShoppingEntryDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -62,12 +68,14 @@ public class ShoppingService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "List archived. can't edit");
         }
         shoppingEntryRepository.save(new ShoppingEntry(shoppingList, shoppingItem));
+        log.info("addShoppingItem() listId: {}, shoppingItemDTO: {}", listId, shoppingItemDTO);
         return shoppingItemDTO;
     }
 
     public void deleteShoppingEntry(Long listId, Long itemId) {
         ShoppingEntry shoppingEntry = shoppingEntryRepository.findByShoppingListIdAndShoppingItemId(listId, itemId);
         shoppingEntryRepository.delete(shoppingEntry);
+        log.info("deleteShoppingEntry() listId: {}, itemId: {}", listId, itemId);
     }
 
     public ShoppingEntryDTO markAsEntryAsBought(Long listId, Long itemId) {
@@ -79,6 +87,7 @@ public class ShoppingService {
                 .getPrincipal().toString();
         shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));
         ShoppingEntry setDone = shoppingEntryRepository.save(shoppingEntry);
+        log.info("deleteShoppingEntry() listId: {}, itemId: {}", listId, itemId);
         return ShoppingEntryDTO.valueOf(setDone);
     }
 }
