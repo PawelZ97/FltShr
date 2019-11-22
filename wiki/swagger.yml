@@ -286,21 +286,6 @@ paths:
       responses:
         200:
           description: "OK"
-#  /manager/expense/list/{listId}/archive:
-#    delete:
-#      tags:
-#        - Expenses
-#      summary: Archive list
-#      parameters:
-#        - name: listId
-#          in: path
-#          description: ExpenseList Id
-#          type: integer
-#          required: true
-#      responses:
-#        202:
-#          description: "Archived"
-
 
   /chores/assignedqueues:
     get:

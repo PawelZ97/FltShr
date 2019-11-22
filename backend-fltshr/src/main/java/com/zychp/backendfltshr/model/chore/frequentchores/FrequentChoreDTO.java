@@ -7,7 +7,6 @@ public class FrequentChoreDTO {
     private Long id;
     private String name;
     private String description;
-    private Boolean active;
     private Long durationDays;
     private Long frequencyDays;
 
@@ -16,7 +15,6 @@ public class FrequentChoreDTO {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setDescription(entity.getDescription());
-        dto.setActive(entity.getActive());
         dto.setDurationDays(entity.getDurationDays());
         dto.setFrequencyDays(entity.getFrequencyDays());
         return dto;

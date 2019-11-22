@@ -13,6 +13,7 @@ public class AssignedFrequentChoreDTO {
     private Timestamp assignDate;
     private Boolean done;
     private Timestamp doneDate;
+    private Boolean reassigned;
 
     public static AssignedFrequentChoreDTO valueOf(AssignedFrequentChore entity) {
         AssignedFrequentChoreDTO dto = new AssignedFrequentChoreDTO();
@@ -22,6 +23,7 @@ public class AssignedFrequentChoreDTO {
         dto.setAssignDate(entity.getAssignDate());
         dto.setDone(entity.getDone());
         dto.setDoneDate(entity.getDoneDate());
+        dto.setReassigned(entity.getReassigned());
         return dto;
     }
 }

@@ -25,7 +25,8 @@ public class QueueChoreService {
     private final UserRepository userRepository;
 
     public List<AssignedQueueChoreDTO> getAssignedQueueChores() {
-        List<AssignedQueueChore> assignedQueueChores = (List<AssignedQueueChore>) assignedQueueChoreRepository.findAll();
+        List<AssignedQueueChore> assignedQueueChores =
+                (List<AssignedQueueChore>) assignedQueueChoreRepository.findAll();
         log.info("getAssignedQueueChores()");
         return assignedQueueChores.stream().map(AssignedQueueChoreDTO::valueOf).collect(Collectors.toList());
     }
@@ -33,9 +34,9 @@ public class QueueChoreService {
     public List<AssignedQueueChoreDTO> getAssignedQueueChoresMe() {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
-        List<AssignedQueueChore> assignedQueueChores =
-                assignedQueueChoreRepository.findByAssignedUser_UsernameAndAndDoneIsFalse(requestUsername);
-        log.info("getAssignedQueueChoresMe()");
+        List<AssignedQueueChore> assignedQueueChores = assignedQueueChoreRepository
+                .findByAssignedUser_UsernameAndAndDoneIsFalseAndQueueChore_ArchivedIsFalse(requestUsername);
+        log.info("getAssignedQueueChoresMe() user: {}", requestUsername);
         return assignedQueueChores.stream().map(AssignedQueueChoreDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -90,9 +91,10 @@ public class QueueChoreService {
     }
 
 
-    public void deleteQueueChore(Long queueChoreId) {
-        //TODO Fix delete when queueChore assigned (relation inversion)
-        queueChoreRepository.deleteById(queueChoreId);
+    public void archiveQueueChore(Long queueChoreId) {
+        QueueChore queueChore = queueChoreRepository.findById(queueChoreId).orElseThrow();
+        queueChore.setArchived(true);
+        queueChoreRepository.save(queueChore);
         log.info("deleteQueueChore() queueChoreId: {}", queueChoreId);
     }
 }

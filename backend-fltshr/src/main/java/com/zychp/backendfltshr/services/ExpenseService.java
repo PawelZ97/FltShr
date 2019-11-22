@@ -29,7 +29,7 @@ public class ExpenseService {
     private final UserRepository userRepository;
 
     public List<ExpenseListDTO> getAllExpenseLists() {
-        List<ExpenseList> expenseList = (List<ExpenseList>) expenseListRepository.findAll();
+        List<ExpenseList> expenseList = expenseListRepository.findByIsSettledIsFalse();
         log.info("getAllExpenseLists()");
         return expenseList.stream().map(ExpenseListDTO::valueOf).collect(Collectors.toList());
     }
@@ -71,11 +71,6 @@ public class ExpenseService {
         expenseRepsitory.deleteById(expenseId);
         log.info("deleteExpense() expenseId: {}", expenseId);
     }
-
-//    public void deleteExpenseList( Long expenseListId) {
-//        expenseListRepository.deleteById(expenseListId);
-//        log.info("deleteExpenseList() expenseListId: {}", expenseListId);
-//    }
 
     public void setSetteled(Long expenseListId) {
         ExpenseList expenseList = expenseListRepository.findById(expenseListId).orElseThrow();

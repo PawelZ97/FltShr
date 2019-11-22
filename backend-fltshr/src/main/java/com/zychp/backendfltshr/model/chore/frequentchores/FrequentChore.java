@@ -17,18 +17,18 @@ public class FrequentChore {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "active")
-    private Boolean active;
+    @Column(name = "archived", nullable = false)
+    private Boolean archived;
 
-    @Column(name = "duration_days")
+    @Column(name = "duration_days", nullable = false)
     private Long durationDays;
 
-    @Column(name = "frequency_days")
+    @Column(name = "frequency_days", nullable = false)
     private Long frequencyDays;
 }

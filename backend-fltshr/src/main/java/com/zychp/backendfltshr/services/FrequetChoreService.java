@@ -31,7 +31,8 @@ public class FrequetChoreService {
 
     @Scheduled(cron = "0 0 1 * * *") // Every day at 1.00 am
     public void cronAutoAssign() {
-        List<AssignedFrequentChore> choresNotReassigned = assignedFrequentChoreRepository.findByReassignedIsFalse();
+        List<AssignedFrequentChore> choresNotReassigned =
+                assignedFrequentChoreRepository.findByReassignedIsFalseAndFrequentChore_ArchivedIsFalse();
         LocalDateTime now = LocalDateTime.now().withNano(0);
         for(AssignedFrequentChore readChore: choresNotReassigned) {
             LocalDateTime assignTimeDate = readChore.getAssignDate().toLocalDateTime();
@@ -63,8 +64,8 @@ public class FrequetChoreService {
     public List<AssignedFrequentChoreDTO> getAssignedFrequentChoresTodo() {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
-        List<AssignedFrequentChore> assignedFrequentChores =
-                assignedFrequentChoreRepository.findByUserAssigned_UsernameAndDoneIsFalse(requestUsername);
+        List<AssignedFrequentChore> assignedFrequentChores = assignedFrequentChoreRepository
+                .findByUserAssigned_UsernameAndFrequentChore_ArchivedIsFalseAndDoneIsFalse(requestUsername);
         log.info("getAssignedFrequentChoresTodo() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
@@ -72,8 +73,8 @@ public class FrequetChoreService {
     public List<AssignedFrequentChoreDTO> getAssignedFrequentChoresMe() {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
-        List<AssignedFrequentChore> assignedFrequentChores =
-                assignedFrequentChoreRepository.findByUserAssigned_UsernameAndReassignedIsFalse(requestUsername);
+        List<AssignedFrequentChore> assignedFrequentChores = assignedFrequentChoreRepository
+                .findByUserAssigned_UsernameAndFrequentChore_ArchivedIsFalseAndReassignedIsFalse(requestUsername);
         log.info("getAssignedFrequentChoresMe() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
@@ -117,7 +118,7 @@ public class FrequetChoreService {
         }
 
         FrequentChore received = FrequentChoreCDTO.valueOf(frequentChoreCDTO);
-        received.setActive(true);
+        received.setArchived(false);
         FrequentChore created = frequentChoreRepository.save(received);
 
         AssignedFrequentChore firstCreated = new AssignedFrequentChore();
@@ -132,9 +133,9 @@ public class FrequetChoreService {
         return FrequentChoreDTO.valueOf(created);
     }
 
-    public FrequentChoreDTO deleteFrequentChore(Long frequentChoreId) {
+    public FrequentChoreDTO archiveFrequentChore(Long frequentChoreId) {
         FrequentChore frequentChore = frequentChoreRepository.findById(frequentChoreId).orElseThrow();
-        frequentChore.setActive(false);
+        frequentChore.setArchived(true);
         FrequentChore archived = frequentChoreRepository.save(frequentChore);
         log.info("deleteFrequentChore() frequentChoreId: {}", frequentChoreId);
         return FrequentChoreDTO.valueOf(archived);

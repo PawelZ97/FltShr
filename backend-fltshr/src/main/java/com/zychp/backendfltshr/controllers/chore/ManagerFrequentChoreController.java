@@ -29,8 +29,8 @@ public class ManagerFrequentChoreController {
                 frequetChoreService.createFrequentChore(userId, dateFirstAssign, frequentChoreCDTO));
     }
 
-    @DeleteMapping("/frequentchore/archive/{frequentChoreId}")
-    ResponseEntity<FrequentChoreDTO> deleteFrequentChore(@PathVariable Long frequentChoreId) {
-        return ResponseEntity.accepted().body(frequetChoreService.deleteFrequentChore(frequentChoreId));
+    @DeleteMapping("/frequentchore/{frequentChoreId}/archive")
+    ResponseEntity<FrequentChoreDTO> archiveFrequentChore(@PathVariable Long frequentChoreId) {
+        return ResponseEntity.accepted().body(frequetChoreService.archiveFrequentChore(frequentChoreId));
     }
 }
