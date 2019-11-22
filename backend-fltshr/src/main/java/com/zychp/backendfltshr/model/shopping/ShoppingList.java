@@ -17,10 +17,9 @@ public class ShoppingList {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Column(name = "description")
     private String description;
-
-    public ShoppingList(String description) {
-        this.description = description;
-    }
 }

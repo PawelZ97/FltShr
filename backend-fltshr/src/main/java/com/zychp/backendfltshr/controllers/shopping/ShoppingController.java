@@ -31,9 +31,9 @@ public class ShoppingController {
     }
 
     @PostMapping("/list")
-    ShoppingListDTO createNewShoppingList(@RequestBody ShoppingListDTO shoppingListDTO) {
-        shoppingListRepository.save(new ShoppingList(shoppingListDTO.getDescription()));
-        return shoppingListDTO;
+    ShoppingListDTO createNewShoppingList(@RequestBody ShoppingListCDTO shoppingListCDTO) {
+        ShoppingList saved = shoppingListRepository.save(ShoppingListCDTO.valueOf(shoppingListCDTO));
+        return ShoppingListDTO.valueOf(saved);
     }
 
     @DeleteMapping("/list/{ListId}")
@@ -57,7 +57,7 @@ public class ShoppingController {
     ShoppingItemDTO addShoppingItem(@PathVariable Long listId, @RequestBody ShoppingItemDTO shoppingItemDTO) {
         ShoppingItem shoppingItem = shoppingItemRepository.findById(shoppingItemDTO.getId()).orElse(null);
         if (shoppingItem == null) {
-            shoppingItem = shoppingItemRepository.save(new ShoppingItem(shoppingItemDTO.getDescription()));
+            shoppingItem = shoppingItemRepository.save(ShoppingItemDTO.valueOf(shoppingItemDTO));
         }
         ShoppingList shoppingList = shoppingListRepository.findById(listId).orElse(null);
         shoppingEntryRepository.save(new ShoppingEntry(shoppingList, shoppingItem));

@@ -18,15 +18,15 @@ INSERT INTO users(username, password, email, role, registration_date)
 VALUES ('piotrek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
         'piotrek@fltshr.com', 'ROLE_USER', '2019-11-03 12:12:12');
 
-INSERT INTO shopping_items(description) VALUES ( 'Mydełko' );
+INSERT INTO shopping_items("name", "description") VALUES ( 'Mydełko' , 'Mydło w płynie');
 
-INSERT INTO shopping_items(description) VALUES ( 'Chlebek' );
+INSERT INTO shopping_items("name") VALUES ( 'Chlebek' );
 
-INSERT INTO shopping_items(description) VALUES ( 'Papier do drukarki' );
+INSERT INTO shopping_items("name", "description") VALUES ( 'Papier do drukarki', 'Paper A4 Biały');
 
-INSERT INTO shopping_lists(description) VALUES ( 'Stonka' );
+INSERT INTO shopping_lists("name", "description") VALUES ( 'Stonka', 'Zalupy Rossman' );
 
-INSERT INTO shopping_lists(description) VALUES ( 'Rosenman' );
+INSERT INTO shopping_lists("name") VALUES ( 'Rosenman' );
 
 INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
 VALUES ( 1, 1, true, 4, null );

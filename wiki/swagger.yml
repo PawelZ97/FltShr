@@ -62,7 +62,7 @@ paths:
           name: ShoppingListDTO
           description: Shopping list to create.
           schema:
-            $ref: "#/definitions/ShoppingListDTO"
+            $ref: "#/definitions/ShoppingListCDTO"
       responses:
         201:
           description: Created
@@ -131,7 +131,7 @@ paths:
           type: integer
           required: true
         - in: body
-          name: ShoppingListDTO
+          name: ShoppingItemDTO
           description: Shopping item to create in list.
           schema:
             type: object
@@ -727,6 +727,16 @@ definitions:
     properties:
       id:
         type:  integer
+      name:
+        type:  string
+      description:
+        type:  string
+
+  ShoppingListCDTO:
+    type:  object
+    properties:
+      name:
+        type:  string
       description:
         type:  string
 
@@ -735,6 +745,8 @@ definitions:
     properties:
       id:
         type:  integer
+      name:
+        type:  string
       description:
         type:  string
 
