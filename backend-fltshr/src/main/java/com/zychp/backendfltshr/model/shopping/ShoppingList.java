@@ -22,4 +22,7 @@ public class ShoppingList {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "archived")
+    private Boolean archived;
 }

@@ -24,18 +24,18 @@ INSERT INTO shopping_items("name") VALUES ( 'Chlebek' );
 
 INSERT INTO shopping_items("name", "description") VALUES ( 'Papier do drukarki', 'Paper A4 Biały');
 
-INSERT INTO shopping_lists("name", "description") VALUES ( 'Stonka', 'Zalupy Rossman' );
+INSERT INTO shopping_lists("name", "description", "archived") VALUES ( 'Stonka', 'Spożywcze', false);
 
-INSERT INTO shopping_lists("name") VALUES ( 'Rosenman' );
-
-INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
-VALUES ( 1, 1, true, 4, null );
+INSERT INTO shopping_lists("name", "archived") VALUES ( 'Rosenman' , false);
 
 INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
-VALUES ( 1, 2, true, 3, null );
+VALUES ( 1, 1, true, 4, '2019-11-09 10:10:10');
 
 INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
-VALUES ( 1, 3, true, 5, null );
+VALUES ( 1, 2, true, 3, '2019-11-10 12:10:10' );
+
+INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
+VALUES ( 1, 3, true, 5, '2019-11-20 10:11:10' );
 
 INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
 VALUES ( 2, 3, false, null, null );

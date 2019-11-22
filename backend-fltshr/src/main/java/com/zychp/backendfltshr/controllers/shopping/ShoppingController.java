@@ -18,8 +18,6 @@ import java.util.List;
 public class ShoppingController {
     private final ShoppingService shoppingService;
 
-    //TODO Hard Refactoring To Standard of Other Endpoints
-
     @GetMapping("/lists")
     ResponseEntity<List<ShoppingListDTO>> getShoppingLists() {
         return ResponseEntity.ok(shoppingService.getShoppingLists());
@@ -31,9 +29,9 @@ public class ShoppingController {
                 .body(shoppingService.createNewShoppingList(shoppingListCDTO));
     }
 
-    @DeleteMapping("/list/{ListId}")
+    @DeleteMapping("/list/{ListId}/archive")
     ResponseEntity deleteShoppingList(@PathVariable Long ListId) {
-        shoppingService.deleteShoppingList(ListId);
+        shoppingService.archiveShoppingList(ListId);
         return ResponseEntity.accepted().build();
     }
 
@@ -55,6 +53,7 @@ public class ShoppingController {
 
     @DeleteMapping("/list/{listId}/item/{itemId}")
     ResponseEntity deleteShoppingEntry(@PathVariable Long listId, @PathVariable Long itemId) {
+        shoppingService.deleteShoppingEntry(listId, itemId);
         return ResponseEntity.accepted().build();
     }
 
