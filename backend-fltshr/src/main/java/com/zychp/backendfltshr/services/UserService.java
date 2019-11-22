@@ -16,6 +16,8 @@ public class UserService {
 
     public List<UserNameDTO> getUsers() {
         List<User> users = userRepository.findAll();
+        users.remove(0);
+        users.remove(0);
         return users.stream().map(UserNameDTO::valueOf).collect(Collectors.toList());
     }
 }
