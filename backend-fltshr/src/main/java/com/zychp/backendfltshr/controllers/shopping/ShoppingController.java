@@ -1,84 +1,65 @@
 package com.zychp.backendfltshr.controllers.shopping;
 
-import com.zychp.backendfltshr.repos.shopping.ShoppingEntryRepository;
-import com.zychp.backendfltshr.repos.shopping.ShoppingItemRepository;
-import com.zychp.backendfltshr.repos.shopping.ShoppingListRepository;
-import com.zychp.backendfltshr.model.shopping.*;
-import com.zychp.backendfltshr.repos.UserRepository;
+import com.zychp.backendfltshr.model.shopping.ShoppingEntryDTO;
+import com.zychp.backendfltshr.model.shopping.ShoppingItemDTO;
+import com.zychp.backendfltshr.model.shopping.ShoppingListCDTO;
+import com.zychp.backendfltshr.model.shopping.ShoppingListDTO;
+import com.zychp.backendfltshr.services.ShoppingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/shopping")
 @RequiredArgsConstructor
 public class ShoppingController {
+    private final ShoppingService shoppingService;
+
     //TODO Hard Refactoring To Standard of Other Endpoints
 
-    private final ShoppingListRepository shoppingListRepository;
-    private final ShoppingItemRepository shoppingItemRepository;
-    private final ShoppingEntryRepository shoppingEntryRepository;
-    private final UserRepository userRepository;
-
     @GetMapping("/lists")
-    List<ShoppingListDTO> getShoppingLists() {
-        List<ShoppingList> shoppingLists = (List<ShoppingList>) shoppingListRepository.findAll();
-        return shoppingLists.stream().map(e -> ShoppingListDTO.valueOf(e)).collect(Collectors.toList());
+    ResponseEntity<List<ShoppingListDTO>> getShoppingLists() {
+        return ResponseEntity.ok(shoppingService.getShoppingLists());
     }
 
     @PostMapping("/list")
-    ShoppingListDTO createNewShoppingList(@RequestBody ShoppingListCDTO shoppingListCDTO) {
-        ShoppingList saved = shoppingListRepository.save(ShoppingListCDTO.valueOf(shoppingListCDTO));
-        return ShoppingListDTO.valueOf(saved);
+    ResponseEntity<ShoppingListDTO> createNewShoppingList(@RequestBody ShoppingListCDTO shoppingListCDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(shoppingService.createNewShoppingList(shoppingListCDTO));
     }
 
     @DeleteMapping("/list/{ListId}")
-    void deleteShoppingList(@PathVariable Long ListId) {
-        shoppingListRepository.deleteById(ListId);
+    ResponseEntity deleteShoppingList(@PathVariable Long ListId) {
+        shoppingService.deleteShoppingList(ListId);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/items")
-    List<ShoppingItemDTO> getShoppingItems() {
-        List<ShoppingItem> shoppingItems = (List<ShoppingItem>) shoppingItemRepository.findAll();
-        return shoppingItems.stream().map(ShoppingItemDTO::valueOf).collect(Collectors.toList());
+    ResponseEntity<List<ShoppingItemDTO>> getShoppingItems() {
+        return ResponseEntity.ok(shoppingService.getShoppingItems());
     }
 
     @GetMapping("/list/{listId}/entries")
-    List<ShoppingEntryDTO> getShoppingListItems(@PathVariable Long listId) {
-        List<ShoppingEntry> shoppingEntries = shoppingEntryRepository.findByShoppingListId(listId);
-        return shoppingEntries.stream().map(ShoppingEntryDTO::valueOf).collect(Collectors.toList());
+    ResponseEntity<List<ShoppingEntryDTO>> getShoppingListItems(@PathVariable Long listId) {
+        return ResponseEntity.ok(shoppingService.getShoppingListItems(listId));
     }
 
     @PostMapping("/list/{listId}/item")
-    ShoppingItemDTO addShoppingItem(@PathVariable Long listId, @RequestBody ShoppingItemDTO shoppingItemDTO) {
-        ShoppingItem shoppingItem = shoppingItemRepository.findById(shoppingItemDTO.getId()).orElse(null);
-        if (shoppingItem == null) {
-            shoppingItem = shoppingItemRepository.save(ShoppingItemDTO.valueOf(shoppingItemDTO));
-        }
-        ShoppingList shoppingList = shoppingListRepository.findById(listId).orElse(null);
-        shoppingEntryRepository.save(new ShoppingEntry(shoppingList, shoppingItem));
-        return shoppingItemDTO;
+    ResponseEntity<ShoppingItemDTO> addShoppingItem(@PathVariable Long listId,
+                                                    @RequestBody ShoppingItemDTO shoppingItemDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(shoppingService.addShoppingItem(listId, shoppingItemDTO));
     }
 
     @DeleteMapping("/list/{listId}/item/{itemId}")
-    void deleteShoppingEntry(@PathVariable Long listId, @PathVariable Long itemId) {
-        ShoppingEntry shoppingEntry = shoppingEntryRepository.findByShoppingListIdAndShoppingItemId(listId, itemId);
-        shoppingEntryRepository.delete(shoppingEntry);
+    ResponseEntity deleteShoppingEntry(@PathVariable Long listId, @PathVariable Long itemId) {
+        return ResponseEntity.accepted().build();
     }
 
     @PatchMapping("/list/{listId}/item/{itemId}")
-    Boolean markAsEntryAsBought(@PathVariable Long listId, @PathVariable Long itemId) {
-        ShoppingEntry shoppingEntry = shoppingEntryRepository.findByShoppingListIdAndShoppingItemId(listId, itemId);
-        shoppingEntry.setIsBought(true);
-        shoppingEntry.setBoughtDate(new Timestamp(System.currentTimeMillis()));
-        String userName = SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal().toString();
-        shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));
-        shoppingEntryRepository.save(shoppingEntry);
-        return true;
+    ResponseEntity<ShoppingEntryDTO> markAsEntryAsBought(@PathVariable Long listId, @PathVariable Long itemId) {
+        return ResponseEntity.ok(shoppingService.markAsEntryAsBought(listId, itemId));
     }
 }

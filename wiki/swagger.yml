@@ -69,7 +69,7 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/ShoppingListDTO"
-  /shopping/list/{listId}:
+  /shopping/list/{listId}/archive:
     delete:
       tags:
         - Shopping_Lists
@@ -81,8 +81,8 @@ paths:
           type: integer
           required: true
       responses:
-        200:
-          description: "OK"
+        202:
+          description: "Archived"
   /shopping/items:
     get:
       tags:
@@ -159,8 +159,8 @@ paths:
           type: integer
           required: true
       responses:
-        200:
-          description: OK
+        202:
+          description: Accepted
     patch:
       tags:
         - Shopping_Lists
@@ -180,7 +180,8 @@ paths:
         200:
           description: OK
           schema:
-            type: boolean
+            type: object
+            $ref: "#/definitions/ShoppingEntryDTO"
 
   /expense/lists:
     get:
@@ -268,8 +269,9 @@ paths:
           type: integer
           required: true
       responses:
-        200:
-          description: OK
+        202:
+          description: Accepted
+
   /manager/expense/list/{listId}:
     patch:
       tags:
@@ -284,10 +286,11 @@ paths:
       responses:
         200:
           description: "OK"
+  /manager/expense/list/{listId}/archive:
     delete:
       tags:
         - Expenses
-      summary: Delete list
+      summary: Archive list
       parameters:
         - name: listId
           in: path
@@ -295,8 +298,8 @@ paths:
           type: integer
           required: true
       responses:
-        200:
-          description: "OK"
+        202:
+          description: "Archived"
 
 
   /chores/assignedqueues:
@@ -378,7 +381,7 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/QueueChoreDTO"
-  /manager/chores/queuechore/archive/{queueChoreId}:
+  /manager/chores/queuechore/{queueChoreId}/archive:
     delete:
       tags:
         - Queue_Chores
@@ -390,8 +393,8 @@ paths:
           type: integer
           required: true
       responses:
-        200:
-          description: "Ok"
+        202:
+          description: "Archived"
 
 #  /manager/assignedqueue/{queueChoreId}:
 #    patch:
@@ -500,7 +503,7 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/FrequentChoreDTO"
-  /manager/chores/frequentchore/archive/{frequentChoreId}:
+  /manager/chores/frequentchore/{frequentChoreId}/archive:
     delete:
       tags:
         - Frequent_Chores
