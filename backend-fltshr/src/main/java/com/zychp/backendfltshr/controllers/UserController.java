@@ -1,0 +1,21 @@
+package com.zychp.backendfltshr.controllers;
+
+import com.zychp.backendfltshr.model.user.UserNameDTO;
+import com.zychp.backendfltshr.services.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+public class UserController {
+    private final UserService userService;
+
+    @GetMapping(path = "/users")
+    ResponseEntity<List<UserNameDTO>> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
+    }
+}
