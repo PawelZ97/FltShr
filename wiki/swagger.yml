@@ -40,6 +40,41 @@ paths:
             type: array
             items:
               $ref: "#/definitions/UserNameDTO"
+  /register:
+    post:
+      tags:
+        - Register
+      summary: Registration endpoint
+      parameters:
+        - in: body
+          name: UserRegistrationDTO
+          description: Data to register new User.
+          schema:
+            $ref: "#/definitions/UserRegistrationDTO"
+      consumes:
+        - "application/json"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
+  /register/emailconfirm:
+    get:
+      tags:
+        - Register
+      summary: Email confirmation endpoint
+      parameters:
+        - in: query
+          name: token
+          type: string
+          description: Email verification token send in Email
+      responses:
+        200:
+          description: OK
+          schema:
+            type: string
+
+
   /shopping/lists:
     get:
       tags:
@@ -617,7 +652,7 @@ definitions:
       assignDate:
         type: string
       reassigned:
-          type: boolean
+        type: boolean
       done:
         type: boolean
       doneDate:
@@ -749,5 +784,15 @@ definitions:
       username:
         type: string
       password:
+        type: string
+
+  UserRegistrationDTO:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      email:
         type: string
 

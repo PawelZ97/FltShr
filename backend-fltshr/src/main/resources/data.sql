@@ -1,22 +1,22 @@
-INSERT INTO users(username, password, email, role, registration_date)
+INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
     VALUES ('admin', '$2a$04$CRiFUeohzOfqKIIPuLjK5eeWyb/s6hd2EkMutkFHXXvizBq1ltCiq',
-        'admin@fltshr.com', 'ROLE_ADMIN', '2019-11-08 23:00:00');
+        'admin@fltshr.com', 'ROLE_ADMIN', true, '2019-11-08 23:00:00');
 
-INSERT INTO users(username, password, email, role, registration_date)
+INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
     VALUES ('manager', '$2a$04$/EAn8EzR35CNzNUbQFCCuud0MOWHBuh/KkRvgt0D7Yg9X.IOcZdlO',
-        'manager@fltshr.com', 'ROLE_MANAGER', '2019-11-08 23:01:01');
+        'manager@fltshr.com', 'ROLE_MANAGER', true, '2019-11-08 23:01:01');
 
-INSERT INTO users(username, password, email, role, registration_date)
+INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
     VALUES ('paweł', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'pawel@fltshr.com', 'ROLE_USER', '2019-11-01 10:10:10');
+        'pawel@fltshr.com', 'ROLE_USER', true, '2019-11-01 10:10:10');
 
-INSERT INTO users(username, password, email, role, registration_date)
+INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
     VALUES ('bartek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'bartek@fltshr.com', 'ROLE_USER', '2019-11-02 11:11:11');
+        'bartek@fltshr.com', 'ROLE_USER', true, '2019-11-02 11:11:11');
 
-INSERT INTO users(username, password, email, role, registration_date)
+INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
     VALUES ('piotrek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'piotrek@fltshr.com', 'ROLE_USER', '2019-11-03 12:12:12');
+        'piotrek@fltshr.com', 'ROLE_USER', true,'2019-11-03 12:12:12');
 
 INSERT INTO shopping_items("name", "description") VALUES ( 'Mydełko' , 'Mydło w płynie');
 
