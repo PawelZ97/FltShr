@@ -27,10 +27,13 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "registration_date")
+    @Column(name = "registration_date", nullable = false)
     private Timestamp registration_date;
+
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified;
 }
