@@ -1,18 +1,13 @@
 import React from 'react';
-import FltShrAppBar from "./AppBar";
-import Container from "@material-ui/core/Container";
-
+import AppBarView from "./AppBarView";
+import Container from "@material-ui/core/Container"
 
 function Dashboard() {
     return (
-        <React.Fragment>
-            <FltShrAppBar login={"login"} userType={"stud"}/>
-            <Container maxWidth="lg" className={"listTitleContainer"}>
-                <h3>Twoje kolejki:</h3>
-            </Container>
-        </React.Fragment>
-
+        <Container maxWidth="lg" className={"listTitleContainer"}>
+            <h3>Main Dashboard</h3>
+        </Container>
     );
 }
 
-export default Dashboard
+export default AppBarView(Dashboard);

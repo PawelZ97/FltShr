@@ -1,18 +1,12 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBarView from "./AppBarView";
+import {makeStyles} from '@material-ui/core/styles';
+import SignInButton from "./SignInButton";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import AppBar from "./AppBar";
-import SignInButton from "./SignInButton";
 
 const useStyles = makeStyles(theme => ({
-    '@global': {
-        body: {
-            backgroundColor: theme.palette.common.white,
-        },
-    },
     paper: {
         marginTop: theme.spacing(8),
         display: 'flex',
@@ -30,48 +24,47 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    signinbutton: {
+        marginTop: 20
+    }
 }));
 
-
-function SignIn(props) {
+function SignIn() {
     const classes = useStyles();
     return (
-        <React.Fragment>
-            <AppBar userType={props.userType}/>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h5">
-                        Zaloguj się
-                    </Typography>
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="login"
-                            label="Login"
-                            name="login"
-                            autoComplete="login"
-                            autoFocus
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Hasło"
-                            type="password"
-                            id="password"
-                        />
-                        <SignInButton userType={props.userType}/>
-                    </form>
-                </div>
-            </Container>
-        </React.Fragment>
-    );
+        <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+                <Typography variant="h5">
+                    Zaloguj się
+                </Typography>
+                <form className={classes.form} noValidate>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="login"
+                        label="Login"
+                        name="login"
+                        autoComplete="login"
+                        autoFocus
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Hasło"
+                        type="password"
+                        id="password"
+                    />
+                    <div className={classes.signinbutton}>
+                        <SignInButton />
+                    </div>
+                </form>
+            </div>
+        </Container>
+            );
 }
-
-export default SignIn
+export default AppBarView(SignIn)

@@ -1,17 +1,19 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
 
 function App() {
     return (
-        <Router>
+        <BrowserRouter>
+            <CssBaseline />
             <Switch>
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/dashboard" component={Dashboard}/>
                 <Redirect from="/" to={"/signin"}/>
             </Switch>
-        </Router>
+        </BrowserRouter>
     );
 }
 
