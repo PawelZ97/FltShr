@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String getAdminMessage(){
+    public String getAdminMessage() {
         return "admin ok";
     }
 
     @GetMapping("/manager")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public String managerMessage(){
+    public String managerMessage() {
         return "manager ok";
     }
 
     @GetMapping("/user")
-    public String userMessage(){
+    public String userMessage() {
         return "user ok";
     }
 
