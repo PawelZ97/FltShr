@@ -18,7 +18,7 @@ public class AssignedFrequentChoreDTO {
     public static AssignedFrequentChoreDTO valueOf(AssignedFrequentChore entity) {
         AssignedFrequentChoreDTO dto = new AssignedFrequentChoreDTO();
         dto.setId(entity.getId());
-        dto.setAssignedUser(UserNameDTO.valueOf(entity.getUserAssigned()));
+        dto.setAssignedUser(UserNameDTO.valueOf(entity.getAssignedUser()));
         dto.setFrequentChoreDTO(FrequentChoreDTO.valueOf(entity.getFrequentChore()));
         dto.setAssignDate(entity.getAssignDate());
         dto.setDone(entity.getDone());

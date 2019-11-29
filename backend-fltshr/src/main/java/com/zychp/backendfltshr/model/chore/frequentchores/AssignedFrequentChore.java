@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "assigned_frequent_chores")
+@Table(name = "assigned_frequent_chore")
 public class AssignedFrequentChore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,8 @@ public class AssignedFrequentChore {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_assigned", nullable = false)
-    private User userAssigned;
+    @JoinColumn(name = "assigned_user", nullable = false)
+    private User assignedUser;
 
     @ManyToOne
     @JoinColumn(name = "frequent_chore", nullable = false)

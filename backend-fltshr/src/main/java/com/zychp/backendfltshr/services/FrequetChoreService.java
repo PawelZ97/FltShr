@@ -42,7 +42,7 @@ public class FrequetChoreService {
                 assignedFrequentChoreRepository.save(readChore);
 
                 AssignedFrequentChore newChore = new AssignedFrequentChore();
-                newChore.setUserAssigned(readChore.getUserAssigned());
+                newChore.setAssignedUser(readChore.getAssignedUser());
                 newChore.setFrequentChore(readChore.getFrequentChore());
                 newChore.setAssignDate(Timestamp.valueOf(assignTimeDate));
                 newChore.setReassigned(false);
@@ -65,7 +65,7 @@ public class FrequetChoreService {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
         List<AssignedFrequentChore> assignedFrequentChores = assignedFrequentChoreRepository
-                .findByUserAssigned_UsernameAndFrequentChore_ArchivedIsFalseAndDoneIsFalse(requestUsername);
+                .findByAssignedUser_UsernameAndFrequentChore_ArchivedIsFalseAndDoneIsFalse(requestUsername);
         log.info("getAssignedFrequentChoresTodo() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
@@ -74,7 +74,7 @@ public class FrequetChoreService {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
         List<AssignedFrequentChore> assignedFrequentChores = assignedFrequentChoreRepository
-                .findByUserAssigned_UsernameAndFrequentChore_ArchivedIsFalseAndReassignedIsFalse(requestUsername);
+                .findByAssignedUser_UsernameAndFrequentChore_ArchivedIsFalseAndReassignedIsFalse(requestUsername);
         log.info("getAssignedFrequentChoresMe() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
@@ -84,7 +84,7 @@ public class FrequetChoreService {
                 .getPrincipal().toString();
 
         AssignedFrequentChore doneChore = assignedFrequentChoreRepository.findById(queueChoreId).orElseThrow();
-        if (!doneChore.getUserAssigned().getUsername().equals(requestUsername)) {
+        if (!doneChore.getAssignedUser().getUsername().equals(requestUsername)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chore not yours");
         }
         if (doneChore.getDone()) {
@@ -122,7 +122,7 @@ public class FrequetChoreService {
         FrequentChore created = frequentChoreRepository.save(received);
 
         AssignedFrequentChore firstCreated = new AssignedFrequentChore();
-        firstCreated.setUserAssigned(userRecieved);
+        firstCreated.setAssignedUser(userRecieved);
         firstCreated.setFrequentChore(created);
         firstCreated.setAssignDate(new Timestamp(parsed.getTime()));
         firstCreated.setReassigned(false);
