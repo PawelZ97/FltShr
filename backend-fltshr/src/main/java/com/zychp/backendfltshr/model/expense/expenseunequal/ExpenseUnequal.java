@@ -21,9 +21,6 @@ public class ExpenseUnequal {
     @JoinColumn(name = "used_by", nullable = false)
     private User usedBy;
 
-    @ManyToOne
-    private Expense expense;
-
     @Column(name = "percent")
     private Long percent;
 

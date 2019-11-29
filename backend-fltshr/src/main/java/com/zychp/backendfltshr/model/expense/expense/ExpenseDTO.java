@@ -32,7 +32,10 @@ public class ExpenseDTO {
         dto.setDescription(entity.getDescription());
 
         Set<ExpenseUnequal> expenseUnequals = entity.getExpenseUnequals();
-        dto.setExpenseUnequals(expenseUnequals.stream().map(ExpenseUnequalDTO::valueOf).collect(Collectors.toSet()));
+        if (expenseUnequals != null) {
+            dto.setExpenseUnequals(expenseUnequals.stream().map(ExpenseUnequalDTO::valueOf).collect(Collectors.toSet()));
+        }
+        dto.setExpenseUnequals(null);
         return dto;
     }
 }

@@ -23,7 +23,9 @@ public class ExpenseCDTO {
         entity.setDescription(dto.getDescription());
 
         Set<ExpenseUnequalCDTO> expenseUnequalsCDTOs = dto.getExpenseUnequals();
-        entity.setExpenseUnequals(expenseUnequalsCDTOs.stream().map(ExpenseUnequalCDTO::valueOf).collect(Collectors.toSet()));
+        if(expenseUnequalsCDTOs != null) {
+            entity.setExpenseUnequals(expenseUnequalsCDTOs.stream().map(ExpenseUnequalCDTO::valueOf).collect(Collectors.toSet()));
+        } 
         return entity;
     }
 }
