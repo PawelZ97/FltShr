@@ -70,8 +70,7 @@ CREATE TABLE "shopping_entries" (
 CREATE TABLE "shopping_items" (
   "id" bigint PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
-  "desription" varchar(255) NOT NULL,
-  "archived" boolean NOT NULL
+  "desription" varchar(255) NOT NULL
 );
 
 CREATE TABLE "shopping_lists" (
