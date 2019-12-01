@@ -1,6 +1,5 @@
 package com.zychp.backendfltshr.model.expense.expenseunequal;
 
-import com.zychp.backendfltshr.model.expense.expense.Expense;
 import com.zychp.backendfltshr.model.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
