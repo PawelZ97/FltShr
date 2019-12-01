@@ -60,11 +60,11 @@ function SignIn() {
                         id="password"
                     />
                     <div className={classes.signinbutton}>
-                        <SignInButton />
+                        <SignInButton/>
                     </div>
                 </form>
             </div>
-        </Container>
-            );
+        </Container>);
 }
+
 export default AppBarView(SignIn)
