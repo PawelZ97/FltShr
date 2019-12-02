@@ -13,6 +13,12 @@ const useStyles = makeStyles(theme => ({
     title: {
         paddingTop: 30,
         paddingBottom: 20
+    },
+    listItem: {
+        height: 80
+    },
+    text: {
+        fontSize: "1.2rem",
     }
 }));
 
@@ -46,7 +52,7 @@ function ExpensesList() {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
-            <Typography className={classes.title}>
+            <Typography className={classes.title} variant={"h5"}>
                 Listy wydatków:
             </Typography>
             <Paper>
@@ -54,8 +60,10 @@ function ExpensesList() {
                     {expensesLists.map((expenseList, index) => {
                             return (
                                 <div key={expenseList.id}>
-                                    <ListItem button component="a" href={"/expense/list/"+ expenseList.id + "/expenses"}>
-                                        <ListItemText primary={expenseList.name} secondary={expenseList.description}/>
+                                    <ListItem className={classes.listItem} button component="a"
+                                              href={"/expense/list/"+ expenseList.id + "/expenses"}>
+                                        <ListItemText classes={{primary: classes.text}}
+                                                      primary={expenseList.name} secondary={expenseList.description}/>
                                     </ListItem>
                                     {index !== expensesLists.length - 1 ? (<Divider/>) : null}
                                 </div>

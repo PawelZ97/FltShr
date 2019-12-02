@@ -47,7 +47,7 @@ function ExpenseDisplay() {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
-            <Typography className={classes.title}>
+            <Typography className={classes.title} variant={"h5"}>
                 Wydatki z listy {listId}
             </Typography>
             <Paper>

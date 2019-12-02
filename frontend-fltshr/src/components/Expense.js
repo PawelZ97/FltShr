@@ -26,12 +26,12 @@ function Expense(props) {
             </Typography>
             {props.expense.isEqual ? (
                 <Typography>
-                    Płacone po równo
+                    Podział równomierny.
                 </Typography>
             ) : (
                 <div>
                     <Typography>
-                        Podział
+                        Podział:
                     </Typography>
                     <Paper>
                         <Table aria-label="simple table">
