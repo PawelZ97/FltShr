@@ -12,7 +12,7 @@ import Divider from "@material-ui/core/Divider";
 let categories = [
     {
         title: "Wydatki",
-        href: "/expenses",
+        href: "/expense/lists",
         icon: <AccountBalanceWalletTwoToneIcon/>,
 
     },

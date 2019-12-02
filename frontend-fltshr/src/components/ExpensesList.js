@@ -16,23 +16,23 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ExpensesDashboard() {
+function ExpensesList() {
     const [expensesLists, setExpensesLists] = useState([]);
 
     useEffect(() => {
         console.log("REQUEST SEND");
         axios
-            .get(API_ADDRESS + "/expense/lists",{
+            .get(API_ADDRESS + "/expense/lists", {
                 headers: {
                     'Authorization': localStorage.getItem("authToken")
                 }
             })
-            .then(function(response) {
+            .then(function (response) {
                 setExpensesLists(response.data);
                 console.log("API_RESPONSE_OK: " + response.data);
                 console.log(response.data[0].name);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 if (error.response) {
                     console.log("STATUS NOT OK");
                 } else if (error.request) {
@@ -54,10 +54,10 @@ function ExpensesDashboard() {
                     {expensesLists.map((expenseList, index) => {
                             return (
                                 <div key={expenseList.id}>
-                                    <ListItem >
+                                    <ListItem button component="a" href={"/expense/list/"+ expenseList.id + "/expenses"}>
                                         <ListItemText primary={expenseList.name} secondary={expenseList.description}/>
                                     </ListItem>
-                                    {index !== expensesLists.length-1 ? ( <Divider/>) : null }
+                                    {index !== expensesLists.length - 1 ? (<Divider/>) : null}
                                 </div>
                             )
                         }
@@ -68,4 +68,4 @@ function ExpensesDashboard() {
     );
 }
 
-export default AppBarView(ExpensesDashboard);
+export default AppBarView(ExpensesList);
