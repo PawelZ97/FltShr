@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
+        config.addExposedHeader("Authorization");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
@@ -64,11 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/test/all").permitAll()
                 .antMatchers("/register/**").permitAll()
-                .antMatchers("/users/**").permitAll()
-                .antMatchers("/shopping/**").permitAll()
-                .antMatchers("/expense/**").permitAll()
-                .antMatchers("/chores/**").permitAll()
-                .antMatchers("/manager/**").permitAll()
+//                .antMatchers("/users/**").permitAll()
+//                .antMatchers("/shopping/**").permitAll()
+//                .antMatchers("/expense/**").permitAll()
+//                .antMatchers("/chores/**").permitAll()
+//                .antMatchers("/manager/**").permitAll()
                 .antMatchers(HttpMethod.POST, AuthConstants.LOGIN_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
