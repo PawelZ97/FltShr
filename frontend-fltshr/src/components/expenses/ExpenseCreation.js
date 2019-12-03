@@ -23,6 +23,10 @@ const useStyles = makeStyles(theme => ({
         bottom: 50,
         left: "auto",
         position: "fixed"
+    },
+    padInput: {
+        paddingTop: 20,
+        paddingBottom: 20,
     }
 }));
 
@@ -30,9 +34,9 @@ function ExpenseCreation(props) {
     const [open, setOpen] = useState(false);
     const [expense, setExpense] = useState({
         name: "",
-        total: 0,
+        total: null,
         isEqual: true,
-        description: "brak",
+        description: null,
         expenseUnequals: []
     });
 
@@ -89,17 +93,21 @@ function ExpenseCreation(props) {
             <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleClickOpen}>
                 <AddIcon/>
             </Fab>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog open={open}
+                    onClose={handleClose}
+                    fullWidth={true}
+                    aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Wprowadź nowy wydatek</DialogTitle>
                 <DialogContent>
                     <TextField
+                        autoFocus
                         onChange={(e) => setName(e.target.value)}
                         value={expense.name}
-                        autoFocus
                         id="name"
                         label="Nazwa"
                         type="text"
                         fullWidth
+                        className={classes.padInput}
                     />
                     <TextField
                         onChange={(e) => setTotal(e.target.value)}
@@ -111,7 +119,7 @@ function ExpenseCreation(props) {
                         label="Kwota"
                         type="number"
                         fullWidth
-
+                        className={classes.padInput}
                     />
                     <TextField
                         onChange={(e) => setDescription(e.target.value)}
@@ -120,8 +128,10 @@ function ExpenseCreation(props) {
                         label="Opis"
                         type="text"
                         fullWidth
+                        className={classes.padInput}
                     />
                     <FormControlLabel
+                        className={classes.padInput}
                         control={
                             <Switch checked={expense.isEqual} onChange={(e) => setIsEqual(e.target.checked)} value="checkedA"/>
                         }
