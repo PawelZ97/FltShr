@@ -3,10 +3,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
-import ExpensesDashboard from "./components/ExpensesList";
+import ExpensesDashboard from "./components/expenses/ExpensesList";
 import TestApiCall from "./components/TestApiCall";
 import TestEndpoint from "./components/TestEndpoint";
-import ExpenseList from "./components/ExpenseDisplay";
+import ExpenseList from "./components/expenses/ExpenseDisplay";
 
 function App() {
     return (

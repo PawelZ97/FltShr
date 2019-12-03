@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import AppBarView from "./AppBarView";
+import AppBarView from "../AppBarView";
 import Container from "@material-ui/core/Container"
 import List from "@material-ui/core/List";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
 import axios from "axios";
-import {API_ADDRESS} from "../utils/constants";
+import {API_ADDRESS} from "../../utils/constants";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
