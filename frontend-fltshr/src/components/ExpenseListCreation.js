@@ -1,0 +1,91 @@
+import React, {useState} from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import {makeStyles} from "@material-ui/core";
+import axios from "axios";
+import {API_ADDRESS} from "../utils/constants";
+
+
+const useStyles = makeStyles(theme => ({
+    fab: {
+        margin: 0,
+        top: "auto",
+        right: 50,
+        bottom: 50,
+        left: "auto",
+        position: "fixed"
+    }
+}));
+
+function ExpenseListCreation() {
+    const [open, setOpen] = useState(false);
+    const [listName, setListName] = useState("");
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    function callPostList() {
+        axios.post(API_ADDRESS + '/expense/list', {name: listName}, {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
+            .then(function (response) {
+                console.log("Nowa list utworzona");
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log("Status not OK");
+                } else if (error.request) {
+                    console.log("Can't connect to API");
+                } else {
+                    console.log("Something went wrong");
+                }
+            });
+    }
+
+    const handleClose = () => {
+        callPostList();
+        setOpen(false);
+    };
+
+    const classes = useStyles();
+    return (
+        <div>
+            <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleClickOpen}>
+                <AddIcon/>
+            </Fab>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Utwórz nową listę zakupów</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        onChange={event => setListName(event.target.value)}
+                        value={listName}
+                        autoFocus
+                        id="name"
+                        label="Nazwa nowej listy"
+                        type="text"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="secondary">
+                        Anuluj
+                    </Button>
+                    <Button onClick={handleClose} variant="contained" color="primary">
+                        Utwórz
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+}
+
+export default ExpenseListCreation
