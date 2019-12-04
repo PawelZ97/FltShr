@@ -27,10 +27,6 @@ function ExpenseListCreation() {
     const [open, setOpen] = useState(false);
     const [listName, setListName] = useState("");
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     function callPostList() {
         axios.post(API_ADDRESS + '/expense/list', {name: listName}, {
             headers: {
@@ -51,7 +47,15 @@ function ExpenseListCreation() {
             });
     }
 
-    const handleClose = () => {
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleCancel = () => {
+        setOpen(false);
+    };
+
+    const handleCreate = () => {
         callPostList();
         setOpen(false);
     };
@@ -59,10 +63,10 @@ function ExpenseListCreation() {
     const classes = useStyles();
     return (
         <div>
-            <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleClickOpen}>
+            <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleOpen}>
                 <AddIcon/>
             </Fab>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Utwórz nową listę zakupów</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -76,10 +80,10 @@ function ExpenseListCreation() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="secondary">
+                    <Button onClick={handleCancel} color="secondary">
                         Anuluj
                     </Button>
-                    <Button onClick={handleClose} variant="contained" color="primary">
+                    <Button onClick={handleCreate} variant="contained" color="primary">
                         Utwórz
                     </Button>
                 </DialogActions>

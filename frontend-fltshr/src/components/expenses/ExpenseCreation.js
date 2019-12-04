@@ -40,8 +40,12 @@ function ExpenseCreation(props) {
         expenseUnequals: []
     });
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const setIsEqual = isEqual => {
+        setExpense(values => ({...values, isEqual: isEqual}));
+    };
+
+    const handleTextFieldChange = name => event => {
+        setExpense({...expense, [name]: event.target.value});
     };
 
     function callPostExpense() {
@@ -66,42 +70,34 @@ function ExpenseCreation(props) {
             });
     }
 
-    const handleClose = () => {
-        callPostExpense();
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleCancel = () => {
         setOpen(false);
     };
 
-    const setName = name => {
-        setExpense(values => ({ ...values, name: name }));
-    };
-
-    const setTotal = total => {
-        setExpense(values => ({ ...values, total: total }));
-    };
-
-    const setDescription = description => {
-        setExpense(values => ({ ...values, description: description }));
-    };
-
-    const setIsEqual = isEqual => {
-        setExpense(values => ({ ...values, isEqual: isEqual }));
+    const handleOk = () => {
+        callPostExpense();
+        setOpen(false);
     };
 
     const classes = useStyles();
     return (
         <div>
-            <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleClickOpen}>
+            <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleOpen}>
                 <AddIcon/>
             </Fab>
             <Dialog open={open}
-                    onClose={handleClose}
+                    onClose={handleCancel}
                     fullWidth={true}
                     aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Wprowadź nowy wydatek</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={handleTextFieldChange('name')}
                         value={expense.name}
                         id="name"
                         label="Nazwa"
@@ -110,7 +106,7 @@ function ExpenseCreation(props) {
                         className={classes.padInput}
                     />
                     <TextField
-                        onChange={(e) => setTotal(e.target.value)}
+                        onChange={handleTextFieldChange('total')}
                         value={expense.total}
                         InputProps={{
                             endAdornment: <InputAdornment position="end">zł</InputAdornment>
@@ -122,7 +118,7 @@ function ExpenseCreation(props) {
                         className={classes.padInput}
                     />
                     <TextField
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={handleTextFieldChange('description')}
                         value={expense.description}
                         id="description"
                         label="Opis"
@@ -133,16 +129,17 @@ function ExpenseCreation(props) {
                     <FormControlLabel
                         className={classes.padInput}
                         control={
-                            <Switch checked={expense.isEqual} onChange={(e) => setIsEqual(e.target.checked)} value="checkedA"/>
+                            <Switch checked={expense.isEqual} onChange={(e) => setIsEqual(e.target.checked)}
+                                    value="checkedA"/>
                         }
                         label="Równomiernie"
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="secondary">
+                    <Button onClick={handleCancel} color="secondary">
                         Anuluj
                     </Button>
-                    <Button onClick={handleClose} variant="contained" color="primary">
+                    <Button onClick={handleOk} variant="contained" color="primary">
                         Ok
                     </Button>
                 </DialogActions>
