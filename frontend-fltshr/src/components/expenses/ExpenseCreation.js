@@ -13,6 +13,8 @@ import {API_ADDRESS} from "../../utils/constants";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import ExpenseUnequalCreation from "./ExpenseUnequalCreation";
+import Paper from "@material-ui/core/Paper";
 
 
 const useStyles = makeStyles(theme => ({
@@ -134,6 +136,10 @@ function ExpenseCreation(props) {
                         }
                         label="Równomiernie"
                     />
+                    {expense.isEqual ? null : (<Paper>
+                        <ExpenseUnequalCreation/>
+                    </Paper>)}
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCancel} color="secondary">
