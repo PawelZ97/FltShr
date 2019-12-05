@@ -31,7 +31,7 @@ CREATE TABLE "expenses" (
   "name" varchar(255) NOT NULL,
   "description" varchar(255),
   "total" bigint NOT NULL,
-  "is_equal" boolean NOT NULL,
+  "unequal_type" varchar(255),
   "list" bigint NOT NULL,
   "paid_by" bigint NOT NULL,
   "bought_date" timestamp NOT NULL

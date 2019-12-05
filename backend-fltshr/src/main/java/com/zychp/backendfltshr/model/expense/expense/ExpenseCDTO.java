@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class ExpenseCDTO {
     private String name;
     private BigDecimal total;
-    private Boolean isEqual;
+    private String unequalType;
     private String description;
     private Set<ExpenseUnequalCDTO> expenseUnequals;
 
@@ -19,7 +19,7 @@ public class ExpenseCDTO {
         Expense entity = new Expense();
         entity.setName(dto.getName());
         entity.setTotal(dto.getTotal());
-        entity.setIsEqual(dto.getIsEqual());
+        entity.setUnequalType(dto.getUnequalType());
         entity.setDescription(dto.getDescription());
 
         Set<ExpenseUnequalCDTO> expenseUnequalsCDTOs = dto.getExpenseUnequals();

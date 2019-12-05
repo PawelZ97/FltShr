@@ -15,7 +15,7 @@ public class ExpenseDTO {
     private Long id;
     private String name;
     private BigDecimal total;
-    private Boolean isEqual;
+    private String unequalType;
     private UserNameDTO paidBy;
     private Timestamp boughtDate;
     private String description;
@@ -26,7 +26,7 @@ public class ExpenseDTO {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setTotal(entity.getTotal());
-        dto.setIsEqual(entity.getIsEqual());
+        dto.setUnequalType(entity.getUnequalType());
         dto.setPaidBy(UserNameDTO.valueOf(entity.getPaidBy()));
         dto.setBoughtDate(entity.getBoughtDate());
         dto.setDescription(entity.getDescription());

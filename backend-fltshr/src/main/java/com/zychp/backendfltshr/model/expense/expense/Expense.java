@@ -30,8 +30,8 @@ public class Expense {
     @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
 
-    @Column(name = "is_equal", nullable = false)
-    private Boolean isEqual;
+    @Column(name = "unequal_type")
+    private String unequalType;
 
     @ManyToOne
     @JoinColumn(name = "list", nullable = false)

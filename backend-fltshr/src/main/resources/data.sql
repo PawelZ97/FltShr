@@ -44,20 +44,23 @@ INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Środki czystości' , fal
 INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Jedzonko' , false);
 INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Drukowanie' , false);
 
-INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-08 08:08:08', 'Mydełko kupione', true, 'Mydełko', 13.80, 1, 4);
+INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
+    VALUES ('2019-11-08 08:08:08', 'Mydełko kupione', null, 'Mydełko', 13.80, 1, 4);
 
-INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-08 08:08:08', 'Fajny płyn', true, 'Płyn do naczyń', 25.00, 1, 4);
+INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
+    VALUES ('2019-11-08 08:08:08', 'Fajny płyn', null, 'Płyn do naczyń', 25.00, 1, 4);
 
-INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-09 09:09:09', 'Philips 60W Ultrabright', true,'Żarówka łazienka', 59.99, 1, 3);
+INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
+    VALUES ('2019-11-09 09:09:09', 'Philips 60W Ultrabright', null,'Żarówka łazienka', 59.99, 1, 3);
 
-INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-09 10:10:10', 'Kebsiki z wilanowa', false, 'Kebsiki', 40.00, 2, 3);
+INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
+    VALUES ('2019-11-09 10:10:10', 'Kebsiki z wilanowa', 'PERCENT', 'Kebsiki', 40.00, 2, 3);
 
-INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', false, 'Tusze do Drukarki', 38.00, 3, 3);
+INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
+    VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', 'UNITS', 'Tusze do Drukarki', 38.00, 3, 3);
+
+INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
+VALUES ('2019-11-10 10:10:10', 'Ryzy papieru', 'VALUE', 'Papier', 50.00, 3, 3);
 
 INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
     VALUES (16, 40, null, 4, 3);
@@ -76,6 +79,12 @@ INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
 
 INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
     VALUES (10.2308, null, 14, 5, 5);
+
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+VALUES (20.0000, null, null, 6, 3);
+
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+VALUES (30.0000, null, null, 6, 4);
 
 INSERT INTO queue_chores("name","description", "archived")
     VALUES ( 'Śmieci kuchnia', 'Wyniesienie śmieci z kuchni', false);
