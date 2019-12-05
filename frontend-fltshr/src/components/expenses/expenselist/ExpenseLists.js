@@ -9,6 +9,9 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExpenseListCreation from "./ExpenseListCreation";
+import {getLoggedUser} from "../../../utils/UserUtils";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ExpenseListSettleUp from "./ExpenseListSettleUp";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -56,19 +59,22 @@ function ExpenseLists() {
             </Typography>
             <Paper>
                 <List>
-                    {expensesLists.map((expenseList, index) => {
-                            return (
-                                <div key={expenseList.id}>
-                                    <ListItem className={classes.listItem} button component="a"
-                                              href={"/expense/list/" + expenseList.id + "/expenses"}>
-                                        <ListItemText classes={{primary: classes.text}}
-                                                      primary={expenseList.name} secondary={expenseList.description}/>
-                                    </ListItem>
-                                    {index !== expensesLists.length - 1 ? (<Divider/>) : null}
-                                </div>
-                            )
-                        }
-                    )}
+                    {expensesLists.length === 0 ? (<h3 align={"center"}>Wszystkie listy zamknięte</h3>) : null}
+                    {expensesLists.map((expenseList, index) => (
+                        <div key={expenseList.id}>
+                            <ListItem className={classes.listItem} button component="a"
+                                      href={"/expense/list/" + expenseList.id + "/expenses"}>
+                                <ListItemText classes={{primary: classes.text}}
+                                              primary={expenseList.name}
+                                              secondary={expenseList.description}/>
+                                {getLoggedUser().roles === "ROLE_MANAGER"
+                                    ? (<ListItemSecondaryAction>
+                                        <ExpenseListSettleUp expenseId={expenseList.id}/>
+                                    </ListItemSecondaryAction>) : null}
+                            </ListItem>
+                            {index !== expensesLists.length - 1 ? (<Divider/>) : null}
+                        </div>
+                    ))}
                 </List>
             </Paper>
             <ExpenseListCreation/>

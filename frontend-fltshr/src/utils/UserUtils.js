@@ -5,6 +5,6 @@ export const getLoggedUser = () => {
     let decoded = jwt_decode(token);
     return {
         username: decoded.sub,
-        role: decoded.role
+        roles: decoded.roles
     }
 };
