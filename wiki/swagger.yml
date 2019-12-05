@@ -222,7 +222,7 @@ paths:
     get:
       tags:
         - Expenses
-      summary: Get all ExpenseLists
+      summary: Get all ExpenseLists that are not Settled
       responses:
         200:
           description: OK
@@ -307,7 +307,37 @@ paths:
         202:
           description: Accepted
 
-  /manager/expense/list/{listId}:
+  /manager/expense/lists:
+    get:
+      tags:
+        - Expenses
+      summary: Get all ExpenseLists
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ExpenseListDTO"
+
+  /manager/expense/list/{listId}/settle:
+    get:
+      tags:
+        - Expenses
+      summary: Get ExpenseList SettleUp Summary
+      parameters:
+        - name: listId
+          in: path
+          description: ExpenseList Id
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ExpenseSettleUpDTO"
     patch:
       tags:
         - Expenses
@@ -681,8 +711,8 @@ definitions:
         type: string
       total:
         type: integer
-      isEqual:
-        type: boolean
+      unequalType:
+        type: string
       paidBy:
         $ref: "#/definitions/UserNameDTO"
       boughtDate:
@@ -693,6 +723,17 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/ExpenseUnequalDTO"
+  ExpenseSettleUpDTO:
+    type: object
+    properties:
+      user:
+        $ref: "#/definitions/UserNameDTO"
+      total:
+        type: integer
+      transfer:
+        type: array
+        items:
+          type: integer
   ExpenseCDTO:
     type: object
     properties:
@@ -700,8 +741,8 @@ definitions:
         type: string
       total:
         type: integer
-      isEqual:
-        type: boolean
+      unequalType:
+        type: string
       description:
         type: string
       expenseUnequals:
@@ -712,6 +753,8 @@ definitions:
     type: object
     properties:
       id:
+        type: integer
+      value:
         type: integer
       units:
         type: integer
@@ -724,12 +767,12 @@ definitions:
     properties:
       usedBy:
         $ref: "#/definitions/UserNameDTO"
+      value:
+        type: integer
       units:
         type: integer
       percent:
         type: integer
-
-
   ShoppingListDTO:
     type:  object
     properties:
