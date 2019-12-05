@@ -1,9 +1,12 @@
 package com.zychp.backendfltshr.controllers.expense;
 
+import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
 import com.zychp.backendfltshr.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "manager/expense")
@@ -11,11 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class ManagerExpenseController {
     private final ExpenseService expenseService;
 
-//    @DeleteMapping("/list/{expenseListId}")
-//    ResponseEntity deleteExpenseList(@PathVariable Long expenseListId) {
-//        expenseService.deleteExpenseList(expenseListId);
-//        return ResponseEntity.accepted().build();
-//    }
+    @GetMapping("/lists")
+    ResponseEntity<List<ExpenseListDTO>> getAllExpenseLists() {
+        return ResponseEntity.ok(expenseService.getAllExpenseLists());
+    }
 
     @PatchMapping("/list/{expenseListId}")
     ResponseEntity setSetteled(@PathVariable Long expenseListId) {

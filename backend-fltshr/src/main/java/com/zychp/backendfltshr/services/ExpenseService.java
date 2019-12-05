@@ -6,6 +6,7 @@ import com.zychp.backendfltshr.model.expense.expense.ExpenseDTO;
 import com.zychp.backendfltshr.model.expense.expenselist.ExpenseList;
 import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListCDTO;
 import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
+import com.zychp.backendfltshr.model.expense.expenseunequal.ExpenseUnequal;
 import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseListRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseRepsitory;
@@ -16,8 +17,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,8 +32,14 @@ public class ExpenseService {
     private final ExpenseRepsitory expenseRepsitory;
     private final UserRepository userRepository;
 
-    public List<ExpenseListDTO> getAllExpenseLists() {
+    public List<ExpenseListDTO> getAllNotSettledExpenseLists() {
         List<ExpenseList> expenseList = expenseListRepository.findByIsSettledIsFalse();
+        log.info("getAllExpenseLists()");
+        return expenseList.stream().map(ExpenseListDTO::valueOf).collect(Collectors.toList());
+    }
+
+    public List<ExpenseListDTO> getAllExpenseLists() {
+        List<ExpenseList> expenseList = (List<ExpenseList>) expenseListRepository.findAll();
         log.info("getAllExpenseLists()");
         return expenseList.stream().map(ExpenseListDTO::valueOf).collect(Collectors.toList());
     }
@@ -50,6 +60,41 @@ public class ExpenseService {
 
     public ExpenseDTO createExpense(Long expenseListId, ExpenseCDTO expenseCDTO) {
         Expense received = ExpenseCDTO.valueOf(expenseCDTO);
+        Set<ExpenseUnequal> expenseUnequals = received.getExpenseUnequals();
+        if (received.getUnequalType().equals("PERCENT")) {
+            BigDecimal percentSum = new BigDecimal(0);
+            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+                percentSum = percentSum.add(expenseUnequal.getPercent());
+            }
+            if(!percentSum.equals(new BigDecimal(100))) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Percents don't sum up to 100%");
+            }
+            expenseUnequals.forEach((expenseUnequal) -> {
+                expenseUnequal.setValue(expenseUnequal.getPercent().multiply(received.getTotal())
+                        .divide(BigDecimal.valueOf(100),4, RoundingMode.UP));
+            });
+            log.info("createExpense() percentSum:{}  precent > value convert & check", percentSum);
+        } else if (received.getUnequalType().equals("UNITS")) {
+            Long unitsSum = 0L;
+            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+                unitsSum += expenseUnequal.getUnits();
+            }
+            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+                expenseUnequal.setValue(BigDecimal.valueOf(expenseUnequal.getUnits()).multiply(received.getTotal())
+                        .divide(BigDecimal.valueOf(unitsSum), 4, RoundingMode.UP));
+            }
+            log.info("createExpense() unitsSum:{} units > value convert", unitsSum);
+        } else {
+            BigDecimal sum = new BigDecimal(0);
+            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+                sum = sum.add(expenseUnequal.getValue());
+            }
+            if(!sum.equals(received.getTotal())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Values don't sum up to Total");
+            }
+            log.info("createExpense() value check");
+        }
+
         String requestUsername = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal().toString();
         received.setExpenseList(expenseListRepository.findById(expenseListId).orElseThrow());

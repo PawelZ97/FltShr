@@ -20,8 +20,8 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @GetMapping("/lists")
-    ResponseEntity<List<ExpenseListDTO>> getExpenseLists() {
-        return ResponseEntity.ok(expenseService.getAllExpenseLists());
+    ResponseEntity<List<ExpenseListDTO>> getExpensgetAllNotSettledExpenseListseLists() {
+        return ResponseEntity.ok(expenseService.getAllNotSettledExpenseLists());
     }
 
     @PostMapping("/list")
