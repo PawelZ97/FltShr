@@ -36,15 +36,19 @@ function ExpenseCreation(props) {
     const [open, setOpen] = useState(false);
     const [expense, setExpense] = useState({
         name: "",
-        total: null,
+        total: 0,
         isEqual: true,
-        description: null,
+        description: "",
         expenseUnequals: []
     });
 
     const setIsEqual = isEqual => {
         setExpense(values => ({...values, isEqual: isEqual}));
     };
+
+    function setExpenseUnequals(expenseUnequals) {
+        setExpense(values => ({...values, expenseUnequals: expenseUnequals}));
+    }
 
     const handleTextFieldChange = name => event => {
         setExpense({...expense, [name]: event.target.value});
@@ -78,6 +82,13 @@ function ExpenseCreation(props) {
 
     const handleCancel = () => {
         setOpen(false);
+        setExpense({
+            name: "",
+            total: 0,
+            isEqual: true,
+            description: "",
+            expenseUnequals: []
+        });
     };
 
     const handleOk = () => {
@@ -137,7 +148,8 @@ function ExpenseCreation(props) {
                         label="Równomiernie"
                     />
                     {expense.isEqual ? null : (<Paper>
-                        <ExpenseUnequalCreation/>
+                        <ExpenseUnequalCreation expenseUnequals={expense.expenseUnequals}
+                                                setExpenseUnequals={setExpenseUnequals}/>
                     </Paper>)}
 
                 </DialogContent>

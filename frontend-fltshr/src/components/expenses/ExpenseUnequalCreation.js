@@ -14,15 +14,13 @@ import {API_ADDRESS} from "../../utils/constants";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 
-function ExpenseUnequalCreation() {
+function ExpenseUnequalCreation(props) {
 
     const [usersList, setUserList] = useState([]);
 
     const [user, setUser] = useState({});
     const [valuePercentUnit, setValuePercentUnit] = useState(0);
     const [typeUnits, setTypeUnits] = useState(false);
-
-    const [expenseUnequals, setExpenseUnequals] = useState([]);
 
     useEffect(() => {
         console.log("REQUEST SEND");
@@ -55,7 +53,7 @@ function ExpenseUnequalCreation() {
 
     const handleAdd = () => {
         let createdUnequal = {};
-        if(typeUnits) {
+        if (typeUnits) {
             createdUnequal = {
                 usedBy: user,
                 units: valuePercentUnit
@@ -66,17 +64,17 @@ function ExpenseUnequalCreation() {
                 percent: valuePercentUnit
             };
         }
-        let expenseUnequalsCreate = [...expenseUnequals];
+        let expenseUnequalsCreate = [...props.expenseUnequals];
         expenseUnequalsCreate.push(createdUnequal);
-        setExpenseUnequals(expenseUnequalsCreate);
+        props.setExpenseUnequals(expenseUnequalsCreate);
         setUser({});
         setValuePercentUnit(0);
     };
 
     function handleDelete(index) {
-        let expenseUnequalsDelete = [...expenseUnequals];
-        expenseUnequalsDelete.splice(index,1);
-        setExpenseUnequals(expenseUnequalsDelete);
+        let expenseUnequalsDelete = [...props.expenseUnequals];
+        expenseUnequalsDelete.splice(index, 1);
+        props.setExpenseUnequals(expenseUnequalsDelete);
     }
 
     const handleTypeUnitsChanege = () => {
@@ -92,14 +90,15 @@ function ExpenseUnequalCreation() {
                         {typeUnits ? (<TableCell>Jednostek</TableCell>)
                             : (<TableCell>Procent</TableCell>)}
                         <TableCell align="right">
-                            <Button variant="contained" color="primary" disabled={expenseUnequals.length > 0} fullWidth onClick={handleTypeUnitsChanege}>
+                            <Button variant="contained" color="primary" disabled={props.expenseUnequals.length > 0}
+                                    fullWidth onClick={handleTypeUnitsChanege}>
                                 {typeUnits ? ("Procenty") : ("Jednostki")}
                             </Button>
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {expenseUnequals.map((expenseUnequal, index) => (
+                    {props.expenseUnequals.map((expenseUnequal, index) => (
                         <TableRow key={index}>
                             <TableCell component="th" scope="row">
                                 {expenseUnequal.usedBy.username}
@@ -108,7 +107,7 @@ function ExpenseUnequalCreation() {
                                 : (<TableCell>{expenseUnequal.percent}%</TableCell>)}
                             <TableCell component="th" scope="row" align="right">
                                 <IconButton onClick={() => handleDelete(index)}>
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             </TableCell>
                         </TableRow>

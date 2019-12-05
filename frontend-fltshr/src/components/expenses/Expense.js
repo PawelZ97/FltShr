@@ -24,11 +24,7 @@ function Expense(props) {
             <Typography>
                 Data zakupu: {props.expense.boughtDate.slice(0, 19).replace("T", " ")}
             </Typography>
-            {props.expense.isEqual ? (
-                <Typography>
-                    Podział równomierny.
-                </Typography>
-            ) : (
+            {props.expense.isEqual ? null : (
                 <div>
                     <Typography>
                         Podział:
