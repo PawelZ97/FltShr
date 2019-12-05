@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ExpenseDisplay() {
+function ExpensesDisplay() {
     let { listId } = useParams();
     const [expensesListItems, setExpensesListItems] = useState([]);
 
@@ -68,4 +68,4 @@ function ExpenseDisplay() {
     );
 }
 
-export default AppBarView(ExpenseDisplay);
+export default AppBarView(ExpensesDisplay);
