@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.services;
 
+import com.zychp.backendfltshr.model.expense.ExpenseSettleUpDTO;
 import com.zychp.backendfltshr.model.expense.expense.Expense;
 import com.zychp.backendfltshr.model.expense.expense.ExpenseCDTO;
 import com.zychp.backendfltshr.model.expense.expense.ExpenseDTO;
@@ -7,6 +8,8 @@ import com.zychp.backendfltshr.model.expense.expenselist.ExpenseList;
 import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListCDTO;
 import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
 import com.zychp.backendfltshr.model.expense.expenseunequal.ExpenseUnequal;
+import com.zychp.backendfltshr.model.user.User;
+import com.zychp.backendfltshr.model.user.UserNameDTO;
 import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseListRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseRepsitory;
@@ -20,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -63,33 +67,33 @@ public class ExpenseService {
         Set<ExpenseUnequal> expenseUnequals = received.getExpenseUnequals();
         if (received.getUnequalType().equals("PERCENT")) {
             BigDecimal percentSum = new BigDecimal(0);
-            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+            for (ExpenseUnequal expenseUnequal : expenseUnequals) {
                 percentSum = percentSum.add(expenseUnequal.getPercent());
             }
-            if(!percentSum.equals(new BigDecimal(100))) {
+            if (!percentSum.equals(new BigDecimal(100))) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Percents don't sum up to 100%");
             }
             expenseUnequals.forEach((expenseUnequal) -> {
                 expenseUnequal.setValue(expenseUnequal.getPercent().multiply(received.getTotal())
-                        .divide(BigDecimal.valueOf(100),4, RoundingMode.UP));
+                        .divide(BigDecimal.valueOf(100), 4, RoundingMode.UP));
             });
             log.info("createExpense() percentSum:{}  precent > value convert & check", percentSum);
         } else if (received.getUnequalType().equals("UNITS")) {
             Long unitsSum = 0L;
-            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+            for (ExpenseUnequal expenseUnequal : expenseUnequals) {
                 unitsSum += expenseUnequal.getUnits();
             }
-            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+            for (ExpenseUnequal expenseUnequal : expenseUnequals) {
                 expenseUnequal.setValue(BigDecimal.valueOf(expenseUnequal.getUnits()).multiply(received.getTotal())
                         .divide(BigDecimal.valueOf(unitsSum), 4, RoundingMode.UP));
             }
             log.info("createExpense() unitsSum:{} units > value convert", unitsSum);
         } else {
             BigDecimal sum = new BigDecimal(0);
-            for(ExpenseUnequal expenseUnequal : expenseUnequals) {
+            for (ExpenseUnequal expenseUnequal : expenseUnequals) {
                 sum = sum.add(expenseUnequal.getValue());
             }
-            if(!sum.equals(received.getTotal())) {
+            if (!sum.equals(received.getTotal())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Values don't sum up to Total");
             }
             log.info("createExpense() value check");
@@ -115,6 +119,42 @@ public class ExpenseService {
         }
         expenseRepsitory.deleteById(expenseId);
         log.info("deleteExpense() expenseId: {}", expenseId);
+    }
+
+    public List<ExpenseSettleUpDTO> getSettleUpSummary(Long expenseListId) {
+        List<Expense> expenses = expenseRepsitory.findByExpenseListId(expenseListId);
+        List<User> users = userRepository.findAll();
+        users.remove(0);
+        users.remove(0);
+        List<ExpenseSettleUpDTO> expenseSettleUpDTOS = new ArrayList<>();
+        for (User user : users) {
+            ExpenseSettleUpDTO settleUpDTO = new ExpenseSettleUpDTO();
+            settleUpDTO.setUser(UserNameDTO.valueOf(user));
+            settleUpDTO.setTotal(calculateSumTotal(expenses, user).subtract(calculateUsedTotal(expenses, user)));
+            expenseSettleUpDTOS.add(settleUpDTO);
+        }
+        return expenseSettleUpDTOS;
+    }
+
+    private BigDecimal calculateSumTotal(List<Expense> expenses, User user) {
+        BigDecimal sum = BigDecimal.valueOf(0);
+        for (Expense expense : expenses) {
+            if (expense.getPaidBy().equals(user))
+                sum = sum.add(expense.getTotal());
+        }
+        return sum;
+    }
+
+    private BigDecimal calculateUsedTotal(List<Expense> expenses, User user) {
+        BigDecimal sum = BigDecimal.valueOf(0);
+        for (Expense expense : expenses) {
+            Set<ExpenseUnequal> expenseUnequals = expense.getExpenseUnequals();
+            for (ExpenseUnequal expenseUnequal : expenseUnequals) {
+                if (expenseUnequal.getUsedBy().equals(user))
+                    sum = sum.add(expenseUnequal.getValue());
+            }
+        }
+        return sum;
     }
 
     public void setSetteled(Long expenseListId) {

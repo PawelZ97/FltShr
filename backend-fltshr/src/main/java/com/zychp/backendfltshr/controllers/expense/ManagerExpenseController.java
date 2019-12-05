@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.controllers.expense;
 
+import com.zychp.backendfltshr.model.expense.ExpenseSettleUpDTO;
 import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
 import com.zychp.backendfltshr.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,11 @@ public class ManagerExpenseController {
     @GetMapping("/lists")
     ResponseEntity<List<ExpenseListDTO>> getAllExpenseLists() {
         return ResponseEntity.ok(expenseService.getAllExpenseLists());
+    }
+
+    @GetMapping("/list/{expenseListId}/settle")
+    ResponseEntity<List<ExpenseSettleUpDTO>> getSettleUpSummary(@PathVariable Long expenseListId) {
+        return ResponseEntity.ok(expenseService.getSettleUpSummary(expenseListId));
     }
 
     @PatchMapping("/list/{expenseListId}")
