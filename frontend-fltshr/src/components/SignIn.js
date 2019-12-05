@@ -39,6 +39,8 @@ function SignIn() {
     const [usernameForm, setUsernameForm] = useState("");
     const [passwordForm, setPasswordForm] = useState("");
 
+    const [loginError, setLoginError] = useState(false);
+
     function callLogin() {
         axios.post(API_ADDRESS + '/login', {
             username: usernameForm,
@@ -51,7 +53,7 @@ function SignIn() {
             })
             .catch(function(error) {
                 if (error.response) {
-                    console.log("Status not OK");
+                    setLoginError(true);
                 } else if (error.request) {
                     console.log("Can't connect to API");
                 } else {
@@ -80,6 +82,8 @@ function SignIn() {
                         name="login"
                         autoComplete="login"
                         autoFocus
+                        error = {loginError}
+
                     />
                     <TextField
                         onChange={event => setPasswordForm(event.target.value)}
@@ -92,6 +96,8 @@ function SignIn() {
                         label="Hasło"
                         type="password"
                         id="password"
+                        error = {loginError}
+                        helperText= {loginError ? ("Login i/lub hasło niepoprawne. Możesz użyć login: Imię z dużej litery, hasło: user. Nie loguj się na nie swoje konto bo to nieładnie tak.") : null}
                     />
                     <Button onClick={(e) => callLogin(e)} className={classes.signInButton}
                             fullWidth variant="contained" color="primary" size={"large"}> Zaloguj </Button>
