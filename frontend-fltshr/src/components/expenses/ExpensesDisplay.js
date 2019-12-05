@@ -84,7 +84,7 @@ function ExpensesDisplay() {
                         <div key={expenseListItem.id}>
                             <ListItem>
                                 <Expense expense={expenseListItem}/>
-                                {getLoggedUser() === expenseListItem.paidBy.username
+                                {getLoggedUser().username === expenseListItem.paidBy.username
                                     ? (<ListItemSecondaryAction>
                                         <IconButton edge="end" aria-label="delete"
                                                     onClick={() => handleDelete(expenseListItem.id)}>

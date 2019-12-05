@@ -1,6 +1,10 @@
 import jwt_decode from 'jwt-decode';
 
-export const getLoggedUser=()=>{
+export const getLoggedUser = () => {
     let token = localStorage.getItem("authToken");
-    return jwt_decode(token).sub;
+    let decoded = jwt_decode(token);
+    return {
+        username: decoded.sub,
+        role: decoded.role
+    }
 };
