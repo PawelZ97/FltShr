@@ -10,5 +10,5 @@ import java.util.List;
 public class ExpenseSettleUpDTO {
     private UserNameDTO user;
     private BigDecimal total;
-    private List<BigDecimal> transfer;
+    //private List<BigDecimal> transfer;
 }
