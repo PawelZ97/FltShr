@@ -23,7 +23,6 @@ function ExpenseUnequalCreation(props) {
     const [typeUnits, setTypeUnits] = useState(false);
 
     useEffect(() => {
-        console.log("REQUEST SEND");
         axios
             .get(API_ADDRESS + "/users", {
                 headers: {
@@ -32,9 +31,7 @@ function ExpenseUnequalCreation(props) {
             })
             .then(function (response) {
                 setUserList(response.data);
-                console.log("Users loaded");
-                console.log(response.data);
-
+                console.log("Users loaded, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {

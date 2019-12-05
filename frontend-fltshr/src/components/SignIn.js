@@ -48,12 +48,13 @@ function SignIn() {
         })
             .then(function (response) {
                 localStorage.setItem("authToken", response.headers.authorization);
-                console.log("Login Succesfull");
+                console.log("Login Succesfull, status: " + response.status);
                 history.push("/dashboard");
             })
             .catch(function(error) {
                 if (error.response) {
                     setLoginError(true);
+                    console.log("Login Rejected, status: " + error.response.status);
                 } else if (error.request) {
                     console.log("Can't connect to API");
                 } else {

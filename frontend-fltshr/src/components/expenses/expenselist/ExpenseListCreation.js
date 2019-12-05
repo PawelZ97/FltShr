@@ -34,7 +34,7 @@ function ExpenseListCreation() {
             }
         })
             .then(function (response) {
-                console.log("Nowa list utworzona");
+                console.log("New list created, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {

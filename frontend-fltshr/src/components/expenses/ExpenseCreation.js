@@ -62,8 +62,7 @@ function ExpenseCreation(props) {
             }
         })
             .then(function (response) {
-                console.log("Nowy wydatek utworzony");
-                console.log(response.data);
+                console.log("Expense created, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {

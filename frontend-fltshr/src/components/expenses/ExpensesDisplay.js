@@ -25,9 +25,9 @@ const useStyles = makeStyles(theme => ({
 function ExpensesDisplay() {
     let {listId} = useParams();
     const [expensesListItems, setExpensesListItems] = useState([]);
+    const [forceUpdateFlag, setForceUpdateFlag] = useState();
 
     useEffect(() => {
-        console.log("REQUEST SEND");
         axios
             .get(API_ADDRESS + "/expense/list/" + listId + "/expenses", {
                 headers: {
@@ -36,7 +36,7 @@ function ExpensesDisplay() {
             })
             .then(function (response) {
                 setExpensesListItems(response.data);
-                console.log("API_RESPONSE_OK: " + response.data);
+                console.log("Expenses loaded, status: " + response.status)
             })
             .catch(function (error) {
                 if (error.response) {
@@ -47,18 +47,19 @@ function ExpensesDisplay() {
                     console.log("Something went wrong");
                 }
             });
-    }, [listId]);
+    }, [listId, forceUpdateFlag]);
 
     function handleDelete(expenseId) {
         axios.delete(API_ADDRESS + '/expense/list/' + listId + '/expense/' + expenseId, {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
-                console.log("Expense Deleted");
+                setForceUpdateFlag({});
+                console.log("Expense Deleted, status: " + response.status);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 if (error.response) {
                     console.log("Status not OK");
                 } else if (error.request) {
@@ -67,7 +68,6 @@ function ExpensesDisplay() {
                     console.log("Something went wrong");
                 }
             });
-
     }
 
     const classes = useStyles();

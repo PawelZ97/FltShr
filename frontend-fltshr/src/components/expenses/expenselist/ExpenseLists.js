@@ -27,7 +27,6 @@ function ExpenseLists() {
     const [expensesLists, setExpensesLists] = useState([]);
 
     useEffect(() => {
-        console.log("REQUEST SEND");
         axios
             .get(API_ADDRESS + "/expense/lists", {
                 headers: {
@@ -36,8 +35,7 @@ function ExpenseLists() {
             })
             .then(function (response) {
                 setExpensesLists(response.data);
-                console.log("API_RESPONSE_OK: " + response.data);
-                console.log(response.data[0].name);
+                console.log("ExpenseLists loaded, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {
