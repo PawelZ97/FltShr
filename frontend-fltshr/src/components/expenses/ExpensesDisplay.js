@@ -10,6 +10,10 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import Expense from "./Expense";
 import ExpenseCreation from "./ExpenseCreation";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from '@material-ui/icons/Delete';
+import {getLoggedUser} from '../../utils/UserUtils';
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -19,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ExpensesDisplay() {
-    let { listId } = useParams();
+    let {listId} = useParams();
     const [expensesListItems, setExpensesListItems] = useState([]);
 
     useEffect(() => {
@@ -45,6 +49,27 @@ function ExpensesDisplay() {
             });
     }, [listId]);
 
+    function handleDelete(expenseId) {
+        axios.delete(API_ADDRESS + '/expense/list/' + listId + '/expense/' + expenseId, {
+                headers: {
+                    'Authorization': localStorage.getItem("authToken")
+                }
+            })
+            .then(function (response) {
+                console.log("Expense Deleted");
+            })
+            .catch(function(error) {
+                if (error.response) {
+                    console.log("Status not OK");
+                } else if (error.request) {
+                    console.log("Can't connect to API");
+                } else {
+                    console.log("Something went wrong");
+                }
+            });
+
+    }
+
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
@@ -53,10 +78,19 @@ function ExpensesDisplay() {
             </Typography>
             <Paper>
                 <List>
+                    {expensesListItems.length === 0 ? (<h3 align={"center"}>Brak wydatków na liście</h3>) : null}
+
                     {expensesListItems.map((expenseListItem, index) => (
                         <div key={expenseListItem.id}>
                             <ListItem>
                                 <Expense expense={expenseListItem}/>
+                                {getLoggedUser() === expenseListItem.paidBy.username
+                                    ? (<ListItemSecondaryAction>
+                                        <IconButton edge="end" aria-label="delete"
+                                                    onClick={() => handleDelete(expenseListItem.id)}>
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    </ListItemSecondaryAction>) : null}
                             </ListItem>
                             {index !== expensesListItems.length - 1 ? (<Divider/>) : null}
                         </div>
