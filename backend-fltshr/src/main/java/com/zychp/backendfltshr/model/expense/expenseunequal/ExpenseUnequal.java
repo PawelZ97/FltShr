@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -20,8 +21,11 @@ public class ExpenseUnequal {
     @JoinColumn(name = "used_by", nullable = false)
     private User usedBy;
 
-    @Column(name = "percent")
-    private Long percent;
+    @Column(name = "value", nullable = false, precision = 10, scale = 4)
+    private BigDecimal value;
+
+    @Column(name = "percent",  precision = 8, scale = 2)
+    private BigDecimal percent;
 
     @Column(name = "units")
     private Long units;

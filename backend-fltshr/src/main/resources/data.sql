@@ -59,23 +59,23 @@ INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", 
 INSERT INTO expenses("bought_date", "description", "is_equal", "name", "total", "list", "paid_by")
     VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', false, 'Tusze do Drukarki', 38.00, 3, 3);
 
-INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
-    VALUES ( 40, null, 4, 3);
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+    VALUES (16, 40, null, 4, 3);
 
-INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
-    VALUES ( 60, null, 4, 4);
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+    VALUES (24, 60, null, 4, 4);
 
-INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
-    VALUES ( null, 10, 5, 3);
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+    VALUES (7.3077, null, 10, 5, 3);
 
-INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
-    VALUES ( null, 18, 5, 4);
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+    VALUES (13.1539, null, 18, 5, 4);
 
-INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
-    VALUES ( null, 10, 5, 5);
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+    VALUES (7.3077, null, 10, 5, 5);
 
-INSERT INTO expense_unequal("percent", "units", "expense", "used_by")
-    VALUES ( null, 14, 5, 5);
+INSERT INTO expense_unequal("value", "percent", "units", "expense", "used_by")
+    VALUES (10.2308, null, 14, 5, 5);
 
 INSERT INTO queue_chores("name","description", "archived")
     VALUES ( 'Śmieci kuchnia', 'Wyniesienie śmieci z kuchni', false);

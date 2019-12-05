@@ -27,7 +27,7 @@ public class Expense {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "total", nullable = false)
+    @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
 
     @Column(name = "is_equal", nullable = false)

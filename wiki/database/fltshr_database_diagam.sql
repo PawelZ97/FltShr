@@ -19,8 +19,9 @@ CREATE TABLE "assigned_frequent_chore" (
 
 CREATE TABLE "expense_unequal" (
   "id" bigint PRIMARY KEY NOT NULL,
-  "used_by" bigint NOT NULL,
   "expense" bigint NOT NULL,
+  "used_by" bigint NOT NULL,
+  "value" bigint NOT NULL,
   "percent" bigint,
   "units" bigint
 );
