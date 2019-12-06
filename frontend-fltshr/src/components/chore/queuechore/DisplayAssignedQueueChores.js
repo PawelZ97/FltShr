@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
-import QueueChore from "./QueueChore";
+import AssignedQueueChore from "./AssignedQueueChore";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DoneIcon from '@material-ui/icons/Done';
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayQueueChores(props) {
+function DisplayAssignedQueueChores(props) {
     const [assignedQueueChores, setAssignedQueueChores] = useState([]);
     const [showHistory, setShowHistory] = useState(false);
     const [forceUpdateFlag, setForceUpdateFlag] = useState();
@@ -62,7 +62,7 @@ function DisplayQueueChores(props) {
                 }
             })
             .then(function (response) {
-                console.log("QueueChore setDone, status: " + response.status);
+                console.log("AssignedQueueChore setDone, status: " + response.status);
                 setForceUpdateFlag({});
             })
             .catch(function (error) {
@@ -103,7 +103,7 @@ function DisplayQueueChores(props) {
                     {assignedQueueChores.map((assignedQueueChore, index) => (
                         <div key={assignedQueueChore.id}>
                             <ListItem>
-                                <QueueChore userPrint={showHistory} assignedQueueChore={assignedQueueChore}/>
+                                <AssignedQueueChore userPrint={showHistory} assignedQueueChore={assignedQueueChore}/>
                                 {!showHistory ? (
                                     <ListItemSecondaryAction>
                                         <IconButton edge="end" aria-label="delete"
@@ -121,4 +121,4 @@ function DisplayQueueChores(props) {
     );
 }
 
-export default AppBarView(DisplayQueueChores);
+export default AppBarView(DisplayAssignedQueueChores);

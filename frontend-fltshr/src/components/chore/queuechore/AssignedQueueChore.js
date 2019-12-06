@@ -1,7 +1,7 @@
 import React from "react";
 import {Typography} from "@material-ui/core";
 
-function QueueChore(props) {
+function AssignedQueueChore(props) {
     return (
         <div>
             <Typography variant={"h5"}>
@@ -25,4 +25,4 @@ function QueueChore(props) {
     );
 }
 
-export default QueueChore
+export default AssignedQueueChore

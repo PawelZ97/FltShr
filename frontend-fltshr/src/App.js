@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard";
 import TestEndpoint from "./components/TestEndpoint";
 import ExpenseLists from "./components/expenses/expenselist/ExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
-import DisplayQueueChores from "./components/chore/queuechore/DisplayQueueChores";
+import DisplayQueueChores from "./components/chore/queuechore/DisplayAssignedQueueChores";
 
 function App() {
     return (
