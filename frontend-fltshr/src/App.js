@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import TestEndpoint from "./components/TestEndpoint";
 import ExpenseLists from "./components/expenses/expenselist/ExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
+import DisplayQueueChores from "./components/chore/queuechore/DisplayQueueChores";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route exact path="/dashboard" component={Dashboard}/>
                 <Route exact path="/expense/lists" component={ExpenseLists}/>
                 <Route path="/expense/list/:listId/expenses" children={<ExpensesDisplay/>}/>
+                <Route path="/chore/assignedqueues" component={DisplayQueueChores}/>
                 <Route exact path="/te" component={TestEndpoint}/>
                 <Redirect from="/" to={"/signin"}/>
             </Switch>

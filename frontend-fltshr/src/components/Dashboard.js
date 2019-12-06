@@ -17,7 +17,12 @@ let categories = [
 
     },
     {
-        title: "Obowiązki",
+        title: "Obowiązki w kolejce",
+        icon: <EventTwoToneIcon/>,
+        href: "/chore/assignedqueues"
+    },
+    {
+        title: "Obowiązki cykliczne",
         icon: <EventTwoToneIcon/>,
         href: "/chores"
     },
@@ -38,6 +43,8 @@ function Dashboard() {
                     <DashBoardListItem category={categories[1]}/>
                     <Divider/>
                     <DashBoardListItem category={categories[2]}/>
+                    <Divider/>
+                    <DashBoardListItem category={categories[3]}/>
                 </List>
             </Paper>
         </Container>

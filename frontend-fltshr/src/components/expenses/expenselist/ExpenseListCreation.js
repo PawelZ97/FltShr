@@ -67,7 +67,7 @@ function ExpenseListCreation() {
                 <AddIcon/>
             </Fab>
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Utwórz nową listę zakupów</DialogTitle>
+                <DialogTitle id="form-dialog-title">Utwórz nową listę wydatków</DialogTitle>
                 <DialogContent>
                     <TextField
                         onChange={event => setListName(event.target.value)}
