@@ -69,7 +69,7 @@ function ExpenseLists() {
                                               secondary={expenseList.description}/>
                                 {getLoggedUser().roles === "ROLE_MANAGER"
                                     ? (<ListItemSecondaryAction>
-                                        <ExpenseListSettleUp expenseId={expenseList.id}/>
+                                        <ExpenseListSettleUp listId={expenseList.id}/>
                                     </ListItemSecondaryAction>) : null}
                             </ListItem>
                             {index !== expensesLists.length - 1 ? (<Divider/>) : null}

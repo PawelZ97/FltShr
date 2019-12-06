@@ -57,7 +57,7 @@ INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "tota
     VALUES ('2019-11-09 10:10:10', 'Kebsiki z wilanowa', 'PERCENT', 'Kebsiki', 40.00, 2, 3);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', 'UNITS', 'Tusze do Drukarki', 38.00, 3, 3);
+VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', 'UNIT', 'Tusze do Drukarki', 38.00, 3, 3);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
 VALUES ('2019-11-10 10:10:10', 'Ryzy papieru', 'VALUE', 'Papier', 50.00, 3, 3);

@@ -8,11 +8,16 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import IconButton from "@material-ui/core/IconButton";
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 function ExpenseListSettleUp(props) {
     const [open, setOpen] = useState(false);
+    const [settleUpSummary, setSettleUpSummary] = useState([]);
 
     const handleOpen = () => {
+        callSettleUpSummary()
         setOpen(true);
     };
 
@@ -25,14 +30,36 @@ function ExpenseListSettleUp(props) {
         setOpen(false);
     };
 
+    function callSettleUpSummary() {
+        axios
+            .get(API_ADDRESS + "/manager/expense/list/" + props.listId + "/settle", {
+                headers: {
+                    'Authorization': localStorage.getItem("authToken")
+                }
+            })
+            .then(function (response) {
+                setSettleUpSummary(response.data);
+                console.log("ExpenseList SettledUpSumary loaded, status: " + response.status);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    console.log("STATUS NOT OK");
+                } else if (error.request) {
+                    console.log("NOT CONNECTED TO API");
+                } else {
+                    console.log("Something went wrong");
+                }
+            });
+    }
+
     function callSettleUp() {
-        axios.patch(API_ADDRESS + "/manager/expense/list/" + props.expenseId, null, {
+        axios.patch(API_ADDRESS + "/manager/expense/list/" + props.listId, null, {
             headers: {
                 'Authorization': localStorage.getItem("authToken")
             }
         })
             .then(function (response) {
-                console.log("Expense Deleted, status: " + response.status);
+                console.log("ExpenseList SettledUp, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {
@@ -57,7 +84,16 @@ function ExpenseListSettleUp(props) {
                     aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Podsumowanie wyrównania</DialogTitle>
                 <DialogContent>
-                    Podsumowanie tutaj
+                    <List>
+                        {settleUpSummary.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
+                        {settleUpSummary.map((summaryEntry, index) => (
+                            <ListItem key={index}>
+                                <ListItemText
+                                    primary={summaryEntry.user.username}
+                                    secondary={"Total: " + summaryEntry.total}/>
+                            </ListItem>
+                        ))}
+                    </List>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCancel} color="secondary">

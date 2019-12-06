@@ -6,21 +6,21 @@ import TableBody from "@material-ui/core/TableBody";
 import {Table} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import {API_ADDRESS} from "../../utils/constants";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
 
 function ExpenseUnequalCreation(props) {
 
     const [usersList, setUserList] = useState([]);
 
     const [user, setUser] = useState({});
-    const [valuePercentUnit, setValuePercentUnit] = useState(0);
-    const [typeUnits, setTypeUnits] = useState(false);
+    const [inputValue, setInputValue] = useState(0);
 
     useEffect(() => {
         axios
@@ -50,22 +50,27 @@ function ExpenseUnequalCreation(props) {
 
     const handleAdd = () => {
         let createdUnequal = {};
-        if (typeUnits) {
+        if (props.unequalType === "VALUE") {
             createdUnequal = {
                 usedBy: user,
-                units: valuePercentUnit
+                value: inputValue,
             };
-        } else {
+        } else if (props.unequalType === "PERCENT") {
             createdUnequal = {
                 usedBy: user,
-                percent: valuePercentUnit
+                percent: inputValue
+            };
+        } else if (props.unequalType === "UNIT") {
+            createdUnequal = {
+                usedBy: user,
+                units: inputValue
             };
         }
         let expenseUnequalsCreate = [...props.expenseUnequals];
         expenseUnequalsCreate.push(createdUnequal);
         props.setExpenseUnequals(expenseUnequalsCreate);
         setUser({});
-        setValuePercentUnit(0);
+        setInputValue(0);
     };
 
     function handleDelete(index) {
@@ -74,8 +79,8 @@ function ExpenseUnequalCreation(props) {
         props.setExpenseUnequals(expenseUnequalsDelete);
     }
 
-    const handleTypeUnitsChanege = () => {
-        setTypeUnits(!typeUnits);
+    const handleUnequalTypeChange = name => () => {
+        props.setUnequalType(name);
     };
 
     return (
@@ -84,13 +89,21 @@ function ExpenseUnequalCreation(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell>Kto</TableCell>
-                        {typeUnits ? (<TableCell>Jednostek</TableCell>)
-                            : (<TableCell>Procent</TableCell>)}
+                        <TableCell>
+                            {props.unequalType === "VALUE" && ("Kwota")}
+                            {props.unequalType === "PERCENT" && ("Procent")}
+                            {props.unequalType === "UNIT" && ("Jednostek")}
+                        </TableCell>
                         <TableCell align="right">
-                            <Button variant="contained" color="primary" disabled={props.expenseUnequals.length > 0}
-                                    fullWidth onClick={handleTypeUnitsChanege}>
-                                {typeUnits ? ("Procenty") : ("Jednostki")}
-                            </Button>
+                            <ButtonGroup color="primary" aria-label="outlined primary button group"
+                                         disabled={props.expenseUnequals.length > 0}>
+                                <Button onClick={handleUnequalTypeChange("VALUE")}
+                                        disabled={props.unequalType === "VALUE"}>Kwota</Button>
+                                <Button onClick={handleUnequalTypeChange("PERCENT")}
+                                        disabled={props.unequalType === "PERCENT"}>Procent</Button>
+                                <Button onClick={handleUnequalTypeChange("UNIT")}
+                                        disabled={props.unequalType === "UNIT"}>Jednostki</Button>
+                            </ButtonGroup>
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -100,8 +113,11 @@ function ExpenseUnequalCreation(props) {
                             <TableCell component="th" scope="row">
                                 {expenseUnequal.usedBy.username}
                             </TableCell>
-                            {typeUnits ? (<TableCell>{expenseUnequal.units}</TableCell>)
-                                : (<TableCell>{expenseUnequal.percent}%</TableCell>)}
+                            <TableCell>
+                                {props.unequalType === "VALUE" && (expenseUnequal.value) + "zł"}
+                                {props.unequalType === "PERCENT" && (expenseUnequal.percent) + "%"}
+                                {props.unequalType === "UNIT" && (expenseUnequal.units)}
+                            </TableCell>
                             <TableCell component="th" scope="row" align="right">
                                 <IconButton onClick={() => handleDelete(index)}>
                                     <DeleteIcon/>
@@ -124,8 +140,8 @@ function ExpenseUnequalCreation(props) {
                         </TableCell>
                         <TableCell>
                             <TextField
-                                onChange={event => setValuePercentUnit(event.target.value)}
-                                value={valuePercentUnit}
+                                onChange={event => setInputValue(event.target.value)}
+                                value={inputValue}
                                 autoFocus
                                 id="name"
                                 type="number"

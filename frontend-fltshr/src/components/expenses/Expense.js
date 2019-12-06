@@ -24,7 +24,7 @@ function Expense(props) {
             <Typography>
                 Data zakupu: {props.expense.boughtDate.slice(0, 19).replace("T", " ")}
             </Typography>
-            {props.expense.isEqual ? null : (
+            {props.expense.unequalType === null ? null : (
                 <div>
                     <Typography>
                         Podział:
@@ -34,9 +34,15 @@ function Expense(props) {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Kto</TableCell>
-                                    {props.expense.expenseUnequals[0].percent
-                                        ? (<TableCell align="right">Procent</TableCell>)
-                                        : (<TableCell align="right">Jednostek</TableCell>)}
+                                    {props.expense.unequalType !== null ? (
+                                        <TableCell align="right">
+                                            {props.expense.unequalType === "PERCENT" && ("Procent")}
+                                            {props.expense.unequalType === "UNIT" && ("Jednostek")}
+                                        </TableCell>
+                                    ) : null}
+                                    <TableCell align="right">
+                                        Kwota
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -45,9 +51,15 @@ function Expense(props) {
                                         <TableCell component="th" scope="row">
                                             {expenseUnequal.usedBy.username}
                                         </TableCell>
-                                        {expenseUnequal.percent
-                                            ? (<TableCell align="right">{expenseUnequal.percent}%</TableCell>)
-                                            : (<TableCell align="right">{expenseUnequal.units}</TableCell>)}
+                                        {props.expense.unequalType !== null ? (
+                                            <TableCell align="right">
+                                                {props.expense.unequalType === "PERCENT" && (expenseUnequal.percent + "%")}
+                                                {props.expense.unequalType === "UNIT" && (expenseUnequal.units)}
+                                            </TableCell>
+                                        ) : null}
+                                        <TableCell align="right">
+                                            {expenseUnequal.value}zł
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

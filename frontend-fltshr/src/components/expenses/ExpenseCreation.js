@@ -37,13 +37,21 @@ function ExpenseCreation(props) {
     const [expense, setExpense] = useState({
         name: "",
         total: 0,
-        isEqual: true,
+        unequalType: null,
         description: "",
         expenseUnequals: []
     });
 
-    const setIsEqual = isEqual => {
-        setExpense(values => ({...values, isEqual: isEqual}));
+    const setIsEqual = checked => {
+        if (!checked) {
+            setExpense(values => ({...values, unequalType: "VALUE"}));
+        } else {
+            setExpense(values => ({...values, unequalType: null}));
+        }
+    };
+
+    const setUnequalType = unequalType => {
+        setExpense(values => ({...values, unequalType: unequalType}));
     };
 
     function setExpenseUnequals(expenseUnequals) {
@@ -84,7 +92,7 @@ function ExpenseCreation(props) {
         setExpense({
             name: "",
             total: 0,
-            isEqual: true,
+            unequalType: null,
             description: "",
             expenseUnequals: []
         });
@@ -141,15 +149,19 @@ function ExpenseCreation(props) {
                     <FormControlLabel
                         className={classes.padInput}
                         control={
-                            <Switch checked={expense.isEqual} onChange={(e) => setIsEqual(e.target.checked)}
+                            <Switch checked={expense.unequalType === null}
+                                    onChange={(event) => setIsEqual(event.target.checked)}
                                     value="checkedA"/>
                         }
                         label="Równomiernie"
                     />
-                    {expense.isEqual ? null : (<Paper>
-                        <ExpenseUnequalCreation expenseUnequals={expense.expenseUnequals}
-                                                setExpenseUnequals={setExpenseUnequals}/>
-                    </Paper>)}
+                    {expense.unequalType ? (
+                        <Paper>
+                            <ExpenseUnequalCreation unequalType={expense.unequalType}
+                                                    setUnequalType={setUnequalType}
+                                                    expenseUnequals={expense.expenseUnequals}
+                                                    setExpenseUnequals={setExpenseUnequals}/>
+                        </Paper>) : null}
 
                 </DialogContent>
                 <DialogActions>
