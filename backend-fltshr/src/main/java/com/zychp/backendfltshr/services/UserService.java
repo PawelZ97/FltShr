@@ -69,8 +69,8 @@ public class UserService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(userRegistrationDTO.getEmail());
-        message.setSubject("FltShr - Verify email");
-        message.setText("To confirm your account, please click here : "
+        message.setSubject("FltShr - Potwierdź swój email");
+        message.setText("Cześć " + userRegistrationDTO.getUsername() + ". Aby zakończyć rejestrację kliknij: "
                 + "http://" + app_adress + "/register/emailconfirm?token=" + verify_token);
         emailSender.send(message);
         log.info("registerNewUser(): userRegistrationDTO: {}", userRegistrationDTO);
@@ -90,6 +90,6 @@ public class UserService {
         User user = userRepository.findByUsername(jws.getBody().getSubject()).orElseThrow();
         user.setEmailVerified(true);
         userRepository.save(user);
-        return "Email Verified";
+        return "Email Potwierdzony. Możesz się zalogować";
     }
 }
