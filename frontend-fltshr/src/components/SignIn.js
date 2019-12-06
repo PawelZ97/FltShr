@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_ADDRESS} from "../utils/constants";
 import AppBarView from "./AppBarView";
@@ -16,19 +16,15 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
     signInButton: {
         marginTop: 20
+    },
+    signUpButton: {
+        marginTop: 50
     }
 }));
 
@@ -103,6 +99,8 @@ function SignIn() {
                     <Button onClick={(e) => callLogin(e)} className={classes.signInButton}
                             fullWidth variant="contained" color="primary" size={"large"}> Zaloguj </Button>
                 </form>
+                <Button className={classes.signUpButton} component="a" href={"/signup"}
+                        fullWidth variant="contained" color="primary" size={"large"}> Rejestracja </Button>
             </div>
         </Container>);
 }
