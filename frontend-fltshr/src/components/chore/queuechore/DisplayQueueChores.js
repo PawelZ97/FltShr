@@ -11,21 +11,30 @@ import QueueChore from "./QueueChore";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DoneIcon from '@material-ui/icons/Done';
+import Grid from "@material-ui/core/Grid";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        paddingTop: 30,
-        paddingBottom: 20
+        paddingTop: 20,
+        paddingLeft: 5
+    },
+    switch: {
+        padding: 20,
     }
 }));
 
 function DisplayQueueChores(props) {
     const [assignedQueueChores, setAssignedQueueChores] = useState([]);
+    const [showHistory, setShowHistory] = useState(false);
     const [forceUpdateFlag, setForceUpdateFlag] = useState();
 
     useEffect(() => {
+        let getRequestUrl = +(showHistory) ? (API_ADDRESS + "/chores/assignedqueues") : (API_ADDRESS + "/chores/assignedqueues/me");
+        console.log(getRequestUrl);
         axios
-            .get(API_ADDRESS + "/chores/assignedqueues/me", {
+            .get(getRequestUrl, {
                 headers: {
                     'Authorization': localStorage.getItem("authToken")
                 }
@@ -43,7 +52,7 @@ function DisplayQueueChores(props) {
                     console.log("Something went wrong");
                 }
             });
-    }, [forceUpdateFlag]);
+    }, [showHistory, forceUpdateFlag]);
 
     function handleDone(assignedQueueChoreId) {
         axios
@@ -70,9 +79,23 @@ function DisplayQueueChores(props) {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
-            <Typography className={classes.title} variant={"h5"}>
-                Twoje obowiązki w kolejce:
-            </Typography>
+            <Grid container justify={"space-between"} alignItems={"center"}>
+                <Grid item>
+                    <Typography className={classes.title} variant={"h5"}>
+                        Twoje obowiązki w kolejce:
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <FormControlLabel className={classes.switch} control={
+                        <Switch checked={showHistory}
+                                onChange={() => setShowHistory(!showHistory)}
+                                value="checkedA"
+                                color="primary"
+                        />
+                    } label="Pokaż historię"
+                    />
+                </Grid>
+            </Grid>
             <Paper>
                 <List>
                     {assignedQueueChores.length === 0 ? (
@@ -80,13 +103,14 @@ function DisplayQueueChores(props) {
                     {assignedQueueChores.map((assignedQueueChore, index) => (
                         <div key={assignedQueueChore.id}>
                             <ListItem>
-                                <QueueChore assignedQueueChore={assignedQueueChore}/>
-                                <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="delete"
-                                                onClick={() => handleDone(assignedQueueChore.id)}>
-                                        <DoneIcon/>
-                                    </IconButton>
-                                </ListItemSecondaryAction>
+                                <QueueChore userPrint={showHistory} assignedQueueChore={assignedQueueChore}/>
+                                {!showHistory ? (
+                                    <ListItemSecondaryAction>
+                                        <IconButton edge="end" aria-label="delete"
+                                                    onClick={() => handleDone(assignedQueueChore.id)}>
+                                            <DoneIcon/>
+                                        </IconButton>
+                                    </ListItemSecondaryAction>) : null}
                             </ListItem>
                             {index !== assignedQueueChores.length - 1 ? (<Divider/>) : null}
                         </div>

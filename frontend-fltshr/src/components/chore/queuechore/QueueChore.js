@@ -16,6 +16,11 @@ function QueueChore(props) {
             <Typography>
                 Wykonany: {props.assignedQueueChore.done ? ("Tak") : ("Nie")}
             </Typography>
+            {props.userPrint ? (
+                <Typography>
+                    Użytkownik: {props.assignedQueueChore.assignedUser.username}
+                </Typography>
+            ) : null}
         </div>
     );
 }
