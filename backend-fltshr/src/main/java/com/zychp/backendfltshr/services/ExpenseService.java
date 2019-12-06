@@ -153,7 +153,7 @@ public class ExpenseService {
     private BigDecimal calculateUsedTotal(List<Expense> expenses, User user, int size) {
         BigDecimal sum = BigDecimal.valueOf(0);
         for (Expense expense : expenses) {
-            if(expense.getUnequalType().equals("NONE")) {
+            if (expense.getUnequalType() == null) {
                 sum = sum.add(expense.getTotal().divide(BigDecimal.valueOf(size),4, RoundingMode.UP));
             } else {
                 Set<ExpenseUnequal> expenseUnequals = expense.getExpenseUnequals();
