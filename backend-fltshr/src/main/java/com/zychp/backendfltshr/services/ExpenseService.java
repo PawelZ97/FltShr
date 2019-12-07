@@ -65,44 +65,46 @@ public class ExpenseService {
     public ExpenseDTO createExpense(Long expenseListId, ExpenseCDTO expenseCDTO) {
         Expense received = ExpenseCDTO.valueOf(expenseCDTO);
         Set<ExpenseUnequal> expenseUnequals = received.getExpenseUnequals();
-        switch (received.getUnequalType()) {
-            case "PERCENT":
-                BigDecimal percentSum = new BigDecimal(0);
-                for (ExpenseUnequal expenseUnequal : expenseUnequals) {
-                    percentSum = percentSum.add(expenseUnequal.getPercent());
-                }
-                if (!percentSum.equals(new BigDecimal(100))) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Percents don't sum up to 100%");
-                }
-                expenseUnequals.forEach((expenseUnequal) -> {
-                    expenseUnequal.setValue(expenseUnequal.getPercent().multiply(received.getTotal())
-                            .divide(BigDecimal.valueOf(100), 4, RoundingMode.UP));
-                });
-                log.info("createExpense() percentSum:{}  precent > value convert & check", percentSum);
-                break;
-            case "UNIT":
-                Long unitsSum = 0L;
-                for (ExpenseUnequal expenseUnequal : expenseUnequals) {
-                    unitsSum += expenseUnequal.getUnits();
-                }
-                for (ExpenseUnequal expenseUnequal : expenseUnequals) {
-                    expenseUnequal.setValue(BigDecimal.valueOf(expenseUnequal.getUnits()).multiply(received.getTotal())
-                            .divide(BigDecimal.valueOf(unitsSum), 4, RoundingMode.UP));
-                }
-                log.info("createExpense() unitsSum:{} units > value convert", unitsSum);
-                break;
-            case "VALUE":
-                BigDecimal sum = new BigDecimal(0);
-                for (ExpenseUnequal expenseUnequal : expenseUnequals) {
-                    sum = sum.add(expenseUnequal.getValue());
-                }
-                if (!sum.equals(received.getTotal())) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Values don't sum up to Total");
-                }
-                log.info("createExpense() value check");
-                break;
+        if (received.getUnequalType() != null) {
+            switch (received.getUnequalType()) {
+                case "PERCENT":
+                    BigDecimal percentSum = new BigDecimal(0);
+                    for (ExpenseUnequal expenseUnequal : expenseUnequals) {
+                        percentSum = percentSum.add(expenseUnequal.getPercent());
+                    }
+                    if (!percentSum.equals(new BigDecimal(100))) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Percents don't sum up to 100%");
+                    }
+                    expenseUnequals.forEach((expenseUnequal) -> {
+                        expenseUnequal.setValue(expenseUnequal.getPercent().multiply(received.getTotal())
+                                .divide(BigDecimal.valueOf(100), 4, RoundingMode.UP));
+                    });
+                    log.info("createExpense() percentSum:{}  precent > value convert & check", percentSum);
+                    break;
+                case "UNIT":
+                    Long unitsSum = 0L;
+                    for (ExpenseUnequal expenseUnequal : expenseUnequals) {
+                        unitsSum += expenseUnequal.getUnits();
+                    }
+                    for (ExpenseUnequal expenseUnequal : expenseUnequals) {
+                        expenseUnequal.setValue(BigDecimal.valueOf(expenseUnequal.getUnits())
+                                .multiply(received.getTotal())
+                                .divide(BigDecimal.valueOf(unitsSum), 4, RoundingMode.UP));
+                    }
+                    log.info("createExpense() unitsSum:{} units > value convert", unitsSum);
+                    break;
+                case "VALUE":
+                    BigDecimal sum = new BigDecimal(0);
+                    for (ExpenseUnequal expenseUnequal : expenseUnequals) {
+                        sum = sum.add(expenseUnequal.getValue());
+                    }
+                    if (!sum.equals(received.getTotal())) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Values don't sum up to Total");
+                    }
+                    log.info("createExpense() value check");
+                    break;
+            }
         }
-
         String requestUsername = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal().toString();
         received.setExpenseList(expenseListRepository.findById(expenseListId).orElseThrow());

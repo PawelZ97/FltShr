@@ -62,7 +62,7 @@ function ExpenseCreation(props) {
         setExpense({...expense, [name]: event.target.value});
     };
 
-    function callPostExpense() {
+    const handleOk = () => {
         console.log(props.listId);
         axios.post(API_ADDRESS + '/expense/list/' + props.listId + '/expense', expense, {
             headers: {
@@ -71,17 +71,23 @@ function ExpenseCreation(props) {
         })
             .then(function (response) {
                 console.log("Expense created, status: " + response.status);
+                setOpen(false);
             })
             .catch(function (error) {
                 if (error.response) {
                     console.log("Status not OK");
+                    if (error.response.data.message === "Percents don't sum up to 100%") {
+                        alert("Podane wartości nie sumują się do 100%. Należy skorygować podane dane.");
+                    } else if (error.response.data.message === "Values don't sum up to Total") {
+                        alert("Podane wartości nie sumują się do pełnej kwoty. Należy skorygować podane dane.");
+                    }
                 } else if (error.request) {
                     console.log("Can't connect to API");
                 } else {
                     console.log("Something went wrong");
                 }
             });
-    }
+    };
 
     const handleOpen = () => {
         setOpen(true);
@@ -96,11 +102,6 @@ function ExpenseCreation(props) {
             description: "",
             expenseUnequals: []
         });
-    };
-
-    const handleOk = () => {
-        callPostExpense();
-        setOpen(false);
     };
 
     const classes = useStyles();
