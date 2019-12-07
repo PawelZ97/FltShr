@@ -11,6 +11,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import ArchiveIcon from '@material-ui/icons/Archive';
 import QueueChore from "./QueueChore";
+import QueueChoreCreation from "./QueueChoreCreation";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 function DisplayQueueChores(props) {
     const [queueChores, setQueueChores] = useState([]);
-    const [forceUpdateFlag, setForceUpdateFlag] = useState();
+    const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
         axios
@@ -43,7 +44,7 @@ function DisplayQueueChores(props) {
                     console.log("Something went wrong");
                 }
             });
-    }, [forceUpdateFlag]);
+    }, [updateFlag]);
 
     function handleArchive(queueChoreId) {
         axios
@@ -54,7 +55,7 @@ function DisplayQueueChores(props) {
             })
             .then(function (response) {
                 console.log("QueueChores archived, status: " + response.status);
-                setForceUpdateFlag({});
+                setUpdateFlag(!updateFlag);
             })
             .catch(function (error) {
                 if (error.response) {
@@ -93,6 +94,7 @@ function DisplayQueueChores(props) {
                     ))}
                 </List>
             </Paper>
+            <QueueChoreCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
         </Container>
     );
 }
