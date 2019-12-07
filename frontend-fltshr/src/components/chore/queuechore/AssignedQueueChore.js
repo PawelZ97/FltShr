@@ -11,15 +11,24 @@ function AssignedQueueChore(props) {
                 Opis: {props.assignedQueueChore.queueChore.description}
             </Typography>
             <Typography>
-                Data przypisania: {props.assignedQueueChore.assignDate.slice(0, 19).replace("T", " ")}
+                Data przypisania: {props.assignedQueueChore
+                .assignDate.slice(0, 19).replace("T", " ")}
             </Typography>
             <Typography>
                 Wykonany: {props.assignedQueueChore.done ? ("Tak") : ("Nie")}
             </Typography>
-            {props.userPrint ? (
-                <Typography>
-                    Użytkownik: {props.assignedQueueChore.assignedUser.username}
-                </Typography>
+            {props.showHistory ? (
+                <div>
+                    {props.assignedQueueChore.doneDate && (
+                        <Typography>
+                            Data wykonania: {props.assignedQueueChore
+                            .doneDate.slice(0, 19).replace("T", " ")}
+                        </Typography>
+                    )}
+                    <Typography>
+                        Przyisana osoba: {props.assignedQueueChore.assignedUser.username}
+                    </Typography>
+                </div>
             ) : null}
         </div>
     );

@@ -102,7 +102,7 @@ function DisplayAssignedQueueChores(props) {
                     {assignedQueueChores.map((assignedQueueChore, index) => (
                         <div key={assignedQueueChore.id}>
                             <ListItem>
-                                <AssignedQueueChore userPrint={showHistory} assignedQueueChore={assignedQueueChore}/>
+                                <AssignedQueueChore showHistory={showHistory} assignedQueueChore={assignedQueueChore}/>
                                 {!showHistory ? (
                                     <ListItemSecondaryAction>
                                         <IconButton edge="end" aria-label="delete"
