@@ -26,7 +26,7 @@ function AssignedQueueChore(props) {
                         </Typography>
                     )}
                     <Typography>
-                        Przyisana osoba: {props.assignedQueueChore.assignedUser.username}
+                        Przypisana osoba: {props.assignedQueueChore.assignedUser.username}
                     </Typography>
                 </div>
             ) : null}
