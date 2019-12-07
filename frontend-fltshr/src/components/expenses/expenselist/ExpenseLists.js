@@ -13,6 +13,8 @@ import {getLoggedUser} from "../../../utils/UserUtils";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ExpenseListSettleUp from "./ExpenseListSettleUp";
 import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -30,10 +32,12 @@ const useStyles = makeStyles(theme => ({
 function ExpenseLists() {
     const [expensesLists, setExpensesLists] = useState([]);
     const [updateFlag, setUpdateFlag] = useState(false);
+    const [showSettled, setShowSettled] = useState(false);
 
     useEffect(() => {
+        let getRequestUrl = (showSettled) ? (API_ADDRESS + "/manager/expense/lists") : (API_ADDRESS + "/expense/lists");
         axios
-            .get(API_ADDRESS + "/expense/lists", {
+            .get(getRequestUrl, {
                 headers: {
                     'Authorization': localStorage.getItem("authToken")
                 }
@@ -51,7 +55,7 @@ function ExpenseLists() {
                     console.log("Something went wrong");
                 }
             });
-    }, [updateFlag]);
+    }, [updateFlag, showSettled]);
 
     const classes = useStyles();
     return (
@@ -62,6 +66,17 @@ function ExpenseLists() {
                         Listy wydatków:
                     </Typography>
                 </Grid>
+                {getLoggedUser().roles === "ROLE_MANAGER" ? (
+                    <Grid item>
+                        <FormControlLabel className={classes.switch} control={
+                            <Switch checked={showSettled}
+                                    onChange={() => setShowSettled(!showSettled)}
+                                    value="checkedA"
+                                    color="primary"
+                            />
+                        } label="Pokaż wyrównane"/>
+                    </Grid>
+                ) : null}
             </Grid>
             <Paper>
                 <List>

@@ -31,8 +31,7 @@ function DisplayAssignedQueueChores(props) {
     const [forceUpdateFlag, setForceUpdateFlag] = useState();
 
     useEffect(() => {
-        let getRequestUrl = +(showHistory) ? (API_ADDRESS + "/chores/assignedqueues") : (API_ADDRESS + "/chores/assignedqueues/me");
-        console.log(getRequestUrl);
+        let getRequestUrl = (showHistory) ? (API_ADDRESS + "/chores/assignedqueues") : (API_ADDRESS + "/chores/assignedqueues/me");
         axios
             .get(getRequestUrl, {
                 headers: {

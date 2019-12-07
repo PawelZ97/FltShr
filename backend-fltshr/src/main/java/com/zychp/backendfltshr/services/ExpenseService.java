@@ -38,7 +38,7 @@ public class ExpenseService {
 
     public List<ExpenseListDTO> getAllNotSettledExpenseLists() {
         List<ExpenseList> expenseList = expenseListRepository.findByIsSettledIsFalse();
-        log.info("getAllExpenseLists()");
+        log.info("getAllNotSettledExpenseLists()");
         return expenseList.stream().map(ExpenseListDTO::valueOf).collect(Collectors.toList());
     }
 
@@ -75,10 +75,10 @@ public class ExpenseService {
                     if (!percentSum.equals(new BigDecimal(100))) {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Percents don't sum up to 100%");
                     }
-                    expenseUnequals.forEach((expenseUnequal) -> {
+                    for (ExpenseUnequal expenseUnequal : expenseUnequals) {
                         expenseUnequal.setValue(expenseUnequal.getPercent().multiply(received.getTotal())
                                 .divide(BigDecimal.valueOf(100), 4, RoundingMode.UP));
-                    });
+                    }
                     log.info("createExpense() percentSum:{}  precent > value convert & check", percentSum);
                     break;
                 case "UNIT":
