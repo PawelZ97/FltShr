@@ -26,9 +26,8 @@ const useStyles = makeStyles(theme => ({
         left: "auto",
         position: "fixed"
     },
-    padInput: {
-        paddingTop: 20,
-        paddingBottom: 20,
+    marginInput: {
+        marginTop: 20,
     }
 }));
 
@@ -125,7 +124,7 @@ function ExpenseCreation(props) {
                         label="Nazwa"
                         type="text"
                         fullWidth
-                        className={classes.padInput}
+                        className={classes.marginInput}
                     />
                     <TextField
                         onChange={handleTextFieldChange('total')}
@@ -137,7 +136,7 @@ function ExpenseCreation(props) {
                         label="Kwota"
                         type="number"
                         fullWidth
-                        className={classes.padInput}
+                        className={classes.marginInput}
                     />
                     <TextField
                         onChange={handleTextFieldChange('description')}
@@ -146,19 +145,20 @@ function ExpenseCreation(props) {
                         label="Opis"
                         type="text"
                         fullWidth
-                        className={classes.padInput}
+                        className={classes.marginInput}
                     />
                     <FormControlLabel
-                        className={classes.padInput}
+                        className={classes.marginInput}
                         control={
-                            <Switch checked={expense.unequalType === null}
-                                    onChange={(event) => setIsEqual(event.target.checked)}
+                            <Switch checked={expense.unequalType !== null}
+                                    color={"primary"}
+                                    onChange={(event) => setIsEqual(!event.target.checked)}
                                     value="checkedA"/>
                         }
-                        label="Równomiernie"
+                        label="Podział nierównomierny"
                     />
                     {expense.unequalType ? (
-                        <Paper>
+                        <Paper className={classes.marginInput}>
                             <ExpenseUnequalCreation unequalType={expense.unequalType}
                                                     setUnequalType={setUnequalType}
                                                     expenseUnequals={expense.expenseUnequals}

@@ -14,12 +14,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 function ExpenseUnequalCreation(props) {
 
     const [usersList, setUserList] = useState([]);
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
     const [inputValue, setInputValue] = useState(0);
 
     useEffect(() => {
@@ -85,7 +86,21 @@ function ExpenseUnequalCreation(props) {
 
     return (
         <div>
+            <ButtonGroup color="primary" variant="contained" fullWidth
+                         disabled={props.expenseUnequals.length > 0}>
+                <Button onClick={handleUnequalTypeChange("VALUE")}
+                        disabled={props.unequalType === "VALUE"}>Kwota</Button>
+                <Button onClick={handleUnequalTypeChange("PERCENT")}
+                        disabled={props.unequalType === "PERCENT"}>Procenty</Button>
+                <Button onClick={handleUnequalTypeChange("UNIT")}
+                        disabled={props.unequalType === "UNIT"}>Jednostki</Button>
+            </ButtonGroup>
             <Table>
+                <colgroup>
+                    <col style={{width: '33%'}}/>
+                    <col style={{width: '33%'}}/>
+                    <col style={{width: '33%'}}/>
+                </colgroup>
                 <TableHead>
                     <TableRow>
                         <TableCell>Kto</TableCell>
@@ -95,15 +110,6 @@ function ExpenseUnequalCreation(props) {
                             {props.unequalType === "UNIT" && ("Jednostek")}
                         </TableCell>
                         <TableCell align="right">
-                            <ButtonGroup color="primary" aria-label="outlined primary button group"
-                                         disabled={props.expenseUnequals.length > 0}>
-                                <Button onClick={handleUnequalTypeChange("VALUE")}
-                                        disabled={props.unequalType === "VALUE"}>Kwota</Button>
-                                <Button onClick={handleUnequalTypeChange("PERCENT")}
-                                        disabled={props.unequalType === "PERCENT"}>Procent</Button>
-                                <Button onClick={handleUnequalTypeChange("UNIT")}
-                                        disabled={props.unequalType === "UNIT"}>Jednostki</Button>
-                            </ButtonGroup>
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -146,6 +152,10 @@ function ExpenseUnequalCreation(props) {
                                 id="name"
                                 type="number"
                                 fullWidth
+                                InputProps={(props.unequalType === "PERCENT" || props.unequalType === "VALUE") && {
+                                    endAdornment: <InputAdornment
+                                        position="end"> {props.unequalType === "PERCENT" ? ("%") : ("zł")} </InputAdornment>
+                                }}
                             />
                         </TableCell>
                         <TableCell>
