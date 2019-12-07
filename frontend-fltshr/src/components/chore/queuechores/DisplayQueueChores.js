@@ -14,8 +14,8 @@ import QueueChore from "./QueueChore";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        paddingTop: 20,
-        paddingLeft: 5
+        paddingTop: 30,
+        paddingBottom: 20
     }
 }));
 
@@ -76,7 +76,7 @@ function DisplayQueueChores(props) {
             <Paper>
                 <List>
                     {queueChores.length === 0 ? (
-                        <h3 align={"center"}>Brak obowiązków do wykonania :) </h3>) : null}
+                        <h3 align={"center"}>Brak kolejek obowiązków :) </h3>) : null}
                     {queueChores.map((queueChore, index) => (
                         <div key={queueChore.id}>
                             <ListItem>

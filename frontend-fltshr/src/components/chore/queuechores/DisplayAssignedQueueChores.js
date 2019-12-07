@@ -14,6 +14,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import Grid from "@material-ui/core/Grid";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {getLoggedUser} from "../../../utils/UserUtils";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -22,6 +24,9 @@ const useStyles = makeStyles(theme => ({
     },
     switch: {
         padding: 20,
+    },
+    buttonManager: {
+        marginTop: 20
     }
 }));
 
@@ -78,6 +83,16 @@ function DisplayAssignedQueueChores(props) {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
+            {getLoggedUser().roles === "ROLE_MANAGER" && (
+                <Grid container justify={"flex-end"}>
+                    <Grid item>
+                        <Button variant="contained" color="primary" className={classes.buttonManager}
+                                component="a" href={"/manager/chores/queuechores"}>
+                            Zarządzaj obowiązkami kolejkowymi
+                        </Button>
+                    </Grid>
+                </Grid>
+            )}
             <Grid container justify={"space-between"} alignItems={"center"}>
                 <Grid item>
                     <Typography className={classes.title} variant={"h5"}>
