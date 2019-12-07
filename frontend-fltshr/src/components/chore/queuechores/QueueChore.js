@@ -10,9 +10,9 @@ function QueueChore(props) {
             <Typography>
                 Opis: {props.queueChore.description}
             </Typography>
-            {/*<Typography>*/}
-            {/*    Zarchiwizowana: {props.queueChore.archived}*/}
-            {/*</Typography>*/}
+            <Typography>
+                Zarchiwizowana: {(props.queueChore.archived) ? ("Tak") : ("Nie")}
+            </Typography>
         </div>
     );
 }

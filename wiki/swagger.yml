@@ -409,19 +409,14 @@ paths:
             items:
               $ref: "#/definitions/QueueChoreDTO"
 
-  /manager/chores/queuechore/user/{userId}:
+  /manager/chores/queuechore:
     post:
       tags:
         - Queue_Chores
       summary: Create new QueueChore and assign to first User
       parameters:
-        - name: userId
-          in: path
-          description: user Id
-          type: integer
-          required: true
         - in: body
-          name: ExpenseCDTO
+          name: QueueChoreCDTO
           description: Expense Creation DTO
           schema:
             $ref: "#/definitions/QueueChoreCDTO"
@@ -615,6 +610,8 @@ definitions:
         type: string
       description:
         type: string
+      archived:
+        type: boolean
 
   QueueChoreCDTO:
     type:  object
@@ -623,8 +620,8 @@ definitions:
         type: string
       description:
         type: string
-      archived:
-        type: boolean
+      firstUser:
+        $ref: '#/definitions/UserNameDTO'
 
   AssignedQueueChoreDTO:
     type:  object

@@ -76,7 +76,7 @@ function DisplayQueueChores(props) {
             <Paper>
                 <List>
                     {queueChores.length === 0 ? (
-                        <h3 align={"center"}>Brak kolejek obowiązków :) </h3>) : null}
+                        <h3 align={"center"}>Brak kolejek obowiązków</h3>) : null}
                     {queueChores.map((queueChore, index) => (
                         <div key={queueChore.id}>
                             <ListItem>

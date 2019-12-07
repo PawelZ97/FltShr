@@ -2,6 +2,7 @@ package com.zychp.backendfltshr.services;
 
 import com.zychp.backendfltshr.model.chore.queuechores.*;
 import com.zychp.backendfltshr.model.user.User;
+import com.zychp.backendfltshr.model.user.UserNameDTO;
 import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.chore.AssignedQueueChoreRepository;
 import com.zychp.backendfltshr.repos.chore.QueueChoreRepository;
@@ -74,19 +75,19 @@ public class QueueChoreService {
         return found.stream().map(QueueChoreDTO::valueOf).collect(Collectors.toList());
     }
 
-    public QueueChoreDTO createQueueChore(Long userId, QueueChoreCDTO queueChoreCDTO) {
+    public QueueChoreDTO createQueueChore(QueueChoreCDTO queueChoreCDTO) {
+        User firstUser = UserNameDTO.valueOf(queueChoreCDTO.getFirstUser());
         QueueChore received = QueueChoreCDTO.valueOf(queueChoreCDTO);
+        received.setArchived(false);
         QueueChore created = queueChoreRepository.save(received);
-
-        User user = userRepository.findById(userId).orElseThrow();
 
         AssignedQueueChore firstCreated = new AssignedQueueChore();
         firstCreated.setQueueChore(created);
         firstCreated.setDone(false);
-        firstCreated.setAssignedUser(user);
+        firstCreated.setAssignedUser(firstUser);
         assignedQueueChoreRepository.save(firstCreated);
 
-        log.info("createQueueChore() userId: {}, queueChoreCDTO: {}", userId, queueChoreCDTO);
+        log.info("createQueueChore() queueChoreCDTO: {}", queueChoreCDTO);
         return QueueChoreDTO.valueOf(created);
     }
 

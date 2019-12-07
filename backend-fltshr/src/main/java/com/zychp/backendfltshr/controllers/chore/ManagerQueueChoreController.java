@@ -18,10 +18,9 @@ public class ManagerQueueChoreController {
         return ResponseEntity.ok(queueChoreService.getQueueChores());
     }
 
-    @PostMapping("/queuechore/user/{userId}")
-    ResponseEntity<QueueChoreDTO> createQueueChore(@PathVariable Long userId,
-                                                   @RequestBody QueueChoreCDTO queueChoreCDTO) {
-        return ResponseEntity.accepted().body(queueChoreService.createQueueChore(userId, queueChoreCDTO));
+    @PostMapping("/queuechore")
+    ResponseEntity<QueueChoreDTO> createQueueChore(@RequestBody QueueChoreCDTO queueChoreCDTO) {
+        return ResponseEntity.accepted().body(queueChoreService.createQueueChore(queueChoreCDTO));
     }
 
     @DeleteMapping("/queuechore/{queueChoreId}/archive")
