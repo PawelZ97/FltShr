@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class AssignedFrequentChoreDTO {
     private Long id;
     private UserNameDTO assignedUser;
-    private FrequentChoreDTO frequentChoreDTO;
+    private FrequentChoreDTO frequentChore;
     private Timestamp assignDate;
     private Boolean done;
     private Timestamp doneDate;
@@ -19,7 +19,7 @@ public class AssignedFrequentChoreDTO {
         AssignedFrequentChoreDTO dto = new AssignedFrequentChoreDTO();
         dto.setId(entity.getId());
         dto.setAssignedUser(UserNameDTO.valueOf(entity.getAssignedUser()));
-        dto.setFrequentChoreDTO(FrequentChoreDTO.valueOf(entity.getFrequentChore()));
+        dto.setFrequentChore(FrequentChoreDTO.valueOf(entity.getFrequentChore()));
         dto.setAssignDate(entity.getAssignDate());
         dto.setDone(entity.getDone());
         dto.setDoneDate(entity.getDoneDate());

@@ -628,9 +628,9 @@ definitions:
     properties:
       id:
         type: integer
-      user:
+      assignedUser:
         $ref: '#/definitions/UserNameDTO'
-      chore:
+      queueChore:
         $ref: '#/definitions/QueueChoreDTO'
       assignDate:
         type: string
@@ -672,9 +672,9 @@ definitions:
     properties:
       id:
         type: integer
-      user:
+      assignedUser:
         $ref: '#/definitions/UserNameDTO'
-      chore:
+      fequentChore:
         $ref: '#/definitions/FrequentChoreDTO'
       assignDate:
         type: string
