@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 function ExpensesDisplay() {
     let {listId} = useParams();
     const [expensesListItems, setExpensesListItems] = useState([]);
-    const [forceUpdateFlag, setForceUpdateFlag] = useState();
+    const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
         axios
@@ -47,7 +47,7 @@ function ExpensesDisplay() {
                     console.log("Something went wrong");
                 }
             });
-    }, [listId, forceUpdateFlag]);
+    }, [listId, updateFlag]);
 
     function handleDelete(expenseId) {
         axios.delete(API_ADDRESS + '/expense/list/' + listId + '/expense/' + expenseId, {
@@ -56,7 +56,7 @@ function ExpensesDisplay() {
             }
         })
             .then(function (response) {
-                setForceUpdateFlag({});
+                setUpdateFlag(!updateFlag);
                 console.log("Expense Deleted, status: " + response.status);
             })
             .catch(function (error) {
@@ -97,7 +97,7 @@ function ExpensesDisplay() {
                     ))}
                 </List>
             </Paper>
-            <ExpenseCreation listId={listId}/>
+            <ExpenseCreation listId={listId} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
         </Container>
     );
 }

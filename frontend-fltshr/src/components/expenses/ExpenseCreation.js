@@ -72,6 +72,7 @@ function ExpenseCreation(props) {
             .then(function (response) {
                 console.log("Expense created, status: " + response.status);
                 setOpen(false);
+                props.setUpdateFlag(!props.updateFlag);
             })
             .catch(function (error) {
                 if (error.response) {

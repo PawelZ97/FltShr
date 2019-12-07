@@ -17,16 +17,11 @@ function ExpenseListSettleUp(props) {
     const [settleUpSummary, setSettleUpSummary] = useState([]);
 
     const handleOpen = () => {
-        callSettleUpSummary()
+        callSettleUpSummary();
         setOpen(true);
     };
 
     const handleCancel = () => {
-        setOpen(false);
-    };
-
-    const handleSettleUp = () => {
-        callSettleUp();
         setOpen(false);
     };
 
@@ -52,13 +47,15 @@ function ExpenseListSettleUp(props) {
             });
     }
 
-    function callSettleUp() {
+    const handleSettleUp = () => {
         axios.patch(API_ADDRESS + "/manager/expense/list/" + props.listId, null, {
             headers: {
                 'Authorization': localStorage.getItem("authToken")
             }
         })
             .then(function (response) {
+                setOpen(false);
+                props.setUpdateFlag(!props.updateFlag);
                 console.log("ExpenseList SettledUp, status: " + response.status);
             })
             .catch(function (error) {
@@ -70,7 +67,7 @@ function ExpenseListSettleUp(props) {
                     console.log("Something went wrong");
                 }
             });
-    }
+    };
 
     return (
         <div>

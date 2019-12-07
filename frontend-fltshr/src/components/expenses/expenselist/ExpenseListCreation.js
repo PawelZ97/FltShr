@@ -23,17 +23,19 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ExpenseListCreation() {
+function ExpenseListCreation(props) {
     const [open, setOpen] = useState(false);
     const [listName, setListName] = useState("");
 
-    function callPostList() {
+    const handleCreate = () => {
         axios.post(API_ADDRESS + '/expense/list', {name: listName}, {
             headers: {
                 'Authorization': localStorage.getItem("authToken")
             }
         })
             .then(function (response) {
+                setOpen(false);
+                props.setUpdateFlag(!props.updateFlag);
                 console.log("New list created, status: " + response.status);
             })
             .catch(function (error) {
@@ -45,18 +47,13 @@ function ExpenseListCreation() {
                     console.log("Something went wrong");
                 }
             });
-    }
+    };
 
     const handleOpen = () => {
         setOpen(true);
     };
 
     const handleCancel = () => {
-        setOpen(false);
-    };
-
-    const handleCreate = () => {
-        callPostList();
         setOpen(false);
     };
 

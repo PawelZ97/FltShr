@@ -12,6 +12,7 @@ import ExpenseListCreation from "./ExpenseListCreation";
 import {getLoggedUser} from "../../../utils/UserUtils";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ExpenseListSettleUp from "./ExpenseListSettleUp";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 function ExpenseLists() {
     const [expensesLists, setExpensesLists] = useState([]);
+    const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
         axios
@@ -49,14 +51,18 @@ function ExpenseLists() {
                     console.log("Something went wrong");
                 }
             });
-    }, []);
+    }, [updateFlag]);
 
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
-            <Typography className={classes.title} variant={"h5"}>
-                Listy wydatków:
-            </Typography>
+            <Grid container justify={"space-between"} alignItems={"center"}>
+                <Grid item>
+                    <Typography className={classes.title} variant={"h5"}>
+                        Listy wydatków:
+                    </Typography>
+                </Grid>
+            </Grid>
             <Paper>
                 <List>
                     {expensesLists.length === 0 ? (<h3 align={"center"}>Wszystkie listy zamknięte</h3>) : null}
@@ -67,17 +73,20 @@ function ExpenseLists() {
                                 <ListItemText classes={{primary: classes.text}}
                                               primary={expenseList.name}
                                               secondary={expenseList.description}/>
-                                {getLoggedUser().roles === "ROLE_MANAGER"
-                                    ? (<ListItemSecondaryAction>
-                                        <ExpenseListSettleUp listId={expenseList.id}/>
-                                    </ListItemSecondaryAction>) : null}
+                                {getLoggedUser().roles === "ROLE_MANAGER" ? (
+                                    <ListItemSecondaryAction>
+                                        <ExpenseListSettleUp updateFlag={updateFlag}
+                                                             setUpdateFlag={setUpdateFlag}
+                                                             listId={expenseList.id}/>
+                                    </ListItemSecondaryAction>
+                                ) : null}
                             </ListItem>
                             {index !== expensesLists.length - 1 ? (<Divider/>) : null}
                         </div>
                     ))}
                 </List>
             </Paper>
-            <ExpenseListCreation/>
+            <ExpenseListCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
         </Container>
     );
 }
