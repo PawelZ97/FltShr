@@ -80,14 +80,13 @@ public class ShoppingService {
 
     public ShoppingEntryDTO markAsEntryAsBought(Long shoppingEntryId, Long shoppingListId) {
         ShoppingEntry shoppingEntry = shoppingEntryRepository.findByIdAndShoppingListId(shoppingEntryId, shoppingListId);
-        System.out.println("shoppingEntry = " + shoppingEntry);
         shoppingEntry.setIsBought(true);
         shoppingEntry.setBoughtDate(new Timestamp(System.currentTimeMillis()));
         String userName = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
         shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));
         ShoppingEntry setDone = shoppingEntryRepository.save(shoppingEntry);
-        log.info("deleteShoppingEntry() shoppingEntryId: {}, shoppingListId: {}", shoppingEntryId, shoppingListId);
+        log.info("markAsEntryAsBought() shoppingEntryId: {}, shoppingListId: {}", shoppingEntryId, shoppingListId);
         return ShoppingEntryDTO.valueOf(setDone);
     }
 }
