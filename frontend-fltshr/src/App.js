@@ -9,6 +9,7 @@ import ExpenseLists from "./components/expenses/expenselist/ExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
 import DisplayAssignedQueueChores from "./components/chore/queuechores/DisplayAssignedQueueChores";
 import DisplayQueueChore from "./components/chore/queuechores/DisplayQueueChores";
+import DisplayAssignedFrequentChores from "./components/chore/frequentchores/DisplayAssignedFrequentChores";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route exact path="/expense/lists" component={ExpenseLists}/>
                 <Route path="/expense/list/:listId/expenses" children={<ExpensesDisplay/>}/>
                 <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>
+                <Route path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>
                 <Route path="/manager/chores/queuechores" component={DisplayQueueChore}/>
                 <Route exact path="/te" component={TestEndpoint}/>
                 <Redirect from="/" to={"/signin"}/>

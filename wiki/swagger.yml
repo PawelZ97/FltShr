@@ -652,7 +652,7 @@ definitions:
         type: boolean
       durationDays:
         type: integer
-      freqencyDays:
+      frequencyDays:
         type: integer
 
   FrequentChoreCDTO:
@@ -664,7 +664,7 @@ definitions:
         type: string
       durationDays:
         type: integer
-      freqencyDays:
+      frequencyDays:
         type: integer
 
   AssignedFrequentChoreDTO:

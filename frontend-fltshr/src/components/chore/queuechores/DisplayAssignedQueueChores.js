@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 function DisplayAssignedQueueChores(props) {
     const [assignedQueueChores, setAssignedQueueChores] = useState([]);
     const [showHistory, setShowHistory] = useState(false);
-    const [forceUpdateFlag, setForceUpdateFlag] = useState();
+    const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
         let getRequestUrl = (showHistory) ? (API_ADDRESS + "/chores/assignedqueues") : (API_ADDRESS + "/chores/assignedqueues/me");
@@ -56,7 +56,7 @@ function DisplayAssignedQueueChores(props) {
                     console.log("Something went wrong");
                 }
             });
-    }, [showHistory, forceUpdateFlag]);
+    }, [showHistory, updateFlag]);
 
     function handleDone(assignedQueueChoreId) {
         axios
@@ -67,7 +67,7 @@ function DisplayAssignedQueueChores(props) {
             })
             .then(function (response) {
                 console.log("AssignedQueueChore setDone, status: " + response.status);
-                setForceUpdateFlag({});
+                setUpdateFlag(!updateFlag);
             })
             .catch(function (error) {
                 if (error.response) {

@@ -65,7 +65,7 @@ public class FrequetChoreService {
         String requestUsername = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
         List<AssignedFrequentChore> assignedFrequentChores = assignedFrequentChoreRepository
-                .findByAssignedUser_UsernameAndFrequentChore_ArchivedIsFalseAndDoneIsFalse(requestUsername);
+                .findByAssignedUser_UsernameAndFrequentChore_ArchivedIsFalseAndReassignedIsFalseAndDoneIsFalse(requestUsername);
         log.info("getAssignedFrequentChoresTodo() user: {}", requestUsername);
         return assignedFrequentChores.stream().map(AssignedFrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
