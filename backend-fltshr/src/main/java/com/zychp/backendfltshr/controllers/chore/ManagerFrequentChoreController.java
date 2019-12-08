@@ -21,12 +21,10 @@ public class ManagerFrequentChoreController {
         return ResponseEntity.ok(frequetChoreService.getFrequentChores());
     }
 
-    @PostMapping("/frequentchore/user/{userId}/date/{dateFirstAssign}")
-    ResponseEntity<FrequentChoreDTO> createFrequentChore(@PathVariable Long userId,
-                                                         @PathVariable String dateFirstAssign,
-                                                         @RequestBody FrequentChoreCDTO frequentChoreCDTO) {
+    @PostMapping("/frequentchore")
+    ResponseEntity<FrequentChoreDTO> createFrequentChore(@RequestBody FrequentChoreCDTO frequentChoreCDTO) {
         return ResponseEntity.accepted().body(
-                frequetChoreService.createFrequentChore(userId, dateFirstAssign, frequentChoreCDTO));
+                frequetChoreService.createFrequentChore(frequentChoreCDTO));
     }
 
     @DeleteMapping("/frequentchore/{frequentChoreId}/archive")

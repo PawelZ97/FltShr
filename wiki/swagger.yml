@@ -506,25 +506,15 @@ paths:
             type: array
             items:
               $ref: "#/definitions/FrequentChoreDTO"
-  /manager/chores/frequentchore/user/{userId}/date/{dateAssigned}:
+  /manager/chores/frequentchore:
     post:
       tags:
         - Frequent_Chores
       summary: Create new FrequentChores and assign to User
       parameters:
-        - name: userId
-          in: path
-          description: user Id
-          type: integer
-          required: true
-        - name: dateAssigned
-          in: path
-          description: Assign Date String "yyyy-MM-dd hh:mm:ss"
-          type: integer
-          required: true
         - in: body
           name: FrequentChoreCDTO
-          description: FrequentChore creation DTO
+          description: FrequentChore creation DTO  - Assign Date ISO 8601 "yyyy-MM-ddThh:mm:ss"
           schema:
             $ref: "#/definitions/FrequentChoreCDTO"
       responses:
@@ -666,6 +656,10 @@ definitions:
         type: integer
       frequencyDays:
         type: integer
+      user:
+        $ref: '#/definitions/UserNameDTO'
+      date:
+        type: string
 
   AssignedFrequentChoreDTO:
     type:  object

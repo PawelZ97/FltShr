@@ -2,6 +2,7 @@ package com.zychp.backendfltshr.services;
 
 import com.zychp.backendfltshr.model.chore.frequentchores.*;
 import com.zychp.backendfltshr.model.user.User;
+import com.zychp.backendfltshr.model.user.UserNameDTO;
 import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.chore.AssignedFrequentChoreRepository;
 import com.zychp.backendfltshr.repos.chore.FrequentChoreRepository;
@@ -34,7 +35,7 @@ public class FrequetChoreService {
         List<AssignedFrequentChore> choresNotReassigned =
                 assignedFrequentChoreRepository.findByReassignedIsFalseAndFrequentChore_ArchivedIsFalse();
         LocalDateTime now = LocalDateTime.now().withNano(0);
-        for(AssignedFrequentChore readChore: choresNotReassigned) {
+        for (AssignedFrequentChore readChore : choresNotReassigned) {
             LocalDateTime assignTimeDate = readChore.getAssignDate().toLocalDateTime();
             assignTimeDate = assignTimeDate.plusDays(readChore.getFrequentChore().getFrequencyDays()).minusMinutes(5);
             if (assignTimeDate.isBefore(now)) {
@@ -105,14 +106,12 @@ public class FrequetChoreService {
         return found.stream().map(FrequentChoreDTO::valueOf).collect(Collectors.toList());
     }
 
-    public FrequentChoreDTO createFrequentChore(Long userId,
-                                                String dateFirstAssign,
-                                                FrequentChoreCDTO frequentChoreCDTO) {
-        User userRecieved = userRepository.findById(userId).orElseThrow();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public FrequentChoreDTO createFrequentChore(FrequentChoreCDTO frequentChoreCDTO) {
+        User userRecieved = UserNameDTO.valueOf(frequentChoreCDTO.getUser());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date parsed;
         try {
-            parsed = dateFormat.parse(dateFirstAssign);
+            parsed = dateFormat.parse(frequentChoreCDTO.getDate());
         } catch (ParseException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong date format: use \"yyyy-MM-dd hh:mm:ss\"");
         }
