@@ -51,14 +51,15 @@ public class ShoppingController {
         return ResponseEntity.status(HttpStatus.CREATED).body(shoppingService.addShoppingItem(listId, shoppingItemDTO));
     }
 
-    @DeleteMapping("/list/{listId}/item/{itemId}")
-    ResponseEntity deleteShoppingEntry(@PathVariable Long listId, @PathVariable Long itemId) {
-        shoppingService.deleteShoppingEntry(listId, itemId);
+    @DeleteMapping("/list/{shoppingListId}/item/{shoppingEntryId}")
+    ResponseEntity deleteShoppingEntry(@PathVariable Long shoppingListId, @PathVariable Long shoppingEntryId) {
+        shoppingService.deleteShoppingEntry(shoppingEntryId, shoppingListId);
         return ResponseEntity.accepted().build();
     }
 
-    @PatchMapping("/list/{listId}/item/{itemId}")
-    ResponseEntity<ShoppingEntryDTO> markAsEntryAsBought(@PathVariable Long listId, @PathVariable Long itemId) {
-        return ResponseEntity.ok(shoppingService.markAsEntryAsBought(listId, itemId));
+    @PatchMapping("/list/{shoppingListId}/item/{shoppingEntryId}")
+    ResponseEntity<ShoppingEntryDTO> markAsEntryAsBought(@PathVariable Long shoppingListId,
+                                                         @PathVariable Long shoppingEntryId) {
+        return ResponseEntity.ok(shoppingService.markAsEntryAsBought(shoppingEntryId, shoppingListId));
     }
 }

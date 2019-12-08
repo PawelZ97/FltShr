@@ -72,14 +72,14 @@ public class ShoppingService {
         return shoppingItemDTO;
     }
 
-    public void deleteShoppingEntry(Long listId, Long itemId) {
-        ShoppingEntry shoppingEntry = shoppingEntryRepository.findByShoppingListIdAndShoppingItemId(listId, itemId);
+    public void deleteShoppingEntry(Long shoppingEntryId, Long shoppingListId) {
+        ShoppingEntry shoppingEntry = shoppingEntryRepository.findByIdAndShoppingListId(shoppingEntryId, shoppingListId);
         shoppingEntryRepository.delete(shoppingEntry);
-        log.info("deleteShoppingEntry() listId: {}, itemId: {}", listId, itemId);
+        log.info("deleteShoppingEntry() shoppingEntryId: {}, itemId: {}", shoppingEntryId, shoppingListId);
     }
 
-    public ShoppingEntryDTO markAsEntryAsBought(Long listId, Long itemId) {
-        ShoppingEntry shoppingEntry = shoppingEntryRepository.findByShoppingListIdAndShoppingItemId(listId, itemId);
+    public ShoppingEntryDTO markAsEntryAsBought(Long shoppingEntryId, Long shoppingListId) {
+        ShoppingEntry shoppingEntry = shoppingEntryRepository.findByIdAndShoppingListId(shoppingEntryId, shoppingListId);
         System.out.println("shoppingEntry = " + shoppingEntry);
         shoppingEntry.setIsBought(true);
         shoppingEntry.setBoughtDate(new Timestamp(System.currentTimeMillis()));
@@ -87,7 +87,7 @@ public class ShoppingService {
                 .getPrincipal().toString();
         shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));
         ShoppingEntry setDone = shoppingEntryRepository.save(shoppingEntry);
-        log.info("deleteShoppingEntry() listId: {}, itemId: {}", listId, itemId);
+        log.info("deleteShoppingEntry() shoppingEntryId: {}, shoppingListId: {}", shoppingEntryId, shoppingListId);
         return ShoppingEntryDTO.valueOf(setDone);
     }
 }

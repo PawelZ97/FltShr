@@ -8,5 +8,5 @@ import java.util.List;
 public interface ShoppingEntryRepository extends CrudRepository<ShoppingEntry, Long> {
     List<ShoppingEntry> findByShoppingListId(Long shoppingListId);
 
-    ShoppingEntry findByShoppingListIdAndShoppingItemId(Long shoppingListId, Long shoppingItemId);
+    ShoppingEntry findByIdAndShoppingListId(Long shoppingEntryId, Long shoppingListId);
 }
