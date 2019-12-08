@@ -93,7 +93,7 @@ function DisplayAssignedFrequentChores(props) {
                 <Grid container justify={"flex-end"} alignItems={"center"}>
                     <Grid item>
                         <Button variant="contained" color="primary" className={classes.marginTitle}
-                                component="a" href={"/manager/chores/frequentChores"}>
+                                component="a" href={"/manager/chores/frequentchores"}>
                             Zarządzaj obowiązkami
                         </Button>
                     </Grid>

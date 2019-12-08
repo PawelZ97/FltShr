@@ -8,8 +8,9 @@ import TestEndpoint from "./components/TestEndpoint";
 import ExpenseLists from "./components/expenses/expenselist/ExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
 import DisplayAssignedQueueChores from "./components/chore/queuechores/DisplayAssignedQueueChores";
-import DisplayQueueChore from "./components/chore/queuechores/DisplayQueueChores";
+import DisplayQueueChores from "./components/chore/queuechores/DisplayQueueChores";
 import DisplayAssignedFrequentChores from "./components/chore/frequentchores/DisplayAssignedFrequentChores";
+import DisplayFrequentChores from "./components/chore/frequentchores/DisplayFrequentChores";
 
 function App() {
     return (
@@ -23,7 +24,8 @@ function App() {
                 <Route path="/expense/list/:listId/expenses" children={<ExpensesDisplay/>}/>
                 <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>
                 <Route path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>
-                <Route path="/manager/chores/queuechores" component={DisplayQueueChore}/>
+                <Route path="/manager/chores/queuechores" component={DisplayQueueChores}/>
+                <Route path="/manager/chores/frequentchores" component={DisplayFrequentChores}/>
                 <Route exact path="/te" component={TestEndpoint}/>
                 <Redirect from="/" to={"/signin"}/>
             </Switch>

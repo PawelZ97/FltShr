@@ -648,12 +648,12 @@ definitions:
         type: string
       description:
         type: string
-      active:
-        type: boolean
       durationDays:
         type: integer
       frequencyDays:
         type: integer
+      archived:
+        type: boolean
 
   FrequentChoreCDTO:
     type:  object
