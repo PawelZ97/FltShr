@@ -37,7 +37,7 @@ let categories = [
     {
         title: "Zakupy",
         icon: <ShoppingCartTwoToneIcon/>,
-        href: "/shopping"
+        href: "/shopping/lists"
     }
 ];
 

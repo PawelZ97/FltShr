@@ -11,6 +11,7 @@ import DisplayAssignedQueueChores from "./components/chore/queuechores/DisplayAs
 import DisplayQueueChores from "./components/chore/queuechores/DisplayQueueChores";
 import DisplayAssignedFrequentChores from "./components/chore/frequentchores/DisplayAssignedFrequentChores";
 import DisplayFrequentChores from "./components/chore/frequentchores/DisplayFrequentChores";
+import DisplayShoppingLists from "./components/shopping/DisplayShoppingLists";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>
                 <Route path="/manager/chores/queuechores" component={DisplayQueueChores}/>
                 <Route path="/manager/chores/frequentchores" component={DisplayFrequentChores}/>
+                <Route path="/shopping/lists" component={DisplayShoppingLists}/>
                 <Route exact path="/te" component={TestEndpoint}/>
                 <Redirect from="/" to={"/signin"}/>
             </Switch>
