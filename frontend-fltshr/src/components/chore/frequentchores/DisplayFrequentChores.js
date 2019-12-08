@@ -11,6 +11,7 @@ import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
 import AppBarView from "../../AppBarView";
 import FrequentChore from "./FrequentChore";
+import FrequentChoreCreation from "./FrequentChoreCreation";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -92,7 +93,7 @@ function DisplayFrequentChores(props) {
                     ))}
                 </List>
             </Paper>
-            {/*<FrequentChoreCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>*/}
+            <FrequentChoreCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
         </Container>);
 }
 
