@@ -74,7 +74,7 @@ function ShoppingListCreation(props) {
                 <AddIcon/>
             </Fab>
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Utwórz nową listę zalupów</DialogTitle>
+                <DialogTitle id="form-dialog-title">Utwórz nową listę zakupów</DialogTitle>
                 <DialogContent>
                     <TextField
                         onChange={handleTextFieldChange("name")}
