@@ -25,8 +25,12 @@ function FltShrAppBar(props) {
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon onClick={() => props.setOpen(true)}/>
+                <IconButton onClick={() => props.setOpen(true)}
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="menu">
+                    <MenuIcon/>
                 </IconButton>
                 <Typography variant="h5" className={classes.title} component="a" href={"/dashboard"}>
                     FltShr

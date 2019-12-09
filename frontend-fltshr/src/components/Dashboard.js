@@ -35,7 +35,7 @@ function Dashboard() {
     return (
         <List>
             {categories.map((category, index) => (
-                <div>
+                <div key={index}>
                     <DashBoardListItem category={category}/>
                     {index !== categories.length - 1 ? (<Divider/>) : null}
                 </div>))}

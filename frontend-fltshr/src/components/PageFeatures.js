@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import FltShrAppBar from "./FltShrAppBar";
 import {makeStyles, Typography} from "@material-ui/core";
-import {getLoggedUser} from "../utils/UserUtils";
+import {getLoggedUser, isUserLogged} from "../utils/UserUtils";
 import Dashboard from "./Dashboard";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function PageFeatures(props) {
+    let history = useHistory();
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -30,12 +32,18 @@ function PageFeatures(props) {
         setOpen(false);
     };
 
+    const handleSingOut = () => {
+        setOpen(false);
+        localStorage.removeItem("authToken");
+        history.push("/signin");
+    };
+
     const classes = useStyles();
     return (
 
         <div>
             <FltShrAppBar setOpen={setOpen}/>
-            <SwipeableDrawer
+            {isUserLogged() && (<SwipeableDrawer
                 open={open}
                 onClose={handleClose}
                 onOpen={handleOpen}
@@ -45,7 +53,7 @@ function PageFeatures(props) {
                         <Typography className={classes.userPrint}>
                             Zalogowany:
                         </Typography>
-                        <Button variant={"contained"}>
+                        <Button variant={"contained"} onClick={handleSingOut}>
                             Wyloguj
                         </Button>
                     </Grid>
@@ -54,7 +62,7 @@ function PageFeatures(props) {
                     </Typography>
                 </Box>
                 <Dashboard/>
-            </SwipeableDrawer>
+            </SwipeableDrawer>)}
         </div>
     );
 }

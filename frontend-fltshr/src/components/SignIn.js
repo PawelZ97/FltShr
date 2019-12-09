@@ -47,7 +47,7 @@ function SignIn() {
                 console.log("Login Succesfull, status: " + response.status);
                 history.push("/dashboard");
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 if (error.response) {
                     setLoginError(true);
                     console.log("Login Rejected, status: " + error.response.status);
@@ -79,7 +79,7 @@ function SignIn() {
                         name="login"
                         autoComplete="login"
                         autoFocus
-                        error = {loginError}
+                        error={loginError}
 
                     />
                     <TextField
@@ -93,8 +93,8 @@ function SignIn() {
                         label="Hasło"
                         type="password"
                         id="password"
-                        error = {loginError}
-                        helperText= {loginError ? ("Login i/lub hasło niepoprawne. Możesz użyć login: Imię z dużej litery, hasło: user. Nie loguj się na nie swoje konto bo to nieładnie tak.") : null}
+                        error={loginError}
+                        helperText={loginError ? ("Login i/lub hasło niepoprawne. Możesz użyć login: Imię z dużej litery, hasło: user. Nie loguj się na nie swoje konto bo to nieładnie tak.") : null}
                     />
                     <Button onClick={(e) => callLogin(e)} className={classes.signInButton}
                             fullWidth variant="contained" color="primary" size={"large"}> Zaloguj </Button>

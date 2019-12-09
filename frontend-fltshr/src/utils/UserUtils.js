@@ -8,3 +8,8 @@ export const getLoggedUser = () => {
         roles: decoded.roles
     }
 };
+
+export const isUserLogged = () => {
+    let token = localStorage.getItem("authToken");
+    return token !== null;
+};
