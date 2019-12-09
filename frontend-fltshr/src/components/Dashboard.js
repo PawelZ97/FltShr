@@ -6,6 +6,7 @@ import {makeStyles, Paper, Typography} from "@material-ui/core";
 import DashBoardListItem from "./DashbordListItem";
 import AccountBalanceWalletTwoToneIcon from '@material-ui/icons/AccountBalanceWalletTwoTone';
 import EventTwoToneIcon from '@material-ui/icons/EventTwoTone';
+import LoopTwoToneIcon from '@material-ui/icons/LoopTwoTone';
 import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone';
 import Divider from "@material-ui/core/Divider";
 
@@ -26,7 +27,7 @@ let categories = [
     },
     {
         title: "Obowiązki w kolejce",
-        icon: <EventTwoToneIcon/>,
+        icon: <LoopTwoToneIcon/>,
         href: "/chore/assignedqueues"
     },
     {
