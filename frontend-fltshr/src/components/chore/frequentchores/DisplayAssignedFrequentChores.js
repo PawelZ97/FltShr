@@ -18,7 +18,8 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles(theme => ({
     marginTitle: {
-        margin: 20,
+        marginTop: 20,
+        marginBottom: 20
     },
     switch: {
         padding: 20,
@@ -90,23 +91,18 @@ function DisplayAssignedFrequentChores(props) {
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
             {getLoggedUser().roles === "ROLE_MANAGER" && (
-                <Grid container justify={"flex-end"} alignItems={"center"}>
-                    <Grid item>
+                <Grid container justify={"flex-end"}>
+                    <Grid item xs={12} sm={6}>
                         <Button variant="contained" color="primary" className={classes.marginTitle}
-                                component="a" href={"/manager/chores/frequentchores"}>
+                                component="a" href={"/manager/chores/frequentchores"} fullWidth>
                             Zarządzaj obowiązkami
                         </Button>
                     </Grid>
                 </Grid>
             )}
-            <Grid container justify={"space-between"} alignItems={"center"}>
-                <Grid item>
-                    <Typography className={classes.marginTitle} variant={"h5"}>
-                        Twoje obowiązki w kolejce:
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <ButtonGroup color="primary" variant="contained" className={classes.marginTitle}>
+            <Grid container justify={"space-between"} alignItems={"center"} direction={"row-reverse"}>
+                <Grid item xs={12} sm={6}>
+                    <ButtonGroup color="primary" variant="contained" className={classes.marginTitle} fullWidth>
                         <Button onClick={() => setViewMode("TODO")}
                                 disabled={viewMode === "TODO"}>Do zrobienia</Button>
                         <Button onClick={() => setViewMode("USER")}
@@ -114,6 +110,11 @@ function DisplayAssignedFrequentChores(props) {
                         <Button onClick={() => setViewMode("ALL")}
                                 disabled={viewMode === "ALL"}>Historia</Button>
                     </ButtonGroup>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Typography className={classes.marginTitle} variant={"h5"}>
+                        Twoje obowiązki cykliczne:
+                    </Typography>
                 </Grid>
             </Grid>
             <Paper>

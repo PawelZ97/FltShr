@@ -4,7 +4,7 @@ import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import TestEndpoint from "./components/TestEndpoint";
-import ExpenseLists from "./components/expenses/expenselist/ExpenseLists";
+import DisplayExpenseLists from "./components/expenses/expenselist/DisplayExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
 import DisplayAssignedQueueChores from "./components/chore/queuechores/DisplayAssignedQueueChores";
 import DisplayQueueChores from "./components/chore/queuechores/DisplayQueueChores";
@@ -22,7 +22,7 @@ function App() {
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/signup" component={SignUp}/>
                 <Route exact path="/dashboard" component={DashboardDisplay}/>
-                <Route exact path="/expense/lists" component={ExpenseLists}/>
+                <Route exact path="/expense/lists" component={DisplayExpenseLists}/>
                 <Route path="/expense/list/:listId/expenses" children={<ExpensesDisplay/>}/>
                 <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>
                 <Route path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>

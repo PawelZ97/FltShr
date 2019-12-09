@@ -15,7 +15,8 @@ import FrequentChoreCreation from "./FrequentChoreCreation";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        margin: 20
+        marginTop: 20,
+        marginBottom: 20
     }
 }));
 

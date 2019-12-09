@@ -19,14 +19,8 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        paddingTop: 20,
-        paddingLeft: 5
-    },
-    switch: {
-        padding: 20,
-    },
-    buttonManager: {
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: 20
     }
 }));
 
@@ -85,22 +79,18 @@ function DisplayAssignedQueueChores(props) {
         <Container maxWidth="lg" className={"listTitleContainer"}>
             {getLoggedUser().roles === "ROLE_MANAGER" && (
                 <Grid container justify={"flex-end"}>
-                    <Grid item>
-                        <Button variant="contained" color="primary" className={classes.buttonManager}
-                                component="a" href={"/manager/chores/queuechores"}>
+                    <Grid item xs={12} sm={6}>
+                        <Button variant="contained" color="primary" className={classes.title}
+                                component="a" href={"/manager/chores/queuechores"}
+                                fullWidth>
                             Zarządzaj obowiązkami kolejkowymi
                         </Button>
                     </Grid>
                 </Grid>
             )}
-            <Grid container justify={"space-between"} alignItems={"center"}>
-                <Grid item>
-                    <Typography className={classes.title} variant={"h5"}>
-                        Twoje obowiązki w kolejce:
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <FormControlLabel className={classes.switch} control={
+            <Grid container justify={"space-between"} alignItems={"center"} direction={"row-reverse"}>
+                <Grid item xs={12} sm={3}>
+                    <FormControlLabel className={classes.title} control={
                         <Switch checked={showHistory}
                                 onChange={() => setShowHistory(!showHistory)}
                                 value="checkedA"
@@ -108,6 +98,11 @@ function DisplayAssignedQueueChores(props) {
                         />
                     } label="Pokaż historię"
                     />
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                    <Typography className={classes.title} variant={"h5"}>
+                        Twoje obowiązki w kolejce:
+                    </Typography>
                 </Grid>
             </Grid>
             <Paper>

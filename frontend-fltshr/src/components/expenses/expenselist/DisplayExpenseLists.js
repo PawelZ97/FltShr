@@ -18,8 +18,8 @@ import Switch from "@material-ui/core/Switch";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        paddingTop: 30,
-        paddingBottom: 20
+        marginTop: 20,
+        marginBottom: 20
     },
     listItem: {
         height: 80
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ExpenseLists() {
+function DisplayExpenseLists() {
     const [expensesLists, setExpensesLists] = useState([]);
     const [updateFlag, setUpdateFlag] = useState(false);
     const [showSettled, setShowSettled] = useState(false);
@@ -44,7 +44,7 @@ function ExpenseLists() {
             })
             .then(function (response) {
                 setExpensesLists(response.data);
-                console.log("ExpenseLists loaded, status: " + response.status);
+                console.log("DisplayExpenseLists loaded, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {
@@ -60,15 +60,10 @@ function ExpenseLists() {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
-            <Grid container justify={"space-between"} alignItems={"center"}>
-                <Grid item>
-                    <Typography className={classes.title} variant={"h5"}>
-                        Listy wydatków:
-                    </Typography>
-                </Grid>
+            <Grid container justify={"space-between"} alignItems={"center"} direction={"row-reverse"}>
                 {getLoggedUser().roles === "ROLE_MANAGER" ? (
-                    <Grid item>
-                        <FormControlLabel className={classes.switch} control={
+                    <Grid item xs={12} sm={6}>
+                        <FormControlLabel className={classes.title} control={
                             <Switch checked={showSettled}
                                     onChange={() => setShowSettled(!showSettled)}
                                     value="checkedA"
@@ -77,6 +72,11 @@ function ExpenseLists() {
                         } label="Pokaż wyrównane"/>
                     </Grid>
                 ) : null}
+                <Grid item xs={12} sm={6}>
+                    <Typography className={classes.title} variant={"h5"}>
+                        Listy wydatków:
+                    </Typography>
+                </Grid>
             </Grid>
             <Paper>
                 <List>
@@ -88,7 +88,7 @@ function ExpenseLists() {
                                 <ListItemText classes={{primary: classes.text}}
                                               primary={expenseList.name}
                                               secondary={expenseList.description}/>
-                                {getLoggedUser().roles === "ROLE_MANAGER" ? (
+                                {getLoggedUser().roles === "ROLE_MANAGER" && !showSettled ? (
                                     <ListItemSecondaryAction>
                                         <ExpenseListSettleUp updateFlag={updateFlag}
                                                              setUpdateFlag={setUpdateFlag}
@@ -106,4 +106,4 @@ function ExpenseLists() {
     );
 }
 
-export default PageViewHoc(ExpenseLists);
+export default PageViewHoc(DisplayExpenseLists);

@@ -24,6 +24,10 @@ const useStyles = makeStyles(theme => ({
         bottom: 50,
         left: "auto",
         position: "fixed"
+    },
+    marginInput: {
+        marginTop: 20,
+        marginBottom: 20,
     }
 }));
 
@@ -83,6 +87,7 @@ function ExpenseListCreation(props) {
                         label="Nazwa nowej listy"
                         type="text"
                         fullWidth
+                        className={classes.marginInput}
                     />
                 </DialogContent>
                 <DialogActions>

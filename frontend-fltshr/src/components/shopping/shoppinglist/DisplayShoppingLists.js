@@ -16,7 +16,8 @@ import {getLoggedUser} from "../../../utils/UserUtils";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        margin: 20
+        marginTop: 20,
+        marginBottom: 20
     }
 }));
 

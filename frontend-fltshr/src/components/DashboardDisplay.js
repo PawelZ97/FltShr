@@ -6,7 +6,8 @@ import PageViewHoc from "./PageViewHoc";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        margin: 20
+        marginTop: 20,
+        marginBottom: 20
     }
 }));
 

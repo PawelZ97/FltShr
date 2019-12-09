@@ -32,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     },
     marginInput: {
         marginTop: 20,
+        marginBottom: 20
     }
 }));
 

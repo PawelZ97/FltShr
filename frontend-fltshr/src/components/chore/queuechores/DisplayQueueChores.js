@@ -15,8 +15,8 @@ import QueueChoreCreation from "./QueueChoreCreation";
 
 const useStyles = makeStyles(theme => ({
     title: {
-        paddingTop: 30,
-        paddingBottom: 20
+        marginTop: 30,
+        marginBottom: 20
     }
 }));
 
