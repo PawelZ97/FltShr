@@ -13,6 +13,7 @@ import DisplayFrequentChores from "./components/chore/frequentchores/DisplayFreq
 import DisplayShoppingLists from "./components/shopping/shoppinglist/DisplayShoppingLists";
 import DisplayShoppingEntries from "./components/shopping/DisplayShoppingEntries";
 import DashboardDisplay from "./components/DashboardDisplay";
+import ExpenseCreation from "./components/expenses/ExpenseCreation";
 
 function App() {
     return (
@@ -23,7 +24,8 @@ function App() {
                 <Route exact path="/signup" component={SignUp}/>
                 <Route exact path="/dashboard" component={DashboardDisplay}/>
                 <Route exact path="/expense/lists" component={DisplayExpenseLists}/>
-                <Route path="/expense/list/:listId/expenses" children={<ExpensesDisplay/>}/>
+                <Route path="/expense/list/:listId/display" children={<ExpensesDisplay/>}/>
+                <Route path="/expense/list/:listId/create" children={<ExpenseCreation/>}/>
                 <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>
                 <Route path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>
                 <Route path="/manager/chores/queuechores" component={DisplayQueueChores}/>

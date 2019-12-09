@@ -84,7 +84,7 @@ function DisplayExpenseLists() {
                     {expensesLists.map((expenseList, index) => (
                         <div key={expenseList.id}>
                             <ListItem className={classes.listItem} button component="a"
-                                      href={"/expense/list/" + expenseList.id + "/expenses"}>
+                                      href={"/expense/list/" + expenseList.id + "/display"}>
                                 <ListItemText classes={{primary: classes.text}}
                                               primary={expenseList.name}
                                               secondary={expenseList.description}/>
