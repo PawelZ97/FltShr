@@ -1,38 +1,24 @@
 import React, {useState} from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import {makeStyles} from "@material-ui/core";
+import {useHistory} from "react-router-dom"
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
-import useTheme from "@material-ui/core/styles/useTheme";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
-import Grid from "@material-ui/core/Grid";
+import {makeStyles} from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import TopDialogBar from "../../TopDialogBar";
-
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
-    fab: {
-        margin: 0,
-        top: "auto",
-        right: 50,
-        bottom: 50,
-        left: "auto",
-        position: "fixed"
-    },
     marginInput: {
         marginTop: 20,
         marginBottom: 20,
     }
 }));
 
-function ExpenseListCreation(props) {
-    const [open, setOpen] = useState(false);
+function ExpenseListCreation() {
+    let history = useHistory();
+
     const [listName, setListName] = useState("");
 
     const handleCreate = () => {
@@ -42,9 +28,8 @@ function ExpenseListCreation(props) {
             }
         })
             .then(function (response) {
-                setOpen(false);
-                props.setUpdateFlag(!props.updateFlag);
                 console.log("New list created, status: " + response.status);
+                history.goBack();
             })
             .catch(function (error) {
                 if (error.response) {
@@ -57,54 +42,39 @@ function ExpenseListCreation(props) {
             });
     };
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
     const handleCancel = () => {
-        setOpen(false);
+        history.goBack();
     };
 
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const buttonsJustify = fullScreen ? "space-evenly" : "flex-end";
     const classes = useStyles();
     return (
         <div>
-            <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleOpen}>
-                <AddIcon/>
-            </Fab>
-            <Dialog open={open} onClose={handleCancel}
-                    fullScreen={fullScreen} aria-labelledby="form-dialog-title">
-                {fullScreen && (<TopDialogBar text={"Nowa lista wydatków"}/>)}
-                {!fullScreen && (<DialogTitle id="form-dialog-title">Nowa lista wydatków</DialogTitle>)}
-                <DialogContent>
-                    <TextField
-                        onChange={event => setListName(event.target.value)}
-                        value={listName}
-                        autoFocus
-                        id="name"
-                        label="Nazwa nowej listy"
-                        type="text"
-                        fullWidth
-                        className={classes.marginInput}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Grid container spacing={3} justify={buttonsJustify} alignItems={"center"}>
-                        <Grid item xs={6}>
-                            <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
-                                Anuluj
-                            </Button>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button onClick={handleCreate} variant="contained" color="primary" fullWidth>
-                                Utwórz
-                            </Button>
-                        </Grid>
+            <TopDialogBar text={"Nowa lista wydatków"}/>
+            <Container maxWidth="sm">
+
+                <TextField
+                    onChange={event => setListName(event.target.value)}
+                    value={listName}
+                    autoFocus
+                    id="name"
+                    label="Nazwa nowej listy"
+                    type="text"
+                    fullWidth
+                    className={classes.marginInput}
+                />
+                <Grid container spacing={3} justify={"space-evenly"} alignItems={"center"}>
+                    <Grid item xs={6}>
+                        <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
+                            Anuluj
+                        </Button>
                     </Grid>
-                </DialogActions>
-            </Dialog>
+                    <Grid item xs={6}>
+                        <Button onClick={handleCreate} variant="contained" color="primary" fullWidth>
+                            Utwórz
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Container>
         </div>
     );
 }

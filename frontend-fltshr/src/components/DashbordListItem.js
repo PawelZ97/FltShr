@@ -1,4 +1,5 @@
 import React from "react";
+import {useHistory} from "react-router-dom"
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import {makeStyles} from "@material-ui/core/styles";
@@ -13,23 +14,19 @@ const useStyles = makeStyles({
     }
 });
 
-function RecipeListItem(props) {
+function DashboardListItem(props) {
+    let history = useHistory();
     const classes = useStyles();
     return (
-        <ListItemLink href={props.category.href}>
+        <ListItem button onClick={() => history.push(props.category.href)}>
             <ListItemIcon>
                 {props.category.icon}
             </ListItemIcon>
             <ListItemText classes={{primary: classes.text}}
                 primary={props.category.title}
             />
-        </ListItemLink>
+        </ListItem>
     );
 }
 
-function ListItemLink(props) {
-    const classes = useStyles();
-    return <ListItem button component="a" className={classes.listItem} {...props} />;
-}
-
-export default RecipeListItem;
+export default DashboardListItem;

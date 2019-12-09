@@ -14,6 +14,7 @@ import DisplayShoppingLists from "./components/shopping/shoppinglist/DisplayShop
 import DisplayShoppingEntries from "./components/shopping/DisplayShoppingEntries";
 import DashboardDisplay from "./components/DashboardDisplay";
 import ExpenseCreation from "./components/expenses/ExpenseCreation";
+import ExpenseListCreation from "./components/expenses/expenselist/ExpenseListCreation";
 
 function App() {
     return (
@@ -23,7 +24,8 @@ function App() {
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/signup" component={SignUp}/>
                 <Route exact path="/dashboard" component={DashboardDisplay}/>
-                <Route exact path="/expense/lists" component={DisplayExpenseLists}/>
+                <Route exact path="/expense/lists/display" component={DisplayExpenseLists}/>
+                <Route exact path="/expense/lists/create" component={ExpenseListCreation}/>
                 <Route path="/expense/list/:listId/display" children={<ExpensesDisplay/>}/>
                 <Route path="/expense/list/:listId/create" children={<ExpenseCreation/>}/>
                 <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>

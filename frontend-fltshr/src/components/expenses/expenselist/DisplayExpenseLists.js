@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom"
+import axios from "axios";
+import {API_ADDRESS} from "../../../utils/constants";
+import AddIcon from "@material-ui/icons/Add";
 import PageViewHoc from "../../PageViewHoc";
+import Fab from "@material-ui/core/Fab";
 import Container from "@material-ui/core/Container"
 import List from "@material-ui/core/List";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
-import axios from "axios";
-import {API_ADDRESS} from "../../../utils/constants";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ExpenseListCreation from "./ExpenseListCreation";
 import {getLoggedUser} from "../../../utils/UserUtils";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ExpenseListSettleUp from "./ExpenseListSettleUp";
@@ -26,10 +28,20 @@ const useStyles = makeStyles(theme => ({
     },
     text: {
         fontSize: "1.2rem",
+    },
+    fab: {
+        margin: 0,
+        top: "auto",
+        right: 50,
+        bottom: 50,
+        left: "auto",
+        position: "fixed"
     }
 }));
 
 function DisplayExpenseLists() {
+    let history = useHistory();
+
     const [expensesLists, setExpensesLists] = useState([]);
     const [updateFlag, setUpdateFlag] = useState(false);
     const [showSettled, setShowSettled] = useState(false);
@@ -57,10 +69,11 @@ function DisplayExpenseLists() {
             });
     }, [updateFlag, showSettled]);
 
+    let direction = (getLoggedUser().roles === "ROLE_MANAGER") ? "row-reverse" : "row";
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
-            <Grid container justify={"space-between"} alignItems={"center"} direction={"row-reverse"}>
+            <Grid container justify={"space-between"} alignItems={"center"} direction={direction}>
                 {getLoggedUser().roles === "ROLE_MANAGER" ? (
                     <Grid item xs={12} sm={6}>
                         <FormControlLabel className={classes.title} control={
@@ -101,7 +114,10 @@ function DisplayExpenseLists() {
                     ))}
                 </List>
             </Paper>
-            <ExpenseListCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
+            <Fab color="secondary" aria-label="add" className={classes.fab}
+                 onClick={() => history.push("/expense/lists/create")}>
+                <AddIcon/>
+            </Fab>
         </Container>
     );
 }
