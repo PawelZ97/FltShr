@@ -9,7 +9,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import ArchiveIcon from '@material-ui/icons/Archive';
 import Divider from "@material-ui/core/Divider";
-import AppBarView from "../../AppBarView";
+import PageViewHoc from "../../PageViewHoc";
 import ShoppingList from "./ShoppingList";
 import ShoppingListCreation from "./ShoppingListCreation";
 import {getLoggedUser} from "../../../utils/UserUtils";
@@ -102,4 +102,4 @@ function DisplayShoppingLists(props) {
     );
 }
 
-export default AppBarView(DisplayShoppingLists);
+export default PageViewHoc(DisplayShoppingLists);

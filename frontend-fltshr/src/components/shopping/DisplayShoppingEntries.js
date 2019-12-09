@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import Divider from "@material-ui/core/Divider";
-import AppBarView from "../AppBarView";
+import PageViewHoc from "../PageViewHoc";
 import ShoppingEntryCreation from "./ShoppingEntryCreation";
 import ShoppingEntry from "./ShoppingEntry";
 
@@ -134,4 +134,4 @@ function DisplayShoppingEntries(props) {
     );
 }
 
-export default AppBarView(DisplayShoppingEntries);
+export default PageViewHoc(DisplayShoppingEntries);

@@ -20,13 +20,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function FltShrAppBar() {
+function FltShrAppBar(props) {
     const classes = useStyles();
     return (
         <AppBar position="static">
             <Toolbar>
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon/>
+                    <MenuIcon onClick={() => props.setOpen(true)}/>
                 </IconButton>
                 <Typography variant="h5" className={classes.title} component="a" href={"/dashboard"}>
                     FltShr

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import AppBarView from "../../AppBarView";
+import PageViewHoc from "../../PageViewHoc";
 import Container from "@material-ui/core/Container"
 import List from "@material-ui/core/List";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
@@ -106,4 +106,4 @@ function ExpenseLists() {
     );
 }
 
-export default AppBarView(ExpenseLists);
+export default PageViewHoc(ExpenseLists);

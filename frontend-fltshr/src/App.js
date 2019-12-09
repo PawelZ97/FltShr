@@ -3,7 +3,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import Dashboard from "./components/Dashboard";
 import TestEndpoint from "./components/TestEndpoint";
 import ExpenseLists from "./components/expenses/expenselist/ExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
@@ -13,6 +12,7 @@ import DisplayAssignedFrequentChores from "./components/chore/frequentchores/Dis
 import DisplayFrequentChores from "./components/chore/frequentchores/DisplayFrequentChores";
 import DisplayShoppingLists from "./components/shopping/shoppinglist/DisplayShoppingLists";
 import DisplayShoppingEntries from "./components/shopping/DisplayShoppingEntries";
+import DashboardDisplay from "./components/DashboardDisplay";
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
             <Switch>
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/signup" component={SignUp}/>
-                <Route exact path="/dashboard" component={Dashboard}/>
+                <Route exact path="/dashboard" component={DashboardDisplay}/>
                 <Route exact path="/expense/lists" component={ExpenseLists}/>
                 <Route path="/expense/list/:listId/expenses" children={<ExpensesDisplay/>}/>
                 <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>

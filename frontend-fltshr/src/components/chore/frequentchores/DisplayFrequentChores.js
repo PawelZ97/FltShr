@@ -9,7 +9,7 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import Divider from "@material-ui/core/Divider";
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
-import AppBarView from "../../AppBarView";
+import PageViewHoc from "../../PageViewHoc";
 import FrequentChore from "./FrequentChore";
 import FrequentChoreCreation from "./FrequentChoreCreation";
 
@@ -97,4 +97,4 @@ function DisplayFrequentChores(props) {
         </Container>);
 }
 
-export default AppBarView(DisplayFrequentChores);
+export default PageViewHoc(DisplayFrequentChores);

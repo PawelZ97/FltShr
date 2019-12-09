@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom"
-import AppBarView from "../AppBarView";
+import PageViewHoc from "../PageViewHoc";
 import Container from "@material-ui/core/Container"
 import List from "@material-ui/core/List";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
@@ -102,4 +102,4 @@ function ExpensesDisplay() {
     );
 }
 
-export default AppBarView(ExpensesDisplay);
+export default PageViewHoc(ExpensesDisplay);

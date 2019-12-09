@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import AppBarView from "../../AppBarView";
+import PageViewHoc from "../../PageViewHoc";
 import Container from "@material-ui/core/Container";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List";
@@ -135,4 +135,4 @@ function DisplayAssignedQueueChores(props) {
     );
 }
 
-export default AppBarView(DisplayAssignedQueueChores);
+export default PageViewHoc(DisplayAssignedQueueChores);

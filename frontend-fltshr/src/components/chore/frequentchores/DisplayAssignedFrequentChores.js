@@ -9,7 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
-import AppBarView from "../../AppBarView";
+import PageViewHoc from "../../PageViewHoc";
 import {API_ADDRESS} from "../../../utils/constants";
 import axios from "axios";
 import AssignedFrequentChore from "./AssignedFrequentChore";
@@ -142,4 +142,4 @@ function DisplayAssignedFrequentChores(props) {
     );
 }
 
-export default AppBarView(DisplayAssignedFrequentChores);
+export default PageViewHoc(DisplayAssignedFrequentChores);

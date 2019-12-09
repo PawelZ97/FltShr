@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useHistory} from "react-router-dom";
-import AppBarView from "./AppBarView";
+import PageViewHoc from "./PageViewHoc";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -174,4 +174,4 @@ function SignUp() {
     );
 }
 
-export default AppBarView(SignUp);
+export default PageViewHoc(SignUp);
