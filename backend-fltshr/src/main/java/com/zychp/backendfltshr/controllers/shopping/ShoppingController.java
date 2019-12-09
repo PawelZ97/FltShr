@@ -29,12 +29,6 @@ public class ShoppingController {
                 .body(shoppingService.createNewShoppingList(shoppingListCDTO));
     }
 
-    @DeleteMapping("/list/{ListId}/archive")
-    ResponseEntity deleteShoppingList(@PathVariable Long ListId) {
-        shoppingService.archiveShoppingList(ListId);
-        return ResponseEntity.accepted().build();
-    }
-
     @GetMapping("/items")
     ResponseEntity<List<ShoppingItemDTO>> getShoppingItems() {
         return ResponseEntity.ok(shoppingService.getShoppingItems());

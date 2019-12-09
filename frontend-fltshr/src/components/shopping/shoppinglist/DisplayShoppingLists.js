@@ -48,7 +48,7 @@ function DisplayShoppingLists(props) {
 
     function handleArchive(shoppingListId) {
         axios
-            .delete(API_ADDRESS + "/shopping/list/" + shoppingListId + "/archive", {
+            .delete(API_ADDRESS + "/manager/shopping/list/" + shoppingListId + "/archive", {
                 headers: {
                     'Authorization': localStorage.getItem("authToken")
                 }

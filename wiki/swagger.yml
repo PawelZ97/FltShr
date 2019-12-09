@@ -104,7 +104,7 @@ paths:
           schema:
             type: object
             $ref: "#/definitions/ShoppingListDTO"
-  /shopping/list/{listId}/archive:
+  /manager/shopping/list/{listId}/archive:
     delete:
       tags:
         - Shopping_Lists
