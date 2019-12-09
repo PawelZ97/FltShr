@@ -86,6 +86,7 @@ public class QueueChoreService {
         firstCreated.setQueueChore(created);
         firstCreated.setDone(false);
         firstCreated.setAssignedUser(firstUser);
+        firstCreated.setAssignDate(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
         assignedQueueChoreRepository.save(firstCreated);
 
         log.info("createQueueChore() queueChoreCDTO: {}", queueChoreCDTO);

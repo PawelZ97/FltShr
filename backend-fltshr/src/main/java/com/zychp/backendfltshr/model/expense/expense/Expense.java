@@ -6,7 +6,6 @@ import com.zychp.backendfltshr.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -41,7 +40,6 @@ public class Expense {
     @JoinColumn(name = "paid_by", nullable = false)
     private User paidBy;
 
-    @CreationTimestamp
     @Column(name = "bought_date")
     private Timestamp boughtDate;
 

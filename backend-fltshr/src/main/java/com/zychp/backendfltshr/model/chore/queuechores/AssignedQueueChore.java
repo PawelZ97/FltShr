@@ -4,7 +4,6 @@ import com.zychp.backendfltshr.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,7 +27,6 @@ public class AssignedQueueChore {
     @JoinColumn(name = "chore", nullable = false)
     private QueueChore queueChore;
 
-    @CreationTimestamp
     @Column(name = "assign_date")
     private Timestamp assignDate;
 
