@@ -165,7 +165,7 @@ function SignUp() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary" autoFocus>
+                    <Button onClick={handleClose} variant={"contained"} color="primary" autoFocus fullWidth>
                         OK
                     </Button>
                 </DialogActions>

@@ -11,6 +11,10 @@ import {API_ADDRESS} from "../../../utils/constants";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
+import TopDialogBar from "../../TopDialogBar";
+import Grid from "@material-ui/core/Grid";
 
 function ExpenseListSettleUp(props) {
     const [open, setOpen] = useState(false);
@@ -69,6 +73,9 @@ function ExpenseListSettleUp(props) {
             });
     };
 
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const buttonsJustify = fullScreen ? "space-evenly" : "flex-end";
     return (
         <div>
             <IconButton edge="end" aria-label="delete"
@@ -78,8 +85,10 @@ function ExpenseListSettleUp(props) {
             <Dialog open={open}
                     onClose={handleCancel}
                     fullWidth={true}
+                    fullScreen={fullScreen}
                     aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Podsumowanie wyrównania</DialogTitle>
+                {fullScreen && (<TopDialogBar text={"Podsumowanie listy"}/>)}
+                {!fullScreen && (<DialogTitle id="form-dialog-title">Podsumowanie listy</DialogTitle>)}
                 <DialogContent>
                     <List>
                         {settleUpSummary.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
@@ -93,12 +102,18 @@ function ExpenseListSettleUp(props) {
                     </List>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">
-                        Anuluj
-                    </Button>
-                    <Button onClick={handleSettleUp} variant="contained" color="primary">
-                        Wyrównaj i zamknij listę
-                    </Button>
+                    <Grid container spacing={3} justify={buttonsJustify} alignItems={"center"}>
+                        <Grid item xs={6}>
+                            <Button onClick={handleCancel} variant="outlined" color="secondary" fullWidth>
+                                Anuluj
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button onClick={handleSettleUp} variant="contained" color="primary" fullWidth>
+                                Wyrównaj i zamknij listę
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </DialogActions>
             </Dialog></div>
     );

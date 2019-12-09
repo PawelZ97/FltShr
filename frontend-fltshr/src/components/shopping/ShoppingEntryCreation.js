@@ -11,6 +11,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import TopDialogBar from "../TopDialogBar";
+import Grid from "@material-ui/core/Grid";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useTheme from "@material-ui/core/styles/useTheme";
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -113,14 +117,18 @@ function ShoppingEntryCreation(props) {
         setOpen(false);
     };
 
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const buttonsJustify = fullScreen ? "space-evenly" : "flex-end";
     const classes = useStyles();
     return (
         <div>
             <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleOpen}>
                 <AddIcon/>
             </Fab>
-            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Utwórz nowy obowiązek kolejkowy</DialogTitle>
+            <Dialog open={open} onClose={handleCancel} fullScreen={fullScreen} aria-labelledby="form-dialog-title">
+                {fullScreen && (<TopDialogBar text={"Nowy wpis listy"}/>)}
+                {!fullScreen && (<DialogTitle id="form-dialog-title">Nowy wpis listy</DialogTitle>)}
                 <DialogContent>
                     <Autocomplete
                         freeSolo
@@ -163,12 +171,18 @@ function ShoppingEntryCreation(props) {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">
-                        Anuluj
-                    </Button>
-                    <Button onClick={handleCreate} variant="contained" color="primary">
-                        Utwórz
-                    </Button>
+                    <Grid container spacing={3} justify={buttonsJustify} alignItems={"center"}>
+                        <Grid item xs={6}>
+                            <Button onClick={handleCancel} color="secondary" fullWidth>
+                                Anuluj
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button onClick={handleCreate} variant="contained" color="primary" fullWidth>
+                                Utwórz
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </DialogActions>
             </Dialog>
         </div>

@@ -13,6 +13,10 @@ import {API_ADDRESS} from "../../../utils/constants";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import Grid from "@material-ui/core/Grid";
+import TopDialogBar from "../../TopDialogBar";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useTheme from "@material-ui/core/styles/useTheme";
 
 const useStyles = makeStyles(theme => ({
     fab: {
@@ -97,14 +101,20 @@ function QueueChoreCreation(props) {
         setOpen(false);
     };
 
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const buttonsJustify = fullScreen ? "space-evenly" : "flex-end";
     const classes = useStyles();
     return (
         <div>
             <Fab color="secondary" aria-label="add" className={classes.fab} onClick={handleOpen}>
                 <AddIcon/>
             </Fab>
-            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Utwórz nowy obowiązek kolejkowy</DialogTitle>
+            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title"
+                    fullScreen={fullScreen}>
+
+                {fullScreen && (<TopDialogBar text={"Nowa kolejka"}/>)}
+                {!fullScreen && (<DialogTitle id="form-dialog-title">Nowy kolejka</DialogTitle>)}
                 <DialogContent>
                     <TextField
                         onChange={handleTextFieldChange('name')}
@@ -119,7 +129,6 @@ function QueueChoreCreation(props) {
                     <TextField
                         onChange={handleTextFieldChange('description')}
                         value={queueChore.description}
-                        autoFocus
                         id="description"
                         label="Opis"
                         type="text"
@@ -141,12 +150,18 @@ function QueueChoreCreation(props) {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">
-                        Anuluj
-                    </Button>
-                    <Button onClick={handleCreate} variant="contained" color="primary">
-                        Utwórz
-                    </Button>
+                    <Grid container spacing={3} justify={buttonsJustify} alignItems={"center"}>
+                        <Grid item xs={6}>
+                            <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
+                                Anuluj
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button onClick={handleCreate} variant="contained" color="primary" fullWidth>
+                                Utwórz
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </DialogActions>
             </Dialog>
         </div>
