@@ -97,9 +97,9 @@ function ExpenseUnequalCreation(props) {
             </ButtonGroup>
             <Table>
                 <colgroup>
-                    <col style={{width: '33%'}}/>
-                    <col style={{width: '33%'}}/>
-                    <col style={{width: '33%'}}/>
+                    <col style={{width: '37%'}}/>
+                    <col style={{width: '25%'}}/>
+                    <col style={{width: '37%'}}/>
                 </colgroup>
                 <TableHead>
                     <TableRow>

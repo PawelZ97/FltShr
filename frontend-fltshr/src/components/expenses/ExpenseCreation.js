@@ -15,6 +15,10 @@ import Switch from "@material-ui/core/Switch";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ExpenseUnequalCreation from "./ExpenseUnequalCreation";
 import Paper from "@material-ui/core/Paper";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useTheme from "@material-ui/core/styles/useTheme";
+import TopDialogBar from "../TopDialogBar";
+import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles(theme => ({
@@ -104,6 +108,9 @@ function ExpenseCreation(props) {
         });
     };
 
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const buttonsJustify = fullScreen ? "space-evenly" : "flex-end";
     const classes = useStyles();
     return (
         <div>
@@ -112,9 +119,11 @@ function ExpenseCreation(props) {
             </Fab>
             <Dialog open={open}
                     onClose={handleCancel}
+                    fullScreen={fullScreen}
                     fullWidth={true}
                     aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Wprowadź nowy wydatek</DialogTitle>
+                {fullScreen && (<TopDialogBar text={"Nowy wydatek"}/>)}
+                {!fullScreen && (<DialogTitle id="form-dialog-title">Nowy wydatek</DialogTitle>)}
                 <DialogContent>
                     <TextField
                         autoFocus
@@ -158,21 +167,26 @@ function ExpenseCreation(props) {
                         label="Podział nierównomierny"
                     />
                     {expense.unequalType ? (
-                        <Paper className={classes.marginInput}>
+                        <Paper className={classes.marginInput} fullWidth>
                             <ExpenseUnequalCreation unequalType={expense.unequalType}
                                                     setUnequalType={setUnequalType}
                                                     expenseUnequals={expense.expenseUnequals}
                                                     setExpenseUnequals={setExpenseUnequals}/>
                         </Paper>) : null}
-
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCancel} color="secondary">
-                        Anuluj
-                    </Button>
-                    <Button onClick={handleOk} variant="contained" color="primary">
-                        Ok
-                    </Button>
+                    <Grid container spacing={3} justify={buttonsJustify}>
+                        <Grid item xs={6}>
+                            <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
+                                Anuluj
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Button onClick={handleOk} variant="contained" color="primary" fullWidth>
+                                Ok
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </DialogActions>
             </Dialog>
         </div>
