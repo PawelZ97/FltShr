@@ -94,7 +94,7 @@ paths:
       summary: Crate new shopping list
       parameters:
         - in: body
-          name: ShoppingListDTO
+          name: ShoppingListCDTO
           description: Shopping list to create.
           schema:
             $ref: "#/definitions/ShoppingListCDTO"

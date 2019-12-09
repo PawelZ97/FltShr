@@ -46,9 +46,10 @@ public class ShoppingController {
     }
 
     @PostMapping("/list/{listId}/item")
-    ResponseEntity<ShoppingItemDTO> addShoppingItem(@PathVariable Long listId,
-                                                    @RequestBody ShoppingItemDTO shoppingItemDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(shoppingService.addShoppingItem(listId, shoppingItemDTO));
+    ResponseEntity<ShoppingItemDTO> createShoppingEntry(@PathVariable Long listId,
+                                                        @RequestBody ShoppingItemDTO shoppingItemDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(shoppingService.createShoppingEntry(listId, shoppingItemDTO));
     }
 
     @DeleteMapping("/list/{shoppingListId}/item/{shoppingEntryId}")

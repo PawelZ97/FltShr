@@ -58,10 +58,12 @@ public class ShoppingService {
         return shoppingEntries.stream().map(ShoppingEntryDTO::valueOf).collect(Collectors.toList());
     }
 
-    public ShoppingItemDTO addShoppingItem(Long listId, ShoppingItemDTO shoppingItemDTO) {
-        ShoppingItem shoppingItem = shoppingItemRepository.findById(shoppingItemDTO.getId()).orElse(null);
-        if (shoppingItem == null) {
+    public ShoppingItemDTO createShoppingEntry(Long listId, ShoppingItemDTO shoppingItemDTO) {
+        ShoppingItem shoppingItem;
+        if (shoppingItemDTO.getId() == null) {
             shoppingItem = shoppingItemRepository.save(ShoppingItemDTO.valueOf(shoppingItemDTO));
+        } else {
+            shoppingItem = shoppingItemRepository.findById(shoppingItemDTO.getId()).orElse(null);
         }
         ShoppingList shoppingList = shoppingListRepository.findById(listId).orElseThrow();
         if (shoppingList.getArchived()) {
