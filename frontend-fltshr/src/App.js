@@ -16,6 +16,7 @@ import DashboardDisplay from "./components/DashboardDisplay";
 import ExpenseCreation from "./components/expenses/ExpenseCreation";
 import ExpenseListCreation from "./components/expenses/expenselist/ExpenseListCreation";
 import ExpenseListSettleUp from "./components/expenses/expenselist/ExpenseListSettleUp";
+import QueueChoreCreation from "./components/chore/queuechores/QueueChoreCreation";
 
 function App() {
     return (
@@ -27,15 +28,16 @@ function App() {
                 <Route exact path="/dashboard" component={DashboardDisplay}/>
                 <Route exact path="/expense/lists/display" component={DisplayExpenseLists}/>
                 <Route exact path="/expense/lists/create" component={ExpenseListCreation}/>
-                <Route path="/expense/list/:listId/display" children={<ExpensesDisplay/>}/>
-                <Route path="/expense/list/:listId/create" children={<ExpenseCreation/>}/>
-                <Route path="/expense/list/:listId/settleup" children={<ExpenseListSettleUp/>}/>
-                <Route path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>
-                <Route path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>
-                <Route path="/manager/chores/queuechores" component={DisplayQueueChores}/>
-                <Route path="/manager/chores/frequentchores" component={DisplayFrequentChores}/>
-                <Route path="/shopping/lists" component={DisplayShoppingLists}/>
-                <Route path="/shopping/list/:listId/entries" children={<DisplayShoppingEntries/>}/>
+                <Route exact path="/expense/list/:listId/display" children={<ExpensesDisplay/>}/>
+                <Route exact path="/expense/list/:listId/create" children={<ExpenseCreation/>}/>
+                <Route exact path="/expense/list/:listId/settleup" children={<ExpenseListSettleUp/>}/>
+                <Route exact path="/chore/assignedqueues" component={DisplayAssignedQueueChores}/>
+                <Route exact path="/chore/assignedfrequents" component={DisplayAssignedFrequentChores}/>
+                <Route exact path="/manager/chores/queuechores" component={DisplayQueueChores}/>
+                <Route exact path="/manager/chores/queuechores/create" component={QueueChoreCreation}/>
+                <Route exact path="/manager/chores/frequentchores" component={DisplayFrequentChores}/>
+                <Route exact path="/shopping/lists" component={DisplayShoppingLists}/>
+                <Route exact path="/shopping/list/:listId/entries" children={<DisplayShoppingEntries/>}/>
                 <Route exact path="/te" component={TestEndpoint}/>
                 <Redirect from="/" to={"/signin"}/>
             </Switch>
