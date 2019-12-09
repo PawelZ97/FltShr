@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.services;
 
+import com.zychp.backendfltshr.constant.TimeZoneOffset;
 import com.zychp.backendfltshr.model.user.Role;
 import com.zychp.backendfltshr.model.user.User;
 import com.zychp.backendfltshr.model.user.UserNameDTO;
@@ -55,14 +56,14 @@ public class UserService {
         registeredUser.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         registeredUser.setEmail(userRegistrationDTO.getEmail());
         registeredUser.setRole(Role.ROLE_USER);
-        registeredUser.setRegistration_date(new Timestamp(System.currentTimeMillis()));
+        registeredUser.setRegistration_date(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
         registeredUser.setEmailVerified(false);
 
         userRepository.save(registeredUser);
 
         String verify_token = Jwts.builder()
                 .setSubject(userRegistrationDTO.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+                .setExpiration(new Date(TimeZoneOffset.getTimeZoneWithOffset() + TOKEN_EXPIRATION_TIME))
                 .setIssuer("FltShr")
                 .signWith(SignatureAlgorithm.HS512, token_secret)
                 .compact();

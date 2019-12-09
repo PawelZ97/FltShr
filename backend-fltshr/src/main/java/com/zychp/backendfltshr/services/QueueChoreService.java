@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.services;
 
+import com.zychp.backendfltshr.constant.TimeZoneOffset;
 import com.zychp.backendfltshr.model.chore.queuechores.*;
 import com.zychp.backendfltshr.model.user.User;
 import com.zychp.backendfltshr.model.user.UserNameDTO;
@@ -53,7 +54,7 @@ public class QueueChoreService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chore already done");
         }
         doneChore.setDone(true);
-        doneChore.setDoneDate(new Timestamp(System.currentTimeMillis()));
+        doneChore.setDoneDate(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
         AssignedQueueChore responseChore = assignedQueueChoreRepository.save(doneChore);
 
         AssignedQueueChore autoAssign = new AssignedQueueChore();

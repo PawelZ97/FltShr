@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.services;
 
+import com.zychp.backendfltshr.constant.TimeZoneOffset;
 import com.zychp.backendfltshr.model.chore.frequentchores.*;
 import com.zychp.backendfltshr.model.user.User;
 import com.zychp.backendfltshr.model.user.UserNameDTO;
@@ -18,6 +19,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +36,7 @@ public class FrequetChoreService {
     public void cronAutoAssign() {
         List<AssignedFrequentChore> choresNotReassigned =
                 assignedFrequentChoreRepository.findByReassignedIsFalseAndFrequentChore_ArchivedIsFalse();
-        LocalDateTime now = LocalDateTime.now().withNano(0);
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Paris")).withNano(0);
         for (AssignedFrequentChore readChore : choresNotReassigned) {
             LocalDateTime assignTimeDate = readChore.getAssignDate().toLocalDateTime();
             assignTimeDate = assignTimeDate.plusDays(readChore.getFrequentChore().getFrequencyDays()).minusMinutes(5);
@@ -92,7 +94,7 @@ public class FrequetChoreService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chore already done");
         }
         doneChore.setDone(true);
-        doneChore.setDoneDate(new Timestamp(System.currentTimeMillis()));
+        doneChore.setDoneDate(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
         AssignedFrequentChore responseChore = assignedFrequentChoreRepository.save(doneChore);
 
         log.info("setDone() queueChoreId: {}", queueChoreId);

@@ -1,5 +1,6 @@
 package com.zychp.backendfltshr.services;
 
+import com.zychp.backendfltshr.constant.TimeZoneOffset;
 import com.zychp.backendfltshr.model.expense.ExpenseSettleUpDTO;
 import com.zychp.backendfltshr.model.expense.expense.Expense;
 import com.zychp.backendfltshr.model.expense.expense.ExpenseCDTO;
@@ -109,7 +110,7 @@ public class ExpenseService {
                 .getAuthentication().getPrincipal().toString();
         received.setExpenseList(expenseListRepository.findById(expenseListId).orElseThrow());
         received.setPaidBy(userRepository.findByUsername(requestUsername).orElseThrow());
-        received.setBoughtDate(new Timestamp(System.currentTimeMillis()));
+        received.setBoughtDate(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
         Expense created = expenseRepsitory.save(received);
         log.info("createExpense() expenseListId: {}, expenseCDTO: {}", expenseListId, expenseCDTO);
         return ExpenseDTO.valueOf(created);

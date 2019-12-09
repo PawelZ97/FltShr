@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.security;
+package com.zychp.backendfltshr.constant;
 
 public class AuthConstants {
     public final static String LOGIN_URL ="/login";
