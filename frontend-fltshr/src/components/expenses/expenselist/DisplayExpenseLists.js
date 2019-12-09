@@ -2,21 +2,25 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom"
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
+import makeStyles from "@material-ui/core/styles/makeStyles"
 import AddIcon from "@material-ui/icons/Add";
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import PageViewHoc from "../../PageViewHoc";
-import Fab from "@material-ui/core/Fab";
-import Container from "@material-ui/core/Container"
-import List from "@material-ui/core/List";
-import {makeStyles, Paper, Typography} from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import Fab from "@material-ui/core/Fab"
 import {getLoggedUser} from "../../../utils/UserUtils";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ExpenseListSettleUp from "./ExpenseListSettleUp";
+import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
+
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -43,7 +47,6 @@ function DisplayExpenseLists() {
     let history = useHistory();
 
     const [expensesLists, setExpensesLists] = useState([]);
-    const [updateFlag, setUpdateFlag] = useState(false);
     const [showSettled, setShowSettled] = useState(false);
 
     useEffect(() => {
@@ -67,7 +70,7 @@ function DisplayExpenseLists() {
                     console.log("Something went wrong");
                 }
             });
-    }, [updateFlag, showSettled]);
+    }, [showSettled]);
 
     let direction = (getLoggedUser().roles === "ROLE_MANAGER") ? "row-reverse" : "row";
     const classes = useStyles();
@@ -103,9 +106,11 @@ function DisplayExpenseLists() {
                                               secondary={expenseList.description}/>
                                 {getLoggedUser().roles === "ROLE_MANAGER" && !showSettled ? (
                                     <ListItemSecondaryAction>
-                                        <ExpenseListSettleUp updateFlag={updateFlag}
-                                                             setUpdateFlag={setUpdateFlag}
-                                                             listId={expenseList.id}/>
+                                        <IconButton edge="end" aria-label="delete"
+                                                    onClick={() => history
+                                                        .push("/expense/list/" + expenseList.id + "/settleup")}>
+                                            <AttachMoneyIcon/>
+                                        </IconButton>
                                     </ListItemSecondaryAction>
                                 ) : null}
                             </ListItem>

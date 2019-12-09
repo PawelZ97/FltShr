@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useHistory} from "react-router-dom"
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
-import {makeStyles} from "@material-ui/core";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import TopDialogBar from "../../TopDialogBar";
 import TextField from "@material-ui/core/TextField";
