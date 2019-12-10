@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom"
 import Container from "@material-ui/core/Container";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List";
@@ -11,16 +12,27 @@ import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
 import PageViewHoc from "../../PageViewHoc";
 import FrequentChore from "./FrequentChore";
-import FrequentChoreCreation from "./FrequentChoreCreation";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 const useStyles = makeStyles(theme => ({
     title: {
         marginTop: 20,
         marginBottom: 20
+    },
+    fab: {
+        margin: 0,
+        top: "auto",
+        right: 50,
+        bottom: 50,
+        left: "auto",
+        position: "fixed"
     }
 }));
 
-function DisplayFrequentChores(props) {
+function DisplayFrequentChores() {
+    let history = useHistory();
+
     const [frequentChores, setFrequentChores] = useState([]);
     const [updateFlag, setUpdateFlag] = useState(false);
 
@@ -94,7 +106,10 @@ function DisplayFrequentChores(props) {
                     ))}
                 </List>
             </Paper>
-            <FrequentChoreCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
+            <Fab color="secondary" aria-label="add" className={classes.fab}
+                 onClick={() => history.push("/manager/chores/frequentchores/create")}>
+                <AddIcon/>
+            </Fab>
         </Container>);
 }
 

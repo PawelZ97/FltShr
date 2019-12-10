@@ -17,6 +17,7 @@ import ExpenseCreation from "./components/expenses/ExpenseCreation";
 import ExpenseListCreation from "./components/expenses/expenselist/ExpenseListCreation";
 import ExpenseListSettleUp from "./components/expenses/expenselist/ExpenseListSettleUp";
 import QueueChoreCreation from "./components/chore/queuechores/QueueChoreCreation";
+import FrequentChoreCreation from "./components/chore/frequentchores/FrequentChoreCreation";
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
                 <Route exact path="/manager/chores/queuechores" component={DisplayQueueChores}/>
                 <Route exact path="/manager/chores/queuechores/create" component={QueueChoreCreation}/>
                 <Route exact path="/manager/chores/frequentchores" component={DisplayFrequentChores}/>
+                <Route exact path="/manager/chores/frequentchores/create" component={FrequentChoreCreation}/>
                 <Route exact path="/shopping/lists" component={DisplayShoppingLists}/>
                 <Route exact path="/shopping/list/:listId/entries" children={<DisplayShoppingEntries/>}/>
                 <Route exact path="/te" component={TestEndpoint}/>
