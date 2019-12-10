@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayShoppingLists(props) {
+function DisplayShoppingLists() {
     let history = useHistory();
 
     const [shoppingLists, setShoppingLists] = useState([]);
@@ -93,8 +93,8 @@ function DisplayShoppingLists(props) {
                         <h3 align={"center"}>Brak list zakupów</h3>) : null}
                     {shoppingLists.map((shoppingList, index) => (
                         <div key={shoppingList.id}>
-                            <ListItem button component="a"
-                                      href={"/shopping/list/" + shoppingList.id + "/entries"}>
+                            <ListItem button
+                                      onClick={() => history.push("/shopping/list/" + shoppingList.id + "/entries")}>
                                 <ShoppingList shoppingList={shoppingList}/>
                                 {getLoggedUser().roles === "ROLE_MANAGER" ? (
                                     <ListItemSecondaryAction>

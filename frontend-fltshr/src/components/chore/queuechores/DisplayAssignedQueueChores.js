@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom"
 import PageViewHoc from "../../PageViewHoc";
 import Container from "@material-ui/core/Container";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
@@ -25,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function DisplayAssignedQueueChores(props) {
+    let history = useHistory();
     const [assignedQueueChores, setAssignedQueueChores] = useState([]);
     const [showHistory, setShowHistory] = useState(false);
     const [updateFlag, setUpdateFlag] = useState(false);
@@ -80,9 +82,8 @@ function DisplayAssignedQueueChores(props) {
             {getLoggedUser().roles === "ROLE_MANAGER" && (
                 <Grid container justify={"flex-end"}>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained" color="primary" className={classes.title}
-                                component="a" href={"/manager/chores/queuechores"}
-                                fullWidth>
+                        <Button variant="contained" color="primary" className={classes.title} fullWidth
+                                onClick={() => history.push("/manager/chores/queuechores")}>
                             Zarządzaj obowiązkami kolejkowymi
                         </Button>
                     </Grid>

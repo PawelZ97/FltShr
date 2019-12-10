@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from "react-router-dom"
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function FltShrAppBar(props) {
+    let history = useHistory();
     const classes = useStyles();
     return (
         <AppBar position="static">
@@ -32,7 +34,7 @@ function FltShrAppBar(props) {
                             aria-label="menu">
                     <MenuIcon/>
                 </IconButton>
-                <Typography variant="h5" className={classes.title} component="a" href={"/dashboard"}>
+                <Typography variant="h5" className={classes.title} button onClick={() => history.push("/dashboard")}>
                     FltShr
                 </Typography>
             </Toolbar>

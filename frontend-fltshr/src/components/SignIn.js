@@ -99,7 +99,7 @@ function SignIn() {
                     <Button onClick={(e) => callLogin(e)} className={classes.signInButton}
                             fullWidth variant="contained" color="primary" size={"large"}> Zaloguj </Button>
                 </form>
-                <Button className={classes.signUpButton} component="a" href={"/signup"}
+                <Button className={classes.signUpButton} onClick={() => history.push("/signup")}
                         fullWidth variant="contained" color="primary" size={"large"}> Rejestracja </Button>
             </div>
         </Container>);

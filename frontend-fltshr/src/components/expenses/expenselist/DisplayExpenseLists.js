@@ -99,8 +99,8 @@ function DisplayExpenseLists() {
                     {expensesLists.length === 0 ? (<h3 align={"center"}>Wszystkie listy zamknięte</h3>) : null}
                     {expensesLists.map((expenseList, index) => (
                         <div key={expenseList.id}>
-                            <ListItem className={classes.listItem} button component="a"
-                                      href={"/expense/list/" + expenseList.id + "/display"}>
+                            <ListItem className={classes.listItem} button
+                                      onClick={() => history.push("/expense/list/" + expenseList.id + "/display")}>
                                 <ListItemText classes={{primary: classes.text}}
                                               primary={expenseList.name}
                                               secondary={expenseList.description}/>

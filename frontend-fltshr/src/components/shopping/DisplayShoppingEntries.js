@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function DisplayShoppingEntries(props) {
+function DisplayShoppingEntries() {
     let history = useHistory();
     let {listId} = useParams();
     const [shoppingListItems, setShoppingListItems] = useState([]);

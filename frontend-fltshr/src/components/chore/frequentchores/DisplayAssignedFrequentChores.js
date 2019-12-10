@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom"
 import Container from "@material-ui/core/Container";
 import {getLoggedUser} from "../../../utils/UserUtils";
 import Grid from "@material-ui/core/Grid";
@@ -30,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function DisplayAssignedFrequentChores(props) {
+    let history = useHistory();
     const [assignedFrequentChores, setAssignedFrequentChores] = useState([]);
     const [viewMode, setViewMode] = useState("TODO");
     const [updateFlag, setUpdateFlag] = useState(false);
@@ -93,8 +95,8 @@ function DisplayAssignedFrequentChores(props) {
             {getLoggedUser().roles === "ROLE_MANAGER" && (
                 <Grid container justify={"flex-end"}>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained" color="primary" className={classes.marginTitle}
-                                component="a" href={"/manager/chores/frequentchores"} fullWidth>
+                        <Button variant="contained" color="primary" className={classes.marginTitle} fullWidth
+                                onClick={() => history.push("/manager/chores/frequentchores")}>
                             Zarządzaj obowiązkami
                         </Button>
                     </Grid>
