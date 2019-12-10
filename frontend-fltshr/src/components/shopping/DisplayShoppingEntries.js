@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom"
+import {useHistory, useParams} from "react-router-dom"
 import axios from "axios";
 import {API_ADDRESS} from "../../utils/constants";
 import Container from "@material-ui/core/Container";
@@ -12,8 +12,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import Divider from "@material-ui/core/Divider";
 import PageViewHoc from "../PageViewHoc";
-import ShoppingEntryCreation from "./ShoppingEntryCreation";
 import ShoppingEntry from "./ShoppingEntry";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -22,11 +23,20 @@ const useStyles = makeStyles(theme => ({
     },
     marginButton: {
         margin: 10
+    },
+    fab: {
+        margin: 0,
+        top: "auto",
+        right: 50,
+        bottom: 50,
+        left: "auto",
+        position: "fixed"
     }
 }));
 
 
 function DisplayShoppingEntries(props) {
+    let history = useHistory();
     let {listId} = useParams();
     const [shoppingListItems, setShoppingListItems] = useState([]);
     const [updateFlag, setUpdateFlag] = useState(false);
@@ -130,7 +140,10 @@ function DisplayShoppingEntries(props) {
                     ))}
                 </List>
             </Paper>
-            <ShoppingEntryCreation listId={listId} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
+            <Fab color="secondary" aria-label="add" className={classes.fab}
+                 onClick={() => history.push("/shopping/list/" + listId + "/entry/create")}>
+                <AddIcon/>
+            </Fab>
         </Container>
     );
 }

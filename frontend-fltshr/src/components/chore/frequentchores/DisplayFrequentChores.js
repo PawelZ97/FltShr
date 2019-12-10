@@ -13,7 +13,7 @@ import {API_ADDRESS} from "../../../utils/constants";
 import PageViewHoc from "../../PageViewHoc";
 import FrequentChore from "./FrequentChore";
 import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles(theme => ({
     title: {

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom"
 import axios from "axios";
 import {API_ADDRESS} from "../../../utils/constants";
 import Container from "@material-ui/core/Container";
@@ -11,17 +12,28 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import Divider from "@material-ui/core/Divider";
 import PageViewHoc from "../../PageViewHoc";
 import ShoppingList from "./ShoppingList";
-import ShoppingListCreation from "./ShoppingListCreation";
 import {getLoggedUser} from "../../../utils/UserUtils";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles(theme => ({
     title: {
         marginTop: 20,
         marginBottom: 20
+    },
+    fab: {
+        margin: 0,
+        top: "auto",
+        right: 50,
+        bottom: 50,
+        left: "auto",
+        position: "fixed"
     }
 }));
 
 function DisplayShoppingLists(props) {
+    let history = useHistory();
+
     const [shoppingLists, setShoppingLists] = useState([]);
     const [updateFlag, setUpdateFlag] = useState(false);
 
@@ -98,7 +110,10 @@ function DisplayShoppingLists(props) {
                     ))}
                 </List>
             </Paper>
-            <ShoppingListCreation updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
+            <Fab color="secondary" aria-label="add" className={classes.fab}
+                 onClick={() => history.push("/shopping/lists/creation")}>
+                <AddIcon/>
+            </Fab>
         </Container>
     );
 }
