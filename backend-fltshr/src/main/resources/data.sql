@@ -18,7 +18,8 @@ INSERT INTO users("username", "password", "email", "role", "email_verified", "re
     VALUES ('Piotrek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
         'piotrek@fltshr.com', 'ROLE_USER', true,'2019-11-03 12:12:12');
 
-INSERT INTO shopping_items("name", "description") VALUES ( 'Mydełko' , 'Mydło w płynie');
+INSERT INTO shopping_items("name", "description")
+VALUES ('Mydło', 'Mydło w płynie');
 
 INSERT INTO shopping_items("name") VALUES ( 'Chlebek' );
 
@@ -45,7 +46,7 @@ INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Jedzonko' , false);
 INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Drukowanie' , false);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-08 08:08:08', 'Mydełko kupione', null, 'Mydełko', 13.80, 1, 4);
+VALUES ('2019-11-08 08:08:08', 'Mydło kupione', null, 'Mydło', 13.80, 1, 4);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
     VALUES ('2019-11-08 08:08:08', 'Fajny płyn', null, 'Płyn do naczyń', 25.00, 1, 4);

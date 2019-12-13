@@ -94,7 +94,7 @@ function SignIn() {
                         type="password"
                         id="password"
                         error={loginError}
-                        helperText={loginError ? ("Login i/lub hasło niepoprawne. Możesz użyć login: Imię z dużej litery, hasło: user. Nie loguj się na nie swoje konto bo to nieładnie tak.") : null}
+                        helperText={loginError ? ("Login i/lub hasło niepoprawne") : null}
                     />
                     <Button onClick={(e) => callLogin(e)} className={classes.signInButton}
                             fullWidth variant="contained" color="primary" size={"large"}> Zaloguj </Button>
