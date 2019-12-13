@@ -11,12 +11,12 @@ INSERT INTO users("username", "password", "email", "role", "email_verified", "re
         'pawel@fltshr.com', 'ROLE_USER', true, '2019-11-01 10:10:10');
 
 INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
-    VALUES ('Bartek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'bartek@fltshr.com', 'ROLE_USER', true, '2019-11-02 11:11:11');
+VALUES ('UżytkownikDwa', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+        'usertwoo@fltshr.com', 'ROLE_USER', true, '2019-11-02 11:11:11');
 
 INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
-    VALUES ('Piotrek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'piotrek@fltshr.com', 'ROLE_USER', true,'2019-11-03 12:12:12');
+VALUES ('UżytkownikTrzy', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+        'userthree@fltshr.com', 'ROLE_USER', true, '2019-11-03 12:12:12');
 
 INSERT INTO shopping_items("name", "description")
 VALUES ('Mydło', 'Mydło w płynie');
