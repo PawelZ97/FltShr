@@ -1,6 +1,5 @@
 package com.zychp.backendfltshr.services;
 
-import com.zychp.backendfltshr.constants.TimeZoneOffset;
 import com.zychp.backendfltshr.dtos.shopping.ShoppingEntryDTO;
 import com.zychp.backendfltshr.dtos.shopping.ShoppingItemDTO;
 import com.zychp.backendfltshr.dtos.shopping.ShoppingListCDTO;
@@ -90,7 +89,7 @@ public class ShoppingService {
     public ShoppingEntryDTO markAsEntryAsBought(Long shoppingEntryId, Long shoppingListId) {
         ShoppingEntry shoppingEntry = shoppingEntryRepository.findByIdAndShoppingListId(shoppingEntryId, shoppingListId);
         shoppingEntry.setIsBought(true);
-        shoppingEntry.setBoughtDate(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
+        shoppingEntry.setBoughtDate(new Timestamp(TimeZoneOffsetUtils.getTimeZoneWithOffset()));
         String userName = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
         shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));

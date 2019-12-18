@@ -1,6 +1,5 @@
 package com.zychp.backendfltshr.security;
 
-import com.zychp.backendfltshr.constants.AuthConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;

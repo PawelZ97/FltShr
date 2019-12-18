@@ -1,6 +1,5 @@
 package com.zychp.backendfltshr.services;
 
-import com.zychp.backendfltshr.constants.TimeZoneOffset;
 import com.zychp.backendfltshr.dtos.chore.AssignedFrequentChoreDTO;
 import com.zychp.backendfltshr.dtos.chore.FrequentChoreCDTO;
 import com.zychp.backendfltshr.dtos.chore.FrequentChoreDTO;
@@ -98,7 +97,7 @@ public class FrequetChoreService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chore already done");
         }
         doneChore.setDone(true);
-        doneChore.setDoneDate(new Timestamp(TimeZoneOffset.getTimeZoneWithOffset()));
+        doneChore.setDoneDate(new Timestamp(TimeZoneOffsetUtils.getTimeZoneWithOffset()));
         AssignedFrequentChore responseChore = assignedFrequentChoreRepository.save(doneChore);
 
         log.info("setDone() queueChoreId: {}", queueChoreId);
