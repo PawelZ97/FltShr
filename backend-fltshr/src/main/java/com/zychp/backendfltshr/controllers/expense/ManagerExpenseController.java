@@ -1,7 +1,7 @@
 package com.zychp.backendfltshr.controllers.expense;
 
-import com.zychp.backendfltshr.model.expense.ExpenseSettleUpDTO;
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
+import com.zychp.backendfltshr.dtos.expense.ExpenseListDTO;
+import com.zychp.backendfltshr.dtos.expense.ExpenseSettleUpDTO;
 import com.zychp.backendfltshr.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

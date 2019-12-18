@@ -1,6 +1,6 @@
 package com.zychp.backendfltshr.controllers.chore;
 
-import com.zychp.backendfltshr.model.chore.frequentchores.AssignedFrequentChoreDTO;
+import com.zychp.backendfltshr.dtos.chore.AssignedFrequentChoreDTO;
 import com.zychp.backendfltshr.services.FrequetChoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

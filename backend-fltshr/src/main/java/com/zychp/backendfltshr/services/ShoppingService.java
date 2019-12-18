@@ -1,7 +1,13 @@
 package com.zychp.backendfltshr.services;
 
-import com.zychp.backendfltshr.constant.TimeZoneOffset;
-import com.zychp.backendfltshr.model.shopping.*;
+import com.zychp.backendfltshr.constants.TimeZoneOffset;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingEntryDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingItemDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingListCDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingListDTO;
+import com.zychp.backendfltshr.model.shopping.ShoppingEntry;
+import com.zychp.backendfltshr.model.shopping.ShoppingItem;
+import com.zychp.backendfltshr.model.shopping.ShoppingList;
 import com.zychp.backendfltshr.repos.shopping.ShoppingEntryRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingItemRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingListRepository;

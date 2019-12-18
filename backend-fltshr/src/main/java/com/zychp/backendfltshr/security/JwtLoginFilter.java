@@ -1,8 +1,8 @@
 package com.zychp.backendfltshr.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zychp.backendfltshr.constant.AuthConstants;
-import com.zychp.backendfltshr.model.user.UserLoginDTO;
+import com.zychp.backendfltshr.constants.AuthConstants;
+import com.zychp.backendfltshr.dtos.user.UserLoginDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;

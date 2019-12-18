@@ -1,16 +1,12 @@
 package com.zychp.backendfltshr.services;
 
-import com.zychp.backendfltshr.constant.TimeZoneOffset;
-import com.zychp.backendfltshr.model.expense.ExpenseSettleUpDTO;
-import com.zychp.backendfltshr.model.expense.expense.Expense;
-import com.zychp.backendfltshr.model.expense.expense.ExpenseCDTO;
-import com.zychp.backendfltshr.model.expense.expense.ExpenseDTO;
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseList;
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListCDTO;
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
-import com.zychp.backendfltshr.model.expense.expenseunequal.ExpenseUnequal;
+import com.zychp.backendfltshr.constants.TimeZoneOffset;
+import com.zychp.backendfltshr.dtos.expense.*;
+import com.zychp.backendfltshr.dtos.user.UserNameDTO;
+import com.zychp.backendfltshr.model.expense.Expense;
+import com.zychp.backendfltshr.model.expense.ExpenseList;
+import com.zychp.backendfltshr.model.expense.ExpenseUnequal;
 import com.zychp.backendfltshr.model.user.User;
-import com.zychp.backendfltshr.model.user.UserNameDTO;
 import com.zychp.backendfltshr.repos.expense.ExpenseListRepository;
 import com.zychp.backendfltshr.repos.expense.ExpenseRepsitory;
 import com.zychp.backendfltshr.repos.user.UserRepository;

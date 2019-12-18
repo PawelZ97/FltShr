@@ -1,9 +1,9 @@
 package com.zychp.backendfltshr.controllers.shopping;
 
-import com.zychp.backendfltshr.model.shopping.ShoppingEntryDTO;
-import com.zychp.backendfltshr.model.shopping.ShoppingItemDTO;
-import com.zychp.backendfltshr.model.shopping.ShoppingListCDTO;
-import com.zychp.backendfltshr.model.shopping.ShoppingListDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingEntryDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingItemDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingListCDTO;
+import com.zychp.backendfltshr.dtos.shopping.ShoppingListDTO;
 import com.zychp.backendfltshr.services.ShoppingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,9 +1,9 @@
 package com.zychp.backendfltshr.controllers.expense;
 
-import com.zychp.backendfltshr.model.expense.expense.ExpenseCDTO;
-import com.zychp.backendfltshr.model.expense.expense.ExpenseDTO;
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListCDTO;
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseListDTO;
+import com.zychp.backendfltshr.dtos.expense.ExpenseCDTO;
+import com.zychp.backendfltshr.dtos.expense.ExpenseDTO;
+import com.zychp.backendfltshr.dtos.expense.ExpenseListCDTO;
+import com.zychp.backendfltshr.dtos.expense.ExpenseListDTO;
 import com.zychp.backendfltshr.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

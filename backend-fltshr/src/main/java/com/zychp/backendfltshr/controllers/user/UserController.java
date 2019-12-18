@@ -1,7 +1,7 @@
 package com.zychp.backendfltshr.controllers.user;
 
-import com.zychp.backendfltshr.model.user.UserNameDTO;
-import com.zychp.backendfltshr.model.user.UserRegistrationDTO;
+import com.zychp.backendfltshr.dtos.user.UserNameDTO;
+import com.zychp.backendfltshr.dtos.user.UserRegistrationDTO;
 import com.zychp.backendfltshr.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

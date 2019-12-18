@@ -1,6 +1,6 @@
 package com.zychp.backendfltshr.repos.expense;
 
-import com.zychp.backendfltshr.model.expense.expenselist.ExpenseList;
+import com.zychp.backendfltshr.model.expense.ExpenseList;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

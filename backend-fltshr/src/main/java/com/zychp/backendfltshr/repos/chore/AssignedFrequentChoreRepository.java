@@ -1,6 +1,6 @@
 package com.zychp.backendfltshr.repos.chore;
 
-import com.zychp.backendfltshr.model.chore.frequentchores.AssignedFrequentChore;
+import com.zychp.backendfltshr.model.chore.AssignedFrequentChore;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

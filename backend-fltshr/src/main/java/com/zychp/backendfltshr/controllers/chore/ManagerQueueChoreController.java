@@ -1,7 +1,7 @@
 package com.zychp.backendfltshr.controllers.chore;
 
-import com.zychp.backendfltshr.model.chore.queuechores.QueueChoreCDTO;
-import com.zychp.backendfltshr.model.chore.queuechores.QueueChoreDTO;
+import com.zychp.backendfltshr.dtos.chore.QueueChoreCDTO;
+import com.zychp.backendfltshr.dtos.chore.QueueChoreDTO;
 import com.zychp.backendfltshr.services.QueueChoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

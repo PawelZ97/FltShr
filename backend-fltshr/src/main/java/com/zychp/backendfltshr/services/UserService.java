@@ -1,10 +1,10 @@
 package com.zychp.backendfltshr.services;
 
-import com.zychp.backendfltshr.constant.TimeZoneOffset;
+import com.zychp.backendfltshr.constants.TimeZoneOffset;
+import com.zychp.backendfltshr.dtos.user.UserNameDTO;
+import com.zychp.backendfltshr.dtos.user.UserRegistrationDTO;
 import com.zychp.backendfltshr.model.user.Role;
 import com.zychp.backendfltshr.model.user.User;
-import com.zychp.backendfltshr.model.user.UserNameDTO;
-import com.zychp.backendfltshr.model.user.UserRegistrationDTO;
 import com.zychp.backendfltshr.repos.user.UserRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
