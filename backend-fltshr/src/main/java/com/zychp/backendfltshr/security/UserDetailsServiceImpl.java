@@ -2,7 +2,7 @@ package com.zychp.backendfltshr.security;
 
 import com.zychp.backendfltshr.model.user.Role;
 import com.zychp.backendfltshr.model.user.User;
-import com.zychp.backendfltshr.repos.UserRepository;
+import com.zychp.backendfltshr.repos.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

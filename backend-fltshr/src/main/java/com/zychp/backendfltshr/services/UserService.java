@@ -5,7 +5,7 @@ import com.zychp.backendfltshr.model.user.Role;
 import com.zychp.backendfltshr.model.user.User;
 import com.zychp.backendfltshr.model.user.UserNameDTO;
 import com.zychp.backendfltshr.model.user.UserRegistrationDTO;
-import com.zychp.backendfltshr.repos.UserRepository;
+import com.zychp.backendfltshr.repos.user.UserRepository;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

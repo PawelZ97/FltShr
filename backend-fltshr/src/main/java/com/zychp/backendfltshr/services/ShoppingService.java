@@ -2,10 +2,10 @@ package com.zychp.backendfltshr.services;
 
 import com.zychp.backendfltshr.constant.TimeZoneOffset;
 import com.zychp.backendfltshr.model.shopping.*;
-import com.zychp.backendfltshr.repos.UserRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingEntryRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingItemRepository;
 import com.zychp.backendfltshr.repos.shopping.ShoppingListRepository;
+import com.zychp.backendfltshr.repos.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

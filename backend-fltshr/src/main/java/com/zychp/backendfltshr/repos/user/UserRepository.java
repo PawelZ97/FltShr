@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.repos;
+package com.zychp.backendfltshr.repos.user;
 
 import com.zychp.backendfltshr.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

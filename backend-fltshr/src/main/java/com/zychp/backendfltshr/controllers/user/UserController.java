@@ -1,4 +1,4 @@
-package com.zychp.backendfltshr.controllers;
+package com.zychp.backendfltshr.controllers.user;
 
 import com.zychp.backendfltshr.model.user.UserNameDTO;
 import com.zychp.backendfltshr.model.user.UserRegistrationDTO;
