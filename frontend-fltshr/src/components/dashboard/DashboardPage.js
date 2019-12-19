@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from "@material-ui/core/Container";
 import {makeStyles, Paper, Typography} from "@material-ui/core";
-import Dashboard from "./Dashboard";
-import PageViewHoc from "./PageViewHoc";
+import DashboardList from "./DashboardList";
+import PageViewHoc from "../PageViewHoc";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DashboardDisplay(props) {
+function DashboardPage(props) {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={"listTitleContainer"}>
@@ -19,10 +19,10 @@ function DashboardDisplay(props) {
                 Kategorie:
             </Typography>
             <Paper>
-                <Dashboard/>
+                <DashboardList/>
             </Paper>
         </Container>
     );
 }
 
-export default PageViewHoc(DashboardDisplay);
+export default PageViewHoc(DashboardPage);

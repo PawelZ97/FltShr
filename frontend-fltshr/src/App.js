@@ -3,7 +3,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import TestEndpoint from "./components/TestEndpoint";
 import DisplayExpenseLists from "./components/expenses/expenselist/DisplayExpenseLists";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
 import DisplayAssignedQueueChores from "./components/chore/queuechores/DisplayAssignedQueueChores";
@@ -12,7 +11,7 @@ import DisplayAssignedFrequentChores from "./components/chore/frequentchores/Dis
 import DisplayFrequentChores from "./components/chore/frequentchores/DisplayFrequentChores";
 import DisplayShoppingLists from "./components/shopping/shoppinglist/DisplayShoppingLists";
 import DisplayShoppingEntries from "./components/shopping/DisplayShoppingEntries";
-import DashboardDisplay from "./components/DashboardDisplay";
+import DashboardDisplay from "./components/dashboard/DashboardPage";
 import ExpenseCreation from "./components/expenses/ExpenseCreation";
 import ExpenseListCreation from "./components/expenses/expenselist/ExpenseListCreation";
 import ExpenseListSettleUp from "./components/expenses/expenselist/ExpenseListSettleUp";
@@ -44,7 +43,6 @@ function App() {
                 <Route exact path="/shopping/lists/creation" component={ShoppingListCreation}/>
                 <Route exact path="/shopping/list/:listId/entries" children={<DisplayShoppingEntries/>}/>
                 <Route exact path="/shopping/list/:listId/entry/create" children={<ShoppingEntryCreation/>}/>
-                <Route exact path="/te" component={TestEndpoint}/>
                 <Redirect from="/" to={"/signin"}/>
             </Switch>
         </BrowserRouter>

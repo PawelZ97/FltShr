@@ -31,7 +31,7 @@ let categories = [
     }
 ];
 
-function Dashboard() {
+function DashboardList() {
     return (
         <List>
             {categories.map((category, index) => (
@@ -43,4 +43,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default DashboardList;

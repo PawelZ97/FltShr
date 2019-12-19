@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import PageFeatures from "./PageFeatures";
+import SidePanel from "./SidePanel";
 
 export default (Component) => {
     return (props) => (
@@ -13,7 +13,7 @@ export default (Component) => {
                 <CssBaseline/>
                 <Grid item xs={12}>
                     <header>
-                        <PageFeatures/>
+                        <SidePanel/>
                     </header>
                 </Grid>
                 <Grid item xs={12} md={8}>
