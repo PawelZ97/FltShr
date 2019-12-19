@@ -8,26 +8,29 @@ INSERT INTO users("username", "password", "email", "role", "email_verified", "re
 
 INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
     VALUES ('Paweł', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'pawel@fltshr.com', 'ROLE_USER', true, '2019-11-01 10:10:10');
+            'pawel@fltshr.com', 'ROLE_MANAGER', true, '2019-11-01 10:10:10');
 
 INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
-VALUES ('UżytkownikDwa', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'usertwoo@fltshr.com', 'ROLE_USER', true, '2019-11-02 11:11:11');
+VALUES ('Michał', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+        'michal@fltshr.com', 'ROLE_USER', true, '2019-11-02 11:11:11');
 
 INSERT INTO users("username", "password", "email", "role", "email_verified", "registration_date")
-VALUES ('UżytkownikTrzy', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        'userthree@fltshr.com', 'ROLE_USER', true, '2019-11-03 12:12:12');
+VALUES ('Darek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+        'darek@fltshr.com', 'ROLE_USER', true, '2019-11-03 12:12:12');
 
 INSERT INTO shopping_items("name", "description")
 VALUES ('Mydło', 'Mydło w płynie');
 
-INSERT INTO shopping_items("name") VALUES ( 'Chlebek' );
+INSERT INTO shopping_items("name", "description")
+VALUES ('Masło orzechowe', 'Masło orzechowe 1g x 3szt');
 
 INSERT INTO shopping_items("name", "description") VALUES ( 'Papier do drukarki', 'Paper A4 Biały');
 
-INSERT INTO shopping_lists("name", "description", "archived") VALUES ( 'Stonka', 'Spożywcze', false);
+INSERT INTO shopping_lists("name", "description", "archived")
+VALUES ('Market', 'Spożywcze', false);
 
-INSERT INTO shopping_lists("name", "archived") VALUES ( 'Rosenman' , false);
+INSERT INTO shopping_lists("name", "description", "archived")
+VALUES ('Drogeria', 'Środki czystości', false);
 
 INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date)
     VALUES ( 1, 1, true, 4, '2019-11-09 10:10:10');
@@ -42,20 +45,22 @@ INSERT INTO shopping_entries(shopping_list, item, bought, bought_by, bought_date
     VALUES ( 2, 3, false, null, null );
 
 INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Środki czystości' , false);
-INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Jedzonko' , false);
-INSERT INTO expenses_lists(name, is_settled) VALUES ( 'Drukowanie' , false);
+INSERT INTO expenses_lists(name, is_settled)
+VALUES ('Jedzenie', false);
+INSERT INTO expenses_lists(name, is_settled)
+VALUES ('Druk', false);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
-VALUES ('2019-11-08 08:08:08', 'Mydło kupione', null, 'Mydło', 13.80, 1, 4);
+VALUES ('2019-11-08 08:08:08', 'Mydło 500ml', null, 'Mydło', 13.80, 1, 4);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-08 08:08:08', 'Fajny płyn', null, 'Płyn do naczyń', 25.00, 1, 4);
+VALUES ('2019-11-08 08:08:08', 'Płyn 700ml', null, 'Płyn do naczyń', 25.00, 1, 4);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-09 09:09:09', 'Philips 60W Ultrabright', null,'Żarówka łazienka', 59.99, 1, 3);
+VALUES ('2019-11-09 09:09:09', '60W Ultrabright', null, 'Żarówka łazienka', 59.99, 1, 3);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
-    VALUES ('2019-11-09 10:10:10', 'Kebsiki z wilanowa', 'PERCENT', 'Kebsiki', 40.00, 2, 3);
+VALUES ('2019-11-09 10:10:10', 'Pizza włoska', 'PERCENT', 'Pizza', 40.00, 2, 3);
 
 INSERT INTO expenses("bought_date", "description", "unequal_type", "name", "total", "list", "paid_by")
 VALUES ('2019-11-09 10:10:10', 'Żużycie na podstawie stron', 'UNIT', 'Tusze do Drukarki', 38.00, 3, 3);
