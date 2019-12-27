@@ -2,6 +2,7 @@ version: "3"
 
 volumes:
   postgres_data:
+  letsencrypt_certs:
 
 services:
   postgres_db:
@@ -29,9 +30,15 @@ services:
       APP_LOGIN_SECRET: ${APP_LOGIN_SECRET}
       SPRING_MAIL_PASSWORD: ${EMAIL_PASSWORD}
       VERIFY_TOKEN_SECRET: ${VERIFY_TOKEN_SECRET}
-#  frontend-fltshr:
-#    build: frontend-fltshr
-#    image: frontend-fltshr:latest
-#    container_name: "frontend-fltshr"
-#    ports:
-#      - '80:80'
+  frontend-fltshr:
+    build: frontend-fltshr
+    image: frontend-fltshr:latest
+    container_name: "frontend-fltshr"
+    volumes:
+      - letsencrypt_certs:/etc/letsencrypt
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      DOMAIN: pawelzych.pl
+      EMAIL: pawelzych97@gmail.com
