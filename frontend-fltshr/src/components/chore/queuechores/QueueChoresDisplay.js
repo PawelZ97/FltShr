@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayQueueChores() {
+function QueueChoresDisplay() {
     let history = useHistory();
 
     const [queueChores, setQueueChores] = useState([]);
@@ -114,4 +114,4 @@ function DisplayQueueChores() {
     );
 }
 
-export default PageViewHoc(DisplayQueueChores);
+export default PageViewHoc(QueueChoresDisplay);

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayAssignedFrequentChores(props) {
+function AssignedFrequentChoresDisplay(props) {
     let history = useHistory();
     const [assignedFrequentChores, setAssignedFrequentChores] = useState([]);
     const [viewMode, setViewMode] = useState("TODO");
@@ -145,4 +145,4 @@ function DisplayAssignedFrequentChores(props) {
     );
 }
 
-export default PageViewHoc(DisplayAssignedFrequentChores);
+export default PageViewHoc(AssignedFrequentChoresDisplay);

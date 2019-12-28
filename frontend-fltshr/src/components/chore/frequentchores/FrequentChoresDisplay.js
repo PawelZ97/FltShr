@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayFrequentChores() {
+function FrequentChoresDisplay() {
     let history = useHistory();
 
     const [frequentChores, setFrequentChores] = useState([]);
@@ -113,4 +113,4 @@ function DisplayFrequentChores() {
         </Container>);
 }
 
-export default PageViewHoc(DisplayFrequentChores);
+export default PageViewHoc(FrequentChoresDisplay);

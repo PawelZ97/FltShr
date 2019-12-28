@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayExpenseLists() {
+function ExpenseListsDisplay() {
     let history = useHistory();
 
     const [expensesLists, setExpensesLists] = useState([]);
@@ -59,7 +59,7 @@ function DisplayExpenseLists() {
             })
             .then(function (response) {
                 setExpensesLists(response.data);
-                console.log("DisplayExpenseLists loaded, status: " + response.status);
+                console.log("ExpenseListsDisplay loaded, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {
@@ -127,4 +127,4 @@ function DisplayExpenseLists() {
     );
 }
 
-export default PageViewHoc(DisplayExpenseLists);
+export default PageViewHoc(ExpenseListsDisplay);

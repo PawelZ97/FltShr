@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayAssignedQueueChores(props) {
+function AssignedQueueChoresDisplay(props) {
     let history = useHistory();
     const [assignedQueueChores, setAssignedQueueChores] = useState([]);
     const [showHistory, setShowHistory] = useState(false);
@@ -131,4 +131,4 @@ function DisplayAssignedQueueChores(props) {
     );
 }
 
-export default PageViewHoc(DisplayAssignedQueueChores);
+export default PageViewHoc(AssignedQueueChoresDisplay);
