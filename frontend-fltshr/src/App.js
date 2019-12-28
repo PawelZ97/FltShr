@@ -9,8 +9,8 @@ import DisplayAssignedQueueChores from "./components/chore/queuechores/AssignedQ
 import DisplayQueueChores from "./components/chore/queuechores/QueueChoresDisplay";
 import DisplayAssignedFrequentChores from "./components/chore/frequentchores/AssignedFrequentChoresDisplay";
 import DisplayFrequentChores from "./components/chore/frequentchores/FrequentChoresDisplay";
-import DisplayShoppingLists from "./components/shopping/shoppinglist/DisplayShoppingLists";
-import DisplayShoppingEntries from "./components/shopping/DisplayShoppingEntries";
+import DisplayShoppingLists from "./components/shopping/shoppinglist/ShoppingListsDisplay";
+import DisplayShoppingEntries from "./components/shopping/ShoppingEntriesDisplay";
 import DashboardDisplay from "./components/dashboard/DashboardPage";
 import ExpenseCreation from "./components/expenses/ExpenseCreation";
 import ExpenseListCreation from "./components/expenses/expenselist/ExpenseListCreation";

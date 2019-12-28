@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function DisplayShoppingLists() {
+function ShoppingListsDisplay() {
     let history = useHistory();
 
     const [shoppingLists, setShoppingLists] = useState([]);
@@ -118,4 +118,4 @@ function DisplayShoppingLists() {
     );
 }
 
-export default PageViewHoc(DisplayShoppingLists);
+export default PageViewHoc(ShoppingListsDisplay);
