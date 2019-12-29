@@ -24,7 +24,7 @@ services:
     ports:
       - "81:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database-fltshr:5432/postgres
       SPRING_DATASOURCE_USERNAME: ${DATABASE_USER}
       SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
       APP_LOGIN_SECRET: ${APP_LOGIN_SECRET}
@@ -42,6 +42,9 @@ services:
     container_name: "proxy-fltshr"
     volumes:
       - letsencrypt_certs:/etc/letsencrypt
+    depends_on:
+      - backend-fltshr
+      - frontend-fltshr
     ports:
       - '80:80'
       - '443:443'

@@ -10,8 +10,6 @@ services:
     container_name: "database-fltshr"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -20,8 +18,6 @@ services:
     container_name: "backend-fltshr"
     depends_on:
       - database-fltshr
-    ports:
-      - "81:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database-fltshr:5432/postgres
       SPRING_DATASOURCE_USERNAME: ${DATABASE_USER}
@@ -32,13 +28,14 @@ services:
   frontend-fltshr:
     image: frontend-fltshr:latest
     container_name: "frontend-fltshr"
-    ports:
-      - '82:80'
   proxy-fltshr:
     image: proxy-fltshr:latest
     container_name: "proxy-fltshr"
     volumes:
       - letsencrypt_certs:/etc/letsencrypt
+    depends_on:
+      - backend-fltshr
+      - frontend-fltshr
     ports:
       - '80:80'
       - '443:443'
