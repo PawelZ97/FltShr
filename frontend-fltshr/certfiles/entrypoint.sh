@@ -12,7 +12,7 @@ if [[ ! -f /usr/share/nginx/certificates/cert.crt ]]; then
 fi
 
 ### Send certbot Emission/Renewal to background
-$(while :; do /opt/certbot.sh; sleep "${RENEW_INTERVAL:-12h}"; done;) &
+# $(while :; do /opt/certbot.sh; sleep "${RENEW_INTERVAL:-12h}"; done;) &
 
 ### Check for changes in the certificate (i.e renewals or first start)
 $(while inotifywait -e close_write /usr/share/nginx/certificates; do nginx -s reload; done) &
