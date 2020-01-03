@@ -123,20 +123,21 @@ public class ExpenseService {
         log.info("deleteExpense() expenseId: {}", expenseId);
     }
 
-    public List<ExpenseSettleUpDTO> getSettleUpSummary(Long expenseListId) {
+    public ExpenseSettleUpDTO getSettleUpSummary(Long expenseListId) {
         List<Expense> expenses = expenseRepsitory.findByExpenseListId(expenseListId);
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByDeactivatedIsFalseAndEmailVerifiedIsTrue();
         users.remove(0);
-        users.remove(0);
-        List<ExpenseSettleUpDTO> expenseSettleUpDTOS = new ArrayList<>();
+        ExpenseSettleUpDTO expenseSettleUpDTO = new ExpenseSettleUpDTO();
+        expenseSettleUpDTO.setTotals(new ArrayList<>());
         for (User user : users) {
-            ExpenseSettleUpDTO settleUpDTO = new ExpenseSettleUpDTO();
-            settleUpDTO.setUser(UserNameDTO.valueOf(user));
-            settleUpDTO.setTotal(calculateSumTotal(expenses, user)
-                    .subtract(calculateUsedTotal(expenses, user, users.size())));
-            expenseSettleUpDTOS.add(settleUpDTO);
+            ExpenseSettleUpTotalsDTO settleUpTotalsDTO = new ExpenseSettleUpTotalsDTO();
+            settleUpTotalsDTO.setUser(UserNameDTO.valueOf(user));
+            settleUpTotalsDTO.setPaid(calculateSumTotal(expenses, user));
+            settleUpTotalsDTO.setUsed(calculateUsedTotal(expenses, user, users.size()));
+            settleUpTotalsDTO.setTotal(settleUpTotalsDTO.getPaid().subtract(settleUpTotalsDTO.getUsed()));
+            expenseSettleUpDTO.getTotals().add(settleUpTotalsDTO);
         }
-        return expenseSettleUpDTOS;
+        return expenseSettleUpDTO;
     }
 
     private BigDecimal calculateSumTotal(List<Expense> expenses, User user) {
@@ -152,7 +153,7 @@ public class ExpenseService {
         BigDecimal sum = BigDecimal.valueOf(0);
         for (Expense expense : expenses) {
             if (expense.getUnequalType() == null) {
-                sum = sum.add(expense.getTotal().divide(BigDecimal.valueOf(size),4, RoundingMode.UP));
+                sum = sum.add(expense.getTotal().divide(BigDecimal.valueOf(size), 4, RoundingMode.UP));
             } else {
                 Set<ExpenseUnequal> expenseUnequals = expense.getExpenseUnequals();
                 for (ExpenseUnequal expenseUnequal : expenseUnequals) {

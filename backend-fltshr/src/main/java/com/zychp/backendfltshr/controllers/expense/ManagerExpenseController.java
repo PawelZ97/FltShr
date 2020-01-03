@@ -21,7 +21,7 @@ public class ManagerExpenseController {
     }
 
     @GetMapping("/list/{expenseListId}/settle")
-    ResponseEntity<List<ExpenseSettleUpDTO>> getSettleUpSummary(@PathVariable Long expenseListId) {
+    ResponseEntity<ExpenseSettleUpDTO> getSettleUpSummary(@PathVariable Long expenseListId) {
         return ResponseEntity.ok(expenseService.getSettleUpSummary(expenseListId));
     }
 

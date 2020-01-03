@@ -1,13 +1,11 @@
 package com.zychp.backendfltshr.dtos.expense;
 
-import com.zychp.backendfltshr.dtos.user.UserNameDTO;
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ExpenseSettleUpDTO {
-    private UserNameDTO user;
-    private BigDecimal total;
-    //private List<BigDecimal> transfer;
+    private List<ExpenseSettleUpTotalsDTO> totals;
+    //private List<ExpenseSettleUpTransferDTO> transfers;
 }

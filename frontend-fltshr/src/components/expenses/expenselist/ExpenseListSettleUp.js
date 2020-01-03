@@ -7,13 +7,27 @@ import TopDialogBar from "../../TopDialogBar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import {Typography} from "@material-ui/core";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles(theme => ({
+    title: {
+        marginTop: 20,
+        marginBottom: 20
+    },
+    listItem: {
+        height: 80
+    }
+}));
 
 function ExpenseListSettleUp() {
     let history = useHistory();
     let {listId} = useParams();
-    const [settleUpSummary, setSettleUpSummary] = useState([]);
+    const [settleUpSummary, setSettleUpSummary] = useState({
+        totals: []
+    });
 
     useEffect(() => {
         axios
@@ -62,17 +76,26 @@ function ExpenseListSettleUp() {
         history.goBack();
     };
 
+    const classes = useStyles();
     return (
         <div>
             <TopDialogBar text={"Podsumowanie listy"}/>
             <Container maxWidth="sm">
+                <Typography className={classes.title} variant={"h5"}>Raport wydatków: </Typography>
                 <List>
-                    {settleUpSummary.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
-                    {settleUpSummary.map((summaryEntry, index) => (
+                    {settleUpSummary.totals.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
+                    {settleUpSummary.totals.map((summaryEntry, index) => (
                         <ListItem key={index}>
                             <ListItemText
                                 primary={summaryEntry.user.username}
-                                secondary={"Total: " + summaryEntry.total}/>
+                                secondary={
+                                    <React.Fragment>
+                                        <div>{"Zapłacił: " + summaryEntry.paid}</div>
+                                        <div>{"Wykorzystał: " + summaryEntry.used}</div>
+                                        <div>{"Podsuma: " + summaryEntry.total}</div>
+                                    </React.Fragment>
+                                }
+                            />
                         </ListItem>
                     ))}
                 </List>
