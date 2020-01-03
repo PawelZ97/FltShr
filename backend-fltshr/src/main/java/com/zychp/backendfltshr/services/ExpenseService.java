@@ -135,47 +135,40 @@ public class ExpenseService {
             settleUpTotalsDTO.setPaid(calculateSumTotal(expenses, user));
             settleUpTotalsDTO.setUsed(calculateUsedTotal(expenses, user, users.size()));
             settleUpTotalsDTO.setTotal(settleUpTotalsDTO.getPaid().subtract(settleUpTotalsDTO.getUsed()));
-            expenseSettleUpDTO.getTotals().add(settleUpTotalsDTO);
+            if (settleUpTotalsDTO.getTotal().compareTo(BigDecimal.ZERO) != 0) {
+                expenseSettleUpDTO.getTotals().add(settleUpTotalsDTO);
+            }
         }
 
-        List<ExpenseSettleUpTransferDTO> transferDTOS = new ArrayList<>();
         List<ExpenseSettleUpUserTotalDTO> totals = new ArrayList<>();
-
         for (ExpenseSettleUpUserTotalDTO totalDTO : expenseSettleUpDTO.getTotals()) {
             totals.add(new ExpenseSettleUpUserTotalDTO(totalDTO));
         }
-        int i = 3;
-        while (i > 0) {
-            log.info("loop START");
-            i--;
 
-            BigDecimal maxTotal = BigDecimal.ZERO;
+        List<ExpenseSettleUpTransferDTO> transferDTOS = new ArrayList<>();
+        while (true) {
+            BigDecimal minTotalSecond = BigDecimal.valueOf(10000);
             UserNameDTO recipient = new UserNameDTO();
-            BigDecimal minTotal = BigDecimal.ZERO;
+            BigDecimal minTotal = BigDecimal.valueOf(10000);
             UserNameDTO sender = new UserNameDTO();
             for (ExpenseSettleUpUserTotalDTO userTotalDTO : totals) {
-                if (userTotalDTO.getTotal().compareTo(maxTotal) > 0) {
-                    maxTotal = userTotalDTO.getTotal();
-                    recipient = userTotalDTO.getUser();
-                }
                 if (userTotalDTO.getTotal().compareTo(minTotal) < 0) {
+                    minTotalSecond = minTotal;
+                    recipient = sender;
                     minTotal = userTotalDTO.getTotal();
                     sender = userTotalDTO.getUser();
                 }
-                System.out.println("userTotalDTOtotal = " + userTotalDTO.getTotal());
-                System.out.println("minTotal = " + minTotal);
-                System.out.println("maxTotal = " + maxTotal);
+                if (userTotalDTO.getTotal().compareTo(minTotalSecond) < 0 && userTotalDTO.getTotal().compareTo(minTotal) > 0) {
+                    minTotalSecond = userTotalDTO.getTotal();
+                    recipient = userTotalDTO.getUser();
+                }
             }
-            System.out.println("EmaxTotal = " + maxTotal);
-            System.out.println("Erecipient = " + recipient);
-            System.out.println("EminTotal = " + minTotal);
-            System.out.println("Esender = " + sender);
-
-            System.out.println("if = " + minTotal.equals(BigDecimal.ZERO));
-
-            if (minTotal.equals(BigDecimal.ZERO)) {
+            if (minTotal.compareTo(BigDecimal.ZERO) == 0) {
                 break;
             }
+
+            log.info("Minimal: {}, Sender {} ", minTotal, sender.getUsername());
+            log.info("SecondMinimal: {}, Recipient {} ", minTotalSecond, recipient.getUsername());
 
             ExpenseSettleUpTransferDTO transferDTO = new ExpenseSettleUpTransferDTO();
             transferDTO.setSender(sender);
@@ -187,19 +180,17 @@ public class ExpenseService {
 
             for (ExpenseSettleUpUserTotalDTO userTotalDTO : totals) {
                 if (userTotalDTO.getUser().equals(sender)) {
-                    log.info("Transfer value: {}, sender: {}", transferValue, sender);
-                    userTotalDTO.setTotal(BigDecimal.valueOf(0));
+                    log.info("Transfer value: {}", transferValue);
+                    userTotalDTO.setTotal(BigDecimal.valueOf(10000));
                 }
                 if (userTotalDTO.getUser().equals(recipient)) {
-                    userTotalDTO.setTotal(maxTotal.subtract(transferDTO.getTransferValue()));
-                    log.info("After transfer, total: {}, reciepent: {}", userTotalDTO.getTotal(), recipient);
+                    userTotalDTO.setTotal(minTotalSecond.subtract(transferDTO.getTransferValue()));
+                    log.info("AfterTransfer: {}", userTotalDTO.getTotal());
                 }
             }
         }
         expenseSettleUpDTO.setTransfers(transferDTOS);
         log.info("ExpenseSettleUpDTO: {}", expenseSettleUpDTO);
-
-
         return expenseSettleUpDTO;
     }
 
