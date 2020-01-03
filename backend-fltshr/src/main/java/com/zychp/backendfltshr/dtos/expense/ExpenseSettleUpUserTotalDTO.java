@@ -11,4 +11,14 @@ public class ExpenseSettleUpUserTotalDTO {
     private BigDecimal paid;
     private BigDecimal used;
     private BigDecimal total;
+
+    public ExpenseSettleUpUserTotalDTO(ExpenseSettleUpUserTotalDTO input) {
+        this.user = input.user;
+        this.paid = input.paid;
+        this.used = input.used;
+        this.total = input.total;
+    }
+
+    public ExpenseSettleUpUserTotalDTO() {
+    }
 }

@@ -137,6 +137,69 @@ public class ExpenseService {
             settleUpTotalsDTO.setTotal(settleUpTotalsDTO.getPaid().subtract(settleUpTotalsDTO.getUsed()));
             expenseSettleUpDTO.getTotals().add(settleUpTotalsDTO);
         }
+
+        List<ExpenseSettleUpTransferDTO> transferDTOS = new ArrayList<>();
+        List<ExpenseSettleUpUserTotalDTO> totals = new ArrayList<>();
+
+        for (ExpenseSettleUpUserTotalDTO totalDTO : expenseSettleUpDTO.getTotals()) {
+            totals.add(new ExpenseSettleUpUserTotalDTO(totalDTO));
+        }
+        int i = 3;
+        while (i > 0) {
+            log.info("loop START");
+            i--;
+
+            BigDecimal maxTotal = BigDecimal.ZERO;
+            UserNameDTO recipient = new UserNameDTO();
+            BigDecimal minTotal = BigDecimal.ZERO;
+            UserNameDTO sender = new UserNameDTO();
+            for (ExpenseSettleUpUserTotalDTO userTotalDTO : totals) {
+                if (userTotalDTO.getTotal().compareTo(maxTotal) > 0) {
+                    maxTotal = userTotalDTO.getTotal();
+                    recipient = userTotalDTO.getUser();
+                }
+                if (userTotalDTO.getTotal().compareTo(minTotal) < 0) {
+                    minTotal = userTotalDTO.getTotal();
+                    sender = userTotalDTO.getUser();
+                }
+                System.out.println("userTotalDTOtotal = " + userTotalDTO.getTotal());
+                System.out.println("minTotal = " + minTotal);
+                System.out.println("maxTotal = " + maxTotal);
+            }
+            System.out.println("EmaxTotal = " + maxTotal);
+            System.out.println("Erecipient = " + recipient);
+            System.out.println("EminTotal = " + minTotal);
+            System.out.println("Esender = " + sender);
+
+            System.out.println("if = " + minTotal.equals(BigDecimal.ZERO));
+
+            if (minTotal.equals(BigDecimal.ZERO)) {
+                break;
+            }
+
+            ExpenseSettleUpTransferDTO transferDTO = new ExpenseSettleUpTransferDTO();
+            transferDTO.setSender(sender);
+            transferDTO.setReciepent(recipient);
+            BigDecimal transferValue = minTotal.multiply(BigDecimal.valueOf(-1));
+            transferDTO.setTransferValue(transferValue);
+
+            transferDTOS.add(transferDTO);
+
+            for (ExpenseSettleUpUserTotalDTO userTotalDTO : totals) {
+                if (userTotalDTO.getUser().equals(sender)) {
+                    log.info("Transfer value: {}, sender: {}", transferValue, sender);
+                    userTotalDTO.setTotal(BigDecimal.valueOf(0));
+                }
+                if (userTotalDTO.getUser().equals(recipient)) {
+                    userTotalDTO.setTotal(maxTotal.subtract(transferDTO.getTransferValue()));
+                    log.info("After transfer, total: {}, reciepent: {}", userTotalDTO.getTotal(), recipient);
+                }
+            }
+        }
+        expenseSettleUpDTO.setTransfers(transferDTOS);
+        log.info("ExpenseSettleUpDTO: {}", expenseSettleUpDTO);
+
+
         return expenseSettleUpDTO;
     }
 
