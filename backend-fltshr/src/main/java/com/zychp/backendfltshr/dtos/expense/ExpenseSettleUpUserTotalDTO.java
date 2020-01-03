@@ -6,7 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class ExpenseSettleUpTotalsDTO {
+public class ExpenseSettleUpUserTotalDTO {
     private UserNameDTO user;
     private BigDecimal paid;
     private BigDecimal used;

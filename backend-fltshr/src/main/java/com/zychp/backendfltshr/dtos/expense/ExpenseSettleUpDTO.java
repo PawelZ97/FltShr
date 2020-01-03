@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class ExpenseSettleUpDTO {
-    private List<ExpenseSettleUpTotalsDTO> totals;
+    private List<ExpenseSettleUpUserTotalDTO> totals;
     //private List<ExpenseSettleUpTransferDTO> transfers;
 }

@@ -9,7 +9,7 @@ public class UserNameDTO {
     private String username;
 
     public static UserNameDTO valueOf(User entity) {
-        if(entity == null) {
+        if (entity == null) {
             return null;
         }
         UserNameDTO dto = new UserNameDTO();

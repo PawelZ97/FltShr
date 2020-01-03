@@ -130,7 +130,7 @@ public class ExpenseService {
         ExpenseSettleUpDTO expenseSettleUpDTO = new ExpenseSettleUpDTO();
         expenseSettleUpDTO.setTotals(new ArrayList<>());
         for (User user : users) {
-            ExpenseSettleUpTotalsDTO settleUpTotalsDTO = new ExpenseSettleUpTotalsDTO();
+            ExpenseSettleUpUserTotalDTO settleUpTotalsDTO = new ExpenseSettleUpUserTotalDTO();
             settleUpTotalsDTO.setUser(UserNameDTO.valueOf(user));
             settleUpTotalsDTO.setPaid(calculateSumTotal(expenses, user));
             settleUpTotalsDTO.setUsed(calculateUsedTotal(expenses, user, users.size()));
@@ -146,7 +146,7 @@ public class ExpenseService {
             if (expense.getPaidBy().equals(user))
                 sum = sum.add(expense.getTotal());
         }
-        return sum;
+        return sum.setScale(2, RoundingMode.HALF_UP);
     }
 
     private BigDecimal calculateUsedTotal(List<Expense> expenses, User user, int size) {
@@ -162,7 +162,7 @@ public class ExpenseService {
                 }
             }
         }
-        return sum;
+        return sum.setScale(2, RoundingMode.HALF_UP);
     }
 
     public void setSetteled(Long expenseListId) {
