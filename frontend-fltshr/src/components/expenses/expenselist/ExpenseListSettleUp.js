@@ -6,19 +6,21 @@ import Container from "@material-ui/core/Container";
 import TopDialogBar from "../../TopDialogBar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import {Typography} from "@material-ui/core";
+import {Paper, Typography} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import SettleUpUserTotal from "./SettleUpUserTotal";
+import SettleUpTransfer from "./SettleUpTransfer";
 
 const useStyles = makeStyles(theme => ({
     title: {
         marginTop: 20,
         marginBottom: 20
     },
-    listItem: {
-        height: 80
+    listMargin: {
+        marginBottom: 30
     }
 }));
 
@@ -26,7 +28,8 @@ function ExpenseListSettleUp() {
     let history = useHistory();
     let {listId} = useParams();
     const [settleUpSummary, setSettleUpSummary] = useState({
-        totals: []
+        totals: [],
+        transfers: []
     });
 
     useEffect(() => {
@@ -81,24 +84,34 @@ function ExpenseListSettleUp() {
         <div>
             <TopDialogBar text={"Podsumowanie listy"}/>
             <Container maxWidth="sm">
-                <Typography className={classes.title} variant={"h5"}>Raport wydatków: </Typography>
-                <List>
-                    {settleUpSummary.totals.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
-                    {settleUpSummary.totals.map((summaryEntry, index) => (
-                        <ListItem key={index}>
-                            <ListItemText
-                                primary={summaryEntry.user.username}
-                                secondary={
-                                    <React.Fragment>
-                                        <div>{"Zapłacił: " + summaryEntry.paid}</div>
-                                        <div>{"Wykorzystał: " + summaryEntry.used}</div>
-                                        <div>{"Podsuma: " + summaryEntry.total}</div>
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                    ))}
-                </List>
+                <Typography className={classes.title} variant={"h5"}>Podsumowanie wydatków: </Typography>
+                <Paper>
+                    <List>
+                        {settleUpSummary.totals.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
+                        {settleUpSummary.totals.map((userTotal, index) => (
+                            <div key={index}>
+                                <ListItem>
+                                    <SettleUpUserTotal userTotal={userTotal}/>
+                                </ListItem>
+                                {index !== settleUpSummary.totals.length - 1 ? (<Divider/>) : null}
+                            </div>
+                        ))}
+                    </List>
+                </Paper>
+                <Typography className={classes.title} variant={"h5"}>Przelewy wyrównujące: </Typography>
+                <Paper>
+                    <List className={classes.listMargin}>
+                        {settleUpSummary.transfers.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
+                        {settleUpSummary.transfers.map((settleTransfer, index) => (
+                            <div key={index}>
+                                <ListItem>
+                                    <SettleUpTransfer settleTransfer={settleTransfer}/>
+                                </ListItem>
+                                {index !== settleUpSummary.transfers.length - 1 ? (<Divider/>) : null}
+                            </div>
+                        ))}
+                    </List>
+                </Paper>
                 <Grid container spacing={3} justify={"space-evenly"} alignItems={"center"}>
                     <Grid item xs={6}>
                         <Button onClick={handleCancel} variant="outlined" color="secondary" fullWidth>
