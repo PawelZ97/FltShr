@@ -104,7 +104,7 @@ public class ExpenseService {
         String requestUsername = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal().toString();
         received.setExpenseList(expenseListRepository.findById(expenseListId).orElseThrow());
-        received.setPaidBy(userRepository.findByUsername(requestUsername).orElseThrow());
+        received.setPaidBy(userRepository.findByUsernameAndDeactivatedIsFalseAndEmailVerifiedIsTrue(requestUsername));
         received.setBoughtDate(new Timestamp(TimeZoneOffsetUtils.getTimeZoneWithOffset()));
         Expense created = expenseRepsitory.save(received);
         log.info("createExpense() expenseListId: {}, expenseCDTO: {}", expenseListId, expenseCDTO);

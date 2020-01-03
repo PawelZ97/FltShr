@@ -9,7 +9,6 @@ import com.zychp.backendfltshr.model.chore.FrequentChore;
 import com.zychp.backendfltshr.model.user.User;
 import com.zychp.backendfltshr.repos.chore.AssignedFrequentChoreRepository;
 import com.zychp.backendfltshr.repos.chore.FrequentChoreRepository;
-import com.zychp.backendfltshr.repos.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,6 @@ import java.util.stream.Collectors;
 public class FrequetChoreService {
     private final AssignedFrequentChoreRepository assignedFrequentChoreRepository;
     private final FrequentChoreRepository frequentChoreRepository;
-    private final UserRepository userRepository;
 
     @Scheduled(cron = "0 0 1 * * *") // Every day at 1.00 am
     public void cronAutoAssign() {

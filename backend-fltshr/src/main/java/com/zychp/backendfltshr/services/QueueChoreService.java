@@ -28,6 +28,7 @@ public class QueueChoreService {
     private final AssignedQueueChoreRepository assignedQueueChoreRepository;
     private final QueueChoreRepository queueChoreRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public List<AssignedQueueChoreDTO> getAssignedQueueChores() {
         List<AssignedQueueChore> assignedQueueChores =
@@ -63,12 +64,21 @@ public class QueueChoreService {
         AssignedQueueChore autoAssign = new AssignedQueueChore();
         autoAssign.setDone(false);
         autoAssign.setQueueChore(doneChore.getQueueChore());
+        autoAssign.setAssignDate(new Timestamp(TimeZoneOffsetUtils.getTimeZoneWithOffset()));
 
-        Long newUserId = (doneChore.getAssignedUser().getId() - 2) % (userRepository.count() - 2) + 3;
+        List<UserNameDTO> activeUsersList = userService.getUsers();
+        int newUserIndex = 0;
+
+        for (UserNameDTO user : activeUsersList) {
+            if (user.getId().equals(doneChore.getAssignedUser().getId())) {
+                newUserIndex = (activeUsersList.indexOf(user) + 1) % activeUsersList.size();
+            }
+        }
+        Long newUserId = activeUsersList.get(newUserIndex).getId();
         autoAssign.setAssignedUser(userRepository.findById(newUserId).orElseThrow());
 
         assignedQueueChoreRepository.save(autoAssign);
-        log.info("setDone() queueChoreId: {}", queueChoreId);
+        log.info("setDone() queueChoreId: {}, newUserAssignedId: {}", queueChoreId, newUserId);
         return AssignedQueueChoreDTO.valueOf(responseChore);
     }
 

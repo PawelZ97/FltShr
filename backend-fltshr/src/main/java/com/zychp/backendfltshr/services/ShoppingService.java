@@ -92,7 +92,7 @@ public class ShoppingService {
         shoppingEntry.setBoughtDate(new Timestamp(TimeZoneOffsetUtils.getTimeZoneWithOffset()));
         String userName = SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal().toString();
-        shoppingEntry.setUser(userRepository.findByUsername(userName).orElse(null));
+        shoppingEntry.setUser(userRepository.findByUsernameAndDeactivatedIsFalseAndEmailVerifiedIsTrue(userName));
         ShoppingEntry setDone = shoppingEntryRepository.save(shoppingEntry);
         log.info("markAsEntryAsBought() shoppingEntryId: {}, shoppingListId: {}", shoppingEntryId, shoppingListId);
         return ShoppingEntryDTO.valueOf(setDone);

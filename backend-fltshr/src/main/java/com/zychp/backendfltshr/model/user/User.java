@@ -24,8 +24,14 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "deactivated", nullable = false)
+    private boolean deactivated;
+
     @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -34,6 +40,4 @@ public class User {
     @Column(name = "registration_date", nullable = false)
     private Timestamp registration_date;
 
-    @Column(name = "email_verified", nullable = false)
-    private boolean emailVerified;
 }

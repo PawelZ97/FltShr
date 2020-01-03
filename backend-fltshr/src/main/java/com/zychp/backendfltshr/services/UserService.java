@@ -37,8 +37,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public List<UserNameDTO> getUsers() {
-        List<User> users = userRepository.findAll();
-        users.remove(0);
+        List<User> users = userRepository.findAllByDeactivatedIsFalseAndEmailVerifiedIsTrue();
         users.remove(0);
         log.info("getUsers()");
         return users.stream().map(UserNameDTO::valueOf).collect(Collectors.toList());
@@ -87,7 +86,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
         }
         log.info("emailConfirm(): jwsSubject: {}", jws.getBody().getSubject());
-        User user = userRepository.findByUsername(jws.getBody().getSubject()).orElseThrow();
+        User user = userRepository.findByUsernameAndDeactivatedIsFalse(jws.getBody().getSubject());
         user.setEmailVerified(true);
         userRepository.save(user);
         return "Email Potwierdzony. Możesz się zalogować";
