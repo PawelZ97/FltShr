@@ -163,7 +163,7 @@ public class ExpenseService {
                     recipient = userTotalDTO.getUser();
                 }
             }
-            if (minTotal.compareTo(BigDecimal.ZERO) == 0) {
+            if (minTotal.abs().compareTo(BigDecimal.valueOf(0.02)) < 0) {
                 break;
             }
 
