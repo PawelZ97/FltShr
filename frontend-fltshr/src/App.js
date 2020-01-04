@@ -1,8 +1,8 @@
 import React from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import SignIn from "./components/account/SignIn";
+import SignUp from "./components/account/SignUp";
 import DisplayExpenseLists from "./components/expenses/expenselist/ExpenseListsDisplay";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
 import DisplayAssignedQueueChores from "./components/chore/queuechores/AssignedQueueChoresDisplay";
@@ -19,8 +19,10 @@ import QueueChoreCreation from "./components/chore/queuechores/QueueChoreCreatio
 import FrequentChoreCreation from "./components/chore/frequentchores/FrequentChoreCreation";
 import ShoppingListCreation from "./components/shopping/shoppinglist/ShoppingListCreation";
 import ShoppingEntryCreation from "./components/shopping/ShoppingEntryCreation";
-import ChangePassword from "./components/ChangePassword";
-import AccountDelete from "./components/AccountDelete";
+import ChangePassword from "./components/account/ChangePassword";
+import RequestAccountDelete from "./components/account/RequestAccountDelete";
+import AccountDelete from "./components/account/AccountDelete";
+import ChangeManager from "./components/account/ChangeManager";
 
 function App() {
     return (
@@ -30,7 +32,9 @@ function App() {
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/signup" component={SignUp}/>
                 <Route exact path="/changepassword" component={ChangePassword}/>
-                <Route exact path="/accountdelete" component={AccountDelete}/>
+                <Route exact path="/requestaccountdelete" component={RequestAccountDelete}/>
+                <Route exact path="/admin/accountdelete" component={AccountDelete}/>
+                <Route exact path="/admin/changemanager" component={ChangeManager}/>
                 <Route exact path="/dashboard" component={DashboardDisplay}/>
                 <Route exact path="/expense/lists/display" component={DisplayExpenseLists}/>
                 <Route exact path="/expense/lists/create" component={ExpenseListCreation}/>

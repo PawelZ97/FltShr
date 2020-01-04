@@ -5,13 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import {makeStyles, Paper} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import {API_ADDRESS} from "../utils/constants";
+import {API_ADDRESS} from "../../utils/constants";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import PageViewHoc from "./PageViewHoc";
+import PageViewHoc from "../PageViewHoc";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function AccountDelete() {
+function RequestAccountDelete() {
     let history = useHistory();
 
     const [open, setOpen] = React.useState(false);
@@ -42,14 +42,14 @@ function AccountDelete() {
         history.push("/signin");
     };
 
-    function callDeleteAccount() {
-        axios.post(API_ADDRESS + '/signaccountdelete')
+    function callDeleteAccount(userId) {
+        axios.post(API_ADDRESS + '/user/requestaccountdelete')
             .then(function (response) {
-                console.log("SignAccountDelete, status: " + response.status);
+                console.log("RequestAccountDelete Success, status: " + response.status);
             })
             .catch(function (error) {
                 if (error.response) {
-                    console.log("SignAccountDelete Rejected, status: " + error.response.status);
+                    console.log("RequestAccountDelete Rejected, status: " + error.response.status);
                 } else if (error.request) {
                     console.log("Can't connect to API");
                 } else {
@@ -97,4 +97,4 @@ function AccountDelete() {
     );
 }
 
-export default PageViewHoc(AccountDelete);
+export default PageViewHoc(RequestAccountDelete);

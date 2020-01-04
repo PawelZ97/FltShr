@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {useHistory} from "react-router-dom";
-import PageViewHoc from "./PageViewHoc";
+import PageViewHoc from "../PageViewHoc";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import {API_ADDRESS} from "../utils/constants";
+import {API_ADDRESS} from "../../utils/constants";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -30,19 +30,17 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function SignUp() {
+function ChangePassword() {
     let history = useHistory();
 
-    const [registration, setRegistration] = useState({
-        username: "",
-        password: "",
-        passwordRetype: "",
-        email: ""
+    const [passwords, setPasswords] = useState({
+        oldPassword: "",
+        newPassword: "",
+        newPasswordRetype: ""
     });
 
     const [passordMatchError, setPassordMatchError] = useState(false);
-    const [loginEmailUsedError, setLoginEmailUsedError] = useState(false);
-
+    const [wrongOldPasswordError, setWrongOldPasswordError] = useState(false);
     const [open, setOpen] = React.useState(false);
 
     const handleClose = () => {
@@ -51,30 +49,26 @@ function SignUp() {
     };
 
     const handleTextFieldChange = name => event => {
-        setRegistration({...registration, [name]: event.target.value});
-        setLoginEmailUsedError(false);
+        setPasswords({...passwords, [name]: event.target.value});
         setPassordMatchError(false);
+        setWrongOldPasswordError(false);
     };
 
-    function callSignUp() {
-        if (registration.password === registration.passwordRetype) {
+    function callChangePassword() {
+        if (passwords.newPassword === passwords.newPasswordRetype) {
             setPassordMatchError(false);
-            axios.post(API_ADDRESS + '/register', {
-                username: registration.username,
-                password: registration.password,
-                email: registration.email
-            })
+            axios.post(API_ADDRESS + '/user/changepassword', passwords)
                 .then(function (response) {
-                    console.log("SignUp Succesfull, status: " + response.status);
-                    if (response.data === "Verification Email Send") {
+                    console.log("PasswordChanged Success, status: " + response.status);
+                    if (response.data === "PassowrdChanged") {
                         setOpen(true);
                     }
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        console.log("SignUn Rejected, status: " + error.response.status);
+                        console.log("PasswordChanged Rejected, status: " + error.response.status);
                         if (error.response.status) {
-                            setLoginEmailUsedError(true);
+                            setWrongOldPasswordError(true);
                         }
                     } else if (error.request) {
                         console.log("Can't connect to API");
@@ -92,7 +86,7 @@ function SignUp() {
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
                 <Typography variant="h5">
-                    Rejestracja
+                    Zmiana hasła
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -100,24 +94,24 @@ function SignUp() {
                         required
                         margin="normal"
                         variant="outlined"
-                        onChange={handleTextFieldChange('username')}
-                        value={registration.username}
+                        onChange={handleTextFieldChange('oldPassword')}
+                        value={passwords.oldPassword}
                         autoComplete="username"
                         id="name"
-                        label="Nazwa użytkownika"
+                        label="Stare Hasło"
                         type="text"
                         fullWidth
-                        error={loginEmailUsedError}
+                        error={wrongOldPasswordError}
                     />
                     <TextField
                         required
                         margin="normal"
                         variant="outlined"
-                        onChange={handleTextFieldChange('password')}
-                        value={registration.password}
+                        onChange={handleTextFieldChange('newPassword')}
+                        value={passwords.newPassword}
                         autoComplete="new-password"
                         id="hasło"
-                        label="Hasło"
+                        label="Nowe hasło"
                         type="password"
                         fullWidth
                         error={passordMatchError}
@@ -126,32 +120,18 @@ function SignUp() {
                         required
                         margin="normal"
                         variant="outlined"
-                        onChange={handleTextFieldChange('passwordRetype')}
-                        value={registration.passwordRetype}
+                        onChange={handleTextFieldChange('newPasswordRetype')}
+                        value={passwords.newPasswordRetype}
                         autoComplete="new-password"
                         id="powtórzhasło"
-                        label="Powtórz hasło"
+                        label="Powtórz nowe hasło"
                         type="password"
                         fullWidth
                         error={passordMatchError}
                         helperText={passordMatchError ? ("Hasła nie są identyczne") : null}
                     />
-                    <TextField
-                        required
-                        margin="normal"
-                        variant="outlined"
-                        onChange={handleTextFieldChange('email')}
-                        value={registration.email}
-                        autoComplete="email"
-                        id="email"
-                        label="Email"
-                        type="email"
-                        fullWidth
-                        error={loginEmailUsedError}
-                        helperText={loginEmailUsedError ? ("Login i/lub email już w użyciu") : null}
-                    />
-                    <Button onClick={() => callSignUp()} className={classes.signUpButton}
-                            fullWidth variant="contained" color="primary" size={"large"}>Zarejestruj się</Button>
+                    <Button onClick={() => callChangePassword()} className={classes.signUpButton}
+                            fullWidth variant="contained" color="primary" size={"large"}>Zmień hasło</Button>
                 </form>
             </div>
             <Dialog
@@ -161,7 +141,7 @@ function SignUp() {
                 <DialogTitle id="alert-dialog-title">{"Email został wysłany"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Zaloguj się na swoją pocztę aby potwierdzić założenie konta.
+                        Twoje hasło zostało pozytywnie zmienione
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -174,4 +154,4 @@ function SignUp() {
     );
 }
 
-export default PageViewHoc(SignUp);
+export default PageViewHoc(ChangePassword);

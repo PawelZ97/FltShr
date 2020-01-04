@@ -5,9 +5,12 @@ import AccountBalanceWalletTwoToneIcon from '@material-ui/icons/AccountBalanceWa
 import EventTwoToneIcon from '@material-ui/icons/EventTwoTone';
 import LoopTwoToneIcon from '@material-ui/icons/LoopTwoTone';
 import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone';
+import ArchiveIcon from '@material-ui/icons/Archive';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Divider from "@material-ui/core/Divider";
+import {getLoggedUser} from "../../utils/UserUtils";
 
-let categories = [
+let userCategories = [
     {
         title: "Wydatki",
         href: "/expense/lists/display",
@@ -31,7 +34,22 @@ let categories = [
     }
 ];
 
+let adminCategories = [
+    {
+        title: "Archiwizacja użytkowników",
+        href: "/admin/accountdelete",
+        icon: <ArchiveIcon/>,
+
+    },
+    {
+        title: "Zmaiana managera",
+        icon: <SupervisorAccountIcon/>,
+        href: "/admin/changemanager"
+    }
+];
+
 function DashboardList() {
+    let categories = getLoggedUser().roles === "ROLE_ADMIN" ? adminCategories : userCategories;
     return (
         <List>
             {categories.map((category, index) => (

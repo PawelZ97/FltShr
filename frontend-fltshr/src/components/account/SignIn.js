@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useHistory} from "react-router-dom";
 import axios from "axios";
-import {API_ADDRESS} from "../utils/constants";
-import PageViewHoc from "./PageViewHoc";
+import {API_ADDRESS} from "../../utils/constants";
+import PageViewHoc from "../PageViewHoc";
 import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
