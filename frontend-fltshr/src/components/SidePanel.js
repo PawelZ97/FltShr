@@ -8,6 +8,13 @@ import DashboardList from "./dashboard/DashboardList";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import VpnKeyTwoToneIcon from '@material-ui/icons/VpnKeyTwoTone';
+import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone';
 
 const useStyles = makeStyles(theme => ({
     userPrint: {
@@ -17,6 +24,9 @@ const useStyles = makeStyles(theme => ({
     containerColor: {
         backgroundColor: theme.palette.primary.main,
         padding: 30
+    },
+    marginUtilsList: {
+        marginTop: 80
     }
 }));
 
@@ -62,6 +72,25 @@ function SidePanel(props) {
                     </Typography>
                 </Box>
                 <DashboardList/>
+                <List className={classes.marginUtilsList}>
+                    <ListItem button onClick={() => history.push("/changepassword")}>
+                        <ListItemIcon>
+                            <VpnKeyTwoToneIcon/>
+                        </ListItemIcon>
+                        <ListItemText classes={{primary: classes.text}}
+                                      primary={"Zmiana hasła"}
+                        />
+                    </ListItem>
+                    <Divider/>
+                    <ListItem button onClick={() => history.push("/accountdelete")}>
+                        <ListItemIcon>
+                            <CancelTwoToneIcon/>
+                        </ListItemIcon>
+                        <ListItemText classes={{primary: classes.text}}
+                                      primary={"Usuń konto"}
+                        />
+                    </ListItem>
+                </List>
             </SwipeableDrawer>)}
         </div>
     );

@@ -19,6 +19,8 @@ import QueueChoreCreation from "./components/chore/queuechores/QueueChoreCreatio
 import FrequentChoreCreation from "./components/chore/frequentchores/FrequentChoreCreation";
 import ShoppingListCreation from "./components/shopping/shoppinglist/ShoppingListCreation";
 import ShoppingEntryCreation from "./components/shopping/ShoppingEntryCreation";
+import ChangePassword from "./components/ChangePassword";
+import AccountDelete from "./components/AccountDelete";
 
 function App() {
     return (
@@ -27,6 +29,8 @@ function App() {
             <Switch>
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/signup" component={SignUp}/>
+                <Route exact path="/changepassword" component={ChangePassword}/>
+                <Route exact path="/accountdelete" component={AccountDelete}/>
                 <Route exact path="/dashboard" component={DashboardDisplay}/>
                 <Route exact path="/expense/lists/display" component={DisplayExpenseLists}/>
                 <Route exact path="/expense/lists/create" component={ExpenseListCreation}/>
