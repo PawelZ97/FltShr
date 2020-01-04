@@ -1,18 +1,22 @@
-INSERT INTO users("username", "password", "deactivated", "email", "email_verified", "role", "registration_date")
+INSERT INTO users("username", "password", "request_deactivation",
+                  "deactivated", "email", "email_verified", "role", "registration_date")
 VALUES ('admin', '$2a$04$CRiFUeohzOfqKIIPuLjK5eeWyb/s6hd2EkMutkFHXXvizBq1ltCiq',
-        false, 'admin@fltshr.com', true, 'ROLE_ADMIN', '2019-11-08 23:00:00');
+        false, false, 'admin@fltshr.com', true, 'ROLE_ADMIN', '2019-11-08 23:00:00');
 
-INSERT INTO users("username", "password", "deactivated", "email", "email_verified", "role", "registration_date")
+INSERT INTO users("username", "password", "request_deactivation",
+                  "deactivated", "email", "email_verified", "role", "registration_date")
     VALUES ('Paweł', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-            false, 'pawel@fltshr.com', true, 'ROLE_MANAGER', '2019-11-01 10:10:10');
+            false, false, 'pawel@fltshr.com', true, 'ROLE_MANAGER', '2019-11-01 10:10:10');
 
-INSERT INTO users("username", "password", "deactivated", "email", "email_verified", "role", "registration_date")
+INSERT INTO users("username", "password", "request_deactivation",
+                  "deactivated", "email", "email_verified", "role", "registration_date")
 VALUES ('Michał', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        false, 'michal@fltshr.com', true, 'ROLE_USER', '2019-11-02 11:11:11');
+        false, false, 'michal@fltshr.com', true, 'ROLE_USER', '2019-11-02 11:11:11');
 
-INSERT INTO users("username", "password", "deactivated", "email", "email_verified", "role", "registration_date")
+INSERT INTO users("username", "password", "request_deactivation",
+                  "deactivated", "email", "email_verified", "role", "registration_date")
 VALUES ('Darek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
-        false, 'darek@fltshr.com', true, 'ROLE_USER', '2019-11-03 12:12:12');
+        false, false, 'darek@fltshr.com', true, 'ROLE_USER', '2019-11-03 12:12:12');
 
 INSERT INTO shopping_items("name", "description")
 VALUES ('Mydło', 'Mydło w płynie');

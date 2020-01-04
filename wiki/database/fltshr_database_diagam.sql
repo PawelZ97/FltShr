@@ -82,14 +82,15 @@ CREATE TABLE "shopping_lists" (
 );
 
 CREATE TABLE "users" (
-                         "id"                bigint PRIMARY KEY NOT NULL,
-                         "username"          varchar(255)       NOT NULL,
-                         "password"          varchar(255)       NOT NULL,
-                         "deactivated"       boolean            NOT NULL,
-                         "email"             varchar(255)       NOT NULL,
-                         "email_verified"    boolean            NOT NULL,
-                         "role"              varchar(255)       NOT NULL,
-                         "registration_date" timestamp          NOT NULL
+                         "id"                   bigint PRIMARY KEY NOT NULL,
+                         "username"             varchar(255)       NOT NULL,
+                         "password"             varchar(255)       NOT NULL,
+                         "request_deactivation" boolean            NOT NULL,
+                         "deactivated"          boolean            NOT NULL,
+                         "email"                varchar(255)       NOT NULL,
+                         "email_verified"       boolean            NOT NULL,
+                         "role"                 varchar(255)       NOT NULL,
+                         "registration_date"    timestamp          NOT NULL
 );
 
 ALTER TABLE "assigned_frequent_chore" ADD FOREIGN KEY ("frequent_chore") REFERENCES "frequent_chores" ("id");

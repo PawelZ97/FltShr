@@ -24,6 +24,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "request_deactivation", nullable = false)
+    private boolean requestDeactivation;
+
     @Column(name = "deactivated", nullable = false)
     private boolean deactivated;
 
