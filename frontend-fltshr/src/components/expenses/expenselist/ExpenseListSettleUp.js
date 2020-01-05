@@ -8,7 +8,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import {Paper, Typography} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import SettleUpUserTotal from "./SettleUpUserTotal";
@@ -19,8 +18,10 @@ const useStyles = makeStyles(theme => ({
         marginTop: 20,
         marginBottom: 20
     },
-    listMargin: {
-        marginBottom: 30
+    bigButton: {
+        height: 60,
+        marginTop: 40,
+        marginBottom: 40
     }
 }));
 
@@ -75,15 +76,11 @@ function ExpenseListSettleUp() {
             });
     };
 
-    const handleCancel = () => {
-        history.goBack();
-    };
-
     const classes = useStyles();
     return (
         <div>
             <TopDialogBar text={"Podsumowanie listy"}/>
-            <Container maxWidth="sm">
+            <Container maxWidth="sm" className={classes.marginBottom}>
                 <Typography className={classes.title} variant={"h5"}>Podsumowanie wydatków: </Typography>
                 <Paper>
                     <List>
@@ -100,7 +97,7 @@ function ExpenseListSettleUp() {
                 </Paper>
                 <Typography className={classes.title} variant={"h5"}>Przelewy wyrównujące: </Typography>
                 <Paper>
-                    <List className={classes.listMargin}>
+                    <List>
                         {settleUpSummary.transfers.length === 0 ? (<h3 align={"center"}>Brak podsumowania</h3>) : null}
                         {settleUpSummary.transfers.map((settleTransfer, index) => (
                             <div key={index}>
@@ -112,18 +109,10 @@ function ExpenseListSettleUp() {
                         ))}
                     </List>
                 </Paper>
-                <Grid container spacing={3} justify={"space-evenly"} alignItems={"center"}>
-                    <Grid item xs={6}>
-                        <Button onClick={handleCancel} variant="outlined" color="secondary" fullWidth>
-                            Anuluj
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button onClick={handleSettleUp} variant="contained" color="primary" fullWidth>
-                            Wyrównaj i zamknij listę
-                        </Button>
-                    </Grid>
-                </Grid>
+                <Button onClick={handleSettleUp} className={classes.bigButton}
+                        variant="contained" color="primary" fullWidth>
+                    Wyrównaj i zamknij listę
+                </Button>
             </Container>
         </div>
     );
