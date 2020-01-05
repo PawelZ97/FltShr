@@ -8,7 +8,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import TopDialogBar from "../TopDialogBar";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import ExpenseUnequalCreation from "./ExpenseUnequalCreation";
@@ -18,6 +17,11 @@ const useStyles = makeStyles(theme => ({
     marginInput: {
         marginTop: 20,
         marginBottom: 20
+    },
+    bigButton: {
+        height: 60,
+        marginTop: 40,
+        marginBottom: 40
     }
 }));
 
@@ -78,9 +82,6 @@ function ExpenseCreation() {
             });
     };
 
-    const handleCancel = () => {
-        history.goBack();
-    };
 
     const classes = useStyles();
     return (
@@ -135,18 +136,9 @@ function ExpenseCreation() {
                                                 expenseUnequals={expense.expenseUnequals}
                                                 setExpenseUnequals={setExpenseUnequals}/>
                     </Paper>) : null}
-                <Grid container spacing={3} justify={"space-evenly"}>
-                    <Grid item xs={6}>
-                        <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
-                            Anuluj
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button onClick={handleOk} variant="contained" color="primary" fullWidth>
-                            Ok
-                        </Button>
-                    </Grid>
-                </Grid>
+                <Button onClick={handleOk} className={classes.bigButton} variant="contained" color="primary" fullWidth>
+                    Utwórz nowy wydatek
+                </Button>
             </Container>
         </div>
     );

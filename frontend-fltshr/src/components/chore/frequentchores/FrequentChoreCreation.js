@@ -12,7 +12,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import {DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import formatISO from 'date-fns/formatISO'
 import TopDialogBar from "../../TopDialogBar";
-import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
 
@@ -20,6 +19,11 @@ const useStyles = makeStyles(theme => ({
     marginInput: {
         marginTop: 20,
         marginBottom: 20,
+    },
+    bigButton: {
+        height: 60,
+        marginTop: 20,
+        marginBottom: 40
     }
 }));
 
@@ -93,9 +97,6 @@ function FrequentChoreCreation(props) {
             });
     };
 
-    const handleCancel = () => {
-        history.goBack();
-    };
 
     const classes = useStyles();
     return (
@@ -162,18 +163,10 @@ function FrequentChoreCreation(props) {
                                         fullWidth/>
                     </MuiPickersUtilsProvider>
                 </div>
-                <Grid container spacing={3} justify={"space-evenly"} alignItems={"center"}>
-                    <Grid item xs={6}>
-                        <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
-                            Anuluj
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button onClick={handleCreate} variant="contained" color="primary" fullWidth>
-                            Utwórz
-                        </Button>
-                    </Grid>
-                </Grid>
+                <Button onClick={handleCreate} className={classes.bigButton}
+                        variant="contained" color="primary" fullWidth>
+                    Utwórz nową kolejkę
+                </Button>
             </Container>
         </div>
     );

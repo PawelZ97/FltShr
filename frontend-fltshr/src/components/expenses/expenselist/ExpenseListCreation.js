@@ -6,13 +6,16 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import TopDialogBar from "../../TopDialogBar";
 import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
     marginInput: {
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 50,
+    },
+    bigButton: {
+        height: 60,
+        marginTop: 40,
+        marginBottom: 40
     }
 }));
 
@@ -42,10 +45,6 @@ function ExpenseListCreation() {
             });
     };
 
-    const handleCancel = () => {
-        history.goBack();
-    };
-
     const classes = useStyles();
     return (
         <div>
@@ -62,18 +61,10 @@ function ExpenseListCreation() {
                     fullWidth
                     className={classes.marginInput}
                 />
-                <Grid container spacing={3} justify={"space-evenly"} alignItems={"center"}>
-                    <Grid item xs={6}>
-                        <Button onClick={handleCancel} variant={"outlined"} color="secondary" fullWidth>
-                            Anuluj
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button onClick={handleCreate} variant="contained" color="primary" fullWidth>
-                            Utwórz
-                        </Button>
-                    </Grid>
-                </Grid>
+                <Button onClick={handleCreate} className={classes.bigButton}
+                        variant="contained" color="primary" fullWidth>
+                    Utwórz
+                </Button>
             </Container>
         </div>
     );
