@@ -43,7 +43,7 @@ function RequestAccountDelete() {
     };
 
     function callDeleteAccount(userId) {
-        axios.post(API_ADDRESS + '/user/requestaccountdelete')
+        axios.post(API_ADDRESS + '/requestdelete')
             .then(function (response) {
                 console.log("RequestAccountDelete Success, status: " + response.status);
             })

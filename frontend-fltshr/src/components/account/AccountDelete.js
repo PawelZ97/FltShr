@@ -25,13 +25,12 @@ function AccountDelete() {
     const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/users", {
-                // .get(API_ADDRESS + "/admin/requestingdeleteusers", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/users", {
+            // .get(API_ADDRESS + "/admin/user/requestingdelete", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setUserList(response.data);
                 console.log("RequestingUsers loaded, status: " + response.status);
@@ -48,12 +47,11 @@ function AccountDelete() {
     }, [updateFlag]);
 
     function handleArchive(userId) {
-        axios
-            .delete(API_ADDRESS + "/admin/user/" + userId + "/archive", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.delete(API_ADDRESS + "/admin/user/" + userId + "/archive", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 console.log("UserAccount archived, status: " + response.status);
                 setUpdateFlag(!updateFlag);

@@ -25,12 +25,11 @@ function ChangeManager() {
     const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/users", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/users", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setUserList(response.data);
                 console.log("RequestingUsers loaded, status: " + response.status);
@@ -47,12 +46,11 @@ function ChangeManager() {
     }, [updateFlag]);
 
     function handleChange(userId) {
-        axios
-            .patch(API_ADDRESS + "/admin/user/" + userId + "/changemanager", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.patch(API_ADDRESS + "/admin/user/" + userId + "/changemanager", "", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 console.log("ChangeManager, status: " + response.status + " id: " + userId);
                 setUpdateFlag(!updateFlag);

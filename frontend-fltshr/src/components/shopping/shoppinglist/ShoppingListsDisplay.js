@@ -39,12 +39,11 @@ function ShoppingListsDisplay() {
     const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/shopping/lists", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/shopping/lists", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setShoppingLists(response.data);
                 console.log("ShoppingLists loaded, status: " + response.status);
@@ -61,12 +60,11 @@ function ShoppingListsDisplay() {
     }, [updateFlag]);
 
     function handleArchive(shoppingListId) {
-        axios
-            .delete(API_ADDRESS + "/manager/shopping/list/" + shoppingListId + "/archive", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.delete(API_ADDRESS + "/manager/shopping/list/" + shoppingListId + "/archive", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 console.log("ShoppingList archived, status: " + response.status);
                 setUpdateFlag(!updateFlag);

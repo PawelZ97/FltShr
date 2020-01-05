@@ -24,12 +24,11 @@ function ExpenseUnequalCreation(props) {
     const [inputValue, setInputValue] = useState(0);
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/users", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/users", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setUserList(response.data);
                 console.log("Users loaded, status: " + response.status);

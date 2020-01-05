@@ -52,12 +52,11 @@ function ExpenseListsDisplay() {
 
     useEffect(() => {
         let getRequestUrl = (showSettled) ? (API_ADDRESS + "/manager/expense/lists") : (API_ADDRESS + "/expense/lists");
-        axios
-            .get(getRequestUrl, {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(getRequestUrl, {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setExpensesLists(response.data);
                 console.log("ExpenseListsDisplay loaded, status: " + response.status);

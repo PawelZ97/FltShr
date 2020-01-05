@@ -38,12 +38,11 @@ function QueueChoresDisplay() {
     const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/manager/chores/queuechores", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/manager/chores/queuechores", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setQueueChores(response.data);
                 console.log("QueueChores loaded, status: " + response.status);

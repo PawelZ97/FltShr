@@ -45,12 +45,11 @@ function ShoppingEntryCreation() {
     };
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/shopping/items", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/shopping/items", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setShoppingItems(response.data);
                 console.log("ShoppingItems loaded, status: " + response.status);

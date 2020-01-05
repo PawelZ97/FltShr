@@ -42,12 +42,11 @@ function ExpensesDisplay() {
     const [updateFlag, setUpdateFlag] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/expense/list/" + listId + "/expenses", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/expense/list/" + listId + "/expenses", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setExpensesListItems(response.data);
                 console.log("Expenses loaded, status: " + response.status)

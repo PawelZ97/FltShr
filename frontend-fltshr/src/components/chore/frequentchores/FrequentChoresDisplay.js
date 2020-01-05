@@ -60,12 +60,11 @@ function FrequentChoresDisplay() {
     }, [updateFlag]);
 
     function handleArchive(frequentChoreId) {
-        axios
-            .delete(API_ADDRESS + "/manager/chores/frequentchore/" + frequentChoreId + "/archive", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.delete(API_ADDRESS + "/manager/chores/frequentchore/" + frequentChoreId + "/archive", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 console.log("FrequentChore archived, status: " + response.status);
                 setUpdateFlag(!updateFlag);

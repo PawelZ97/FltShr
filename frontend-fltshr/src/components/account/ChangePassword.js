@@ -57,7 +57,11 @@ function ChangePassword() {
     function callChangePassword() {
         if (passwords.newPassword === passwords.newPasswordRetype) {
             setPassordMatchError(false);
-            axios.post(API_ADDRESS + '/user/changepassword', passwords)
+            axios.post(API_ADDRESS + '/changepassword', passwords, {
+                headers: {
+                    'Authorization': localStorage.getItem("authToken")
+                }
+            })
                 .then(function (response) {
                     console.log("PasswordChanged Success, status: " + response.status);
                     if (response.data === "PassowrdChanged") {

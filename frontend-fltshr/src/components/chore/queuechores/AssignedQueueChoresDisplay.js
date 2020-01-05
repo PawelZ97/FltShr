@@ -33,12 +33,11 @@ function AssignedQueueChoresDisplay(props) {
 
     useEffect(() => {
         let getRequestUrl = (showHistory) ? (API_ADDRESS + "/chores/assignedqueues") : (API_ADDRESS + "/chores/assignedqueues/me");
-        axios
-            .get(getRequestUrl, {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(getRequestUrl, {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setAssignedQueueChores(response.data);
                 console.log("QueueChoresMe loaded, status: " + response.status);
@@ -55,12 +54,11 @@ function AssignedQueueChoresDisplay(props) {
     }, [showHistory, updateFlag]);
 
     function handleDone(assignedQueueChoreId) {
-        axios
-            .patch(API_ADDRESS + "/chores/assignedqueue/" + assignedQueueChoreId, {}, {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.patch(API_ADDRESS + "/chores/assignedqueue/" + assignedQueueChoreId, {}, {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 console.log("AssignedQueueChore setDone, status: " + response.status);
                 setUpdateFlag(!updateFlag);

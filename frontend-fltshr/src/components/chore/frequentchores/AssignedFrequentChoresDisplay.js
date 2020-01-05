@@ -45,12 +45,11 @@ function AssignedFrequentChoresDisplay(props) {
         } else if (viewMode === "ALL") {
             getRequestUrl = API_ADDRESS + "/chores/assignedfrequents"
         }
-        axios
-            .get(getRequestUrl, {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(getRequestUrl, {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setAssignedFrequentChores(response.data);
                 console.log("FrequentChores loaded, viewMode: " + viewMode + ", status: " + response.status);

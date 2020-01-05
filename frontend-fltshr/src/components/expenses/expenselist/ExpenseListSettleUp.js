@@ -34,12 +34,11 @@ function ExpenseListSettleUp() {
     });
 
     useEffect(() => {
-        axios
-            .get(API_ADDRESS + "/manager/expense/list/" + listId + "/settle", {
-                headers: {
-                    'Authorization': localStorage.getItem("authToken")
-                }
-            })
+        axios.get(API_ADDRESS + "/manager/expense/list/" + listId + "/settle", {
+            headers: {
+                'Authorization': localStorage.getItem("authToken")
+            }
+        })
             .then(function (response) {
                 setSettleUpSummary(response.data);
                 console.log("ExpenseList SettledUpSumary loaded, status: " + response.status);
