@@ -1,183 +1,257 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
-  description: "Api documentation for FltShr"
-  version: "1.0.0"
-  title: "FltShr_API"
-host: "localhost:81"
-schemes:
-  - "http"
+  description: Api documentation for FltShr
+  version: 1.0.0
+  title: FltShr_API
 
 paths:
-  /login:
-    post:
-      tags:
-        - Login
-      summary: Login endpoint
-      parameters:
-        - in: body
-          name: user
-          description: The user to create.
-          schema:
-            $ref: "#/definitions/UserLoginDTO"
-      consumes:
-        - "application/json"
-      responses:
-        200:
-          description: OK
-          headers:
-            Authorization:
-              type: string
-              description: Bearer Token JWT
   /users:
     get:
       tags:
-        - Users
+        - Account
       summary: Get all Users lists
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/UserNameDTO"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserNameDTO"
+  /login:
+    post:
+      tags:
+        - Account
+      summary: Login endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginDTO"
+        description: The user to create.
+      responses:
+        "200":
+          description: OK
+          headers:
+            Authorization:
+              description: Bearer Token JWT
+              schema:
+                type: string
   /register:
     post:
       tags:
-        - Register
+        - Account
       summary: Registration endpoint
-      parameters:
-        - in: body
-          name: UserRegistrationDTO
-          description: Data to register new User.
-          schema:
-            $ref: "#/definitions/UserRegistrationDTO"
-      consumes:
-        - "application/json"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationDTO"
+        description: Data to register new User.
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: string
   /register/emailconfirm:
     get:
       tags:
-        - Register
+        - Account
       summary: Email confirmation endpoint
       parameters:
         - in: query
           name: token
-          type: string
           description: Email verification token send in Email
-      responses:
-        200:
-          description: OK
           schema:
             type: string
-
-
+      responses:
+        "200":
+          description: OK
+  /changepassword:
+    post:
+      tags:
+        - Account
+      summary: Password Change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+                newPasswordRetype:
+                  type: string
+        description: Passord Change DTO
+      responses:
+        "200":
+          description: OK
+  /requestdelete:
+    post:
+      tags:
+        - Account
+      summary: Sign for Account delete
+      responses:
+        "200":
+          description: OK
+  /admin/user/requestingdelete:
+    get:
+      tags:
+        - Admin
+      summary: User requesting account deletion
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserNameDTO"
+  "/admin/user/{userId}archive":
+    delete:
+      tags:
+        - Admin
+      summary: User Archive
+      parameters:
+        - name: userId
+          in: path
+          description: UserId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "202":
+          description: Accepted
+  "/admin/user/{userId}/changemanager":
+    patch:
+      tags:
+        - Admin
+      summary: Manager change
+      parameters:
+        - name: userId
+          in: path
+          description: UserId to become Manager
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
   /shopping/lists:
     get:
       tags:
         - Shopping_Lists
       summary: Get all shopping lists
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/ShoppingListDTO"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShoppingListDTO"
   /shopping/list:
     post:
       tags:
         - Shopping_Lists
       summary: Crate new shopping list
-      parameters:
-        - in: body
-          name: ShoppingListCDTO
-          description: Shopping list to create.
-          schema:
-            $ref: "#/definitions/ShoppingListCDTO"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingListCDTO"
+        description: Shopping list to create.
       responses:
-        201:
+        "201":
           description: Created
-          schema:
-            type: object
-            $ref: "#/definitions/ShoppingListDTO"
-  /manager/shopping/list/{listId}/archive:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListDTO"
+  "/manager/shopping/list/{listId}/archive":
     delete:
       tags:
         - Shopping_Lists
       summary: Archive shopping list
       parameters:
-        - name: id
+        - name: listId
           in: path
           description: Shopping List Id
-          type: integer
           required: true
+          schema:
+            type: integer
       responses:
-        202:
-          description: "Archived"
+        "202":
+          description: Archived
   /shopping/items:
     get:
       tags:
         - Shopping_Lists
       summary: Get all shopping items
-      consumes:
-        - application/json
-      produces:
-        - application/json
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/ShoppingItemDTO"
-  /shopping/list/{listId}/entries:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShoppingItemDTO"
+  "/shopping/list/{listId}/entries":
     get:
       tags:
         - Shopping_Lists
       summary: Get all shopping entries
       parameters:
-        - name: id
+        - name: listId
           in: path
           description: Shopping List Id
-          type: integer
           required: true
-      responses:
-        200:
-          description: OK
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/ShoppingEntryDTO"
-
-  /shopping/list/{listId}/item:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShoppingEntryDTO"
+  "/shopping/list/{listId}/item":
     post:
       tags:
         - Shopping_Lists
       summary: Create shopping entry
       description: Assign item for list or create new item if not exist and then assign.
       parameters:
-        - name: id
+        - name: listId
           in: path
           description: Shopping List Id
-          type: integer
           required: true
-        - in: body
-          name: ShoppingItemDTO
-          description: Shopping item to create in list.
           schema:
-            type: object
-            $ref: "#/definitions/ShoppingItemDTO"
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingItemDTO"
+        description: Shopping item to create in list.
       responses:
-        201:
+        "201":
           description: Created
-          schema:
-            type: object
-            $ref: "#/definitions/ShoppingItemDTO"
-  /shopping/list/{listId}/item/{itemId}:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingItemDTO"
+  "/shopping/list/{listId}/item/{itemId}":
     delete:
       tags:
         - Shopping_Lists
@@ -186,15 +260,17 @@ paths:
         - name: listId
           in: path
           description: Shopping List Id
-          type: integer
           required: true
+          schema:
+            type: integer
         - name: itemId
           in: path
           description: Shopping Item
-          type: integer
           required: true
+          schema:
+            type: integer
       responses:
-        202:
+        "202":
           description: Accepted
     patch:
       tags:
@@ -204,50 +280,55 @@ paths:
         - name: listId
           in: path
           description: Shopping List Id
-          type: integer
           required: true
+          schema:
+            type: integer
         - name: itemId
           in: path
           description: Shopping Item
-          type: integer
           required: true
-      responses:
-        200:
-          description: OK
           schema:
-            type: object
-            $ref: "#/definitions/ShoppingEntryDTO"
-
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingEntryDTO"
   /expense/lists:
     get:
       tags:
         - Expenses
       summary: Get all ExpenseLists that are not Settled
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/ExpenseListDTO"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExpenseListDTO"
   /expense/list:
     post:
       tags:
         - Expenses
       summary: Create new ExpenseList
-      parameters:
-        - in: body
-          name: ExpenseListCDTO
-          description: ExpenseList Creation DTO
-          schema:
-            $ref: "#/definitions/ExpenseListCDTO"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpenseListCDTO"
+        description: ExpenseList Creation DTO
       responses:
-        201:
+        "201":
           description: Created
-          schema:
-            type: object
-            $ref: "#/definitions/ExpenseListDTO"
-  /expense/list/{listId}/expenses:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseListDTO"
+  "/expense/list/{listId}/expenses":
     get:
       tags:
         - Expenses
@@ -256,16 +337,19 @@ paths:
         - name: listId
           in: path
           description: ExpenseList Id
-          type: integer
           required: true
-      responses:
-        200:
-          description: OK
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/ExpenseDTO"
-  /expense/list/{listId}/expense:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExpenseDTO"
+  "/expense/list/{listId}/expense":
     post:
       tags:
         - Expenses
@@ -274,20 +358,23 @@ paths:
         - name: listId
           in: path
           description: ExpenseList Id
-          type: integer
           required: true
-        - in: body
-          name: ExpenseCDTO
-          description: Expense Creation DTO
           schema:
-            $ref: "#/definitions/ExpenseCDTO"
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpenseCDTO"
+        description: Expense Creation DTO
       responses:
-        201:
+        "201":
           description: Created
-          schema:
-            type: object
-            $ref: "#/definitions/ExpenseDTO"
-  /expense/list/{listId}/expense/{expenseId}:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpenseDTO"
+  "/expense/list/{listId}/expense/{expenseId}":
     delete:
       tags:
         - Expenses
@@ -296,31 +383,33 @@ paths:
         - name: listId
           in: path
           description: ExpenseList Id
-          type: integer
           required: true
+          schema:
+            type: integer
         - name: expenseId
           in: path
           description: Expense Id
-          type: integer
           required: true
+          schema:
+            type: integer
       responses:
-        202:
+        "202":
           description: Accepted
-
   /manager/expense/lists:
     get:
       tags:
         - Expenses
       summary: Get all ExpenseLists
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/ExpenseListDTO"
-
-  /manager/expense/list/{listId}/settle:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExpenseListDTO"
+  "/manager/expense/list/{listId}/settle":
     get:
       tags:
         - Expenses
@@ -329,15 +418,18 @@ paths:
         - name: listId
           in: path
           description: ExpenseList Id
-          type: integer
           required: true
-      responses:
-        200:
-          description: OK
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/ExpenseSettleUpDTO"
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExpenseSettleUpDTO"
     patch:
       tags:
         - Expenses
@@ -346,39 +438,41 @@ paths:
         - name: listId
           in: path
           description: ExpenseList Id
-          type: integer
           required: true
+          schema:
+            type: integer
       responses:
-        200:
-          description: "OK"
-
+        "200":
+          description: OK
   /chores/assignedqueues:
     get:
       tags:
         - Queue_Chores
       summary: Get all QueueChoresAssigned of All Users
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/AssignedQueueChoreDTO"
-
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignedQueueChoreDTO"
   /chores/assignedqueues/me:
     get:
       tags:
         - Queue_Chores
       summary: Get all QueueChoresAssigned of User that aren't Done
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/AssignedQueueChoreDTO"
-
-  /chores/assignedqueue/{queueChoreId}:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignedQueueChoreDTO"
+  "/chores/assignedqueue/{queueChoreId}":
     patch:
       tags:
         - Queue_Chores
@@ -387,46 +481,49 @@ paths:
         - name: queueChoreId
           in: path
           description: QueueChore Id
-          type: integer
           required: true
-      responses:
-        200:
-          description: OK
           schema:
-            type: object
-            $ref: "#/definitions/AssignedQueueChoreDTO"
-
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignedQueueChoreDTO"
   /manager/chores/queuechores:
     get:
       tags:
         - Queue_Chores
       summary: Get all QueueChores
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/QueueChoreDTO"
-
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QueueChoreDTO"
   /manager/chores/queuechore:
     post:
       tags:
         - Queue_Chores
       summary: Create new QueueChore and assign to first User
-      parameters:
-        - in: body
-          name: QueueChoreCDTO
-          description: Expense Creation DTO
-          schema:
-            $ref: "#/definitions/QueueChoreCDTO"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueueChoreCDTO"
+        description: Expense Creation DTO
       responses:
-        201:
+        "201":
           description: Created
-          schema:
-            type: object
-            $ref: "#/definitions/QueueChoreDTO"
-  /manager/chores/queuechore/{queueChoreId}/archive:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueueChoreDTO"
+  "/manager/chores/queuechore/{queueChoreId}/archive":
     delete:
       tags:
         - Queue_Chores
@@ -435,49 +532,55 @@ paths:
         - name: queueChoreId
           in: path
           description: QueueChore Id
-          type: integer
           required: true
+          schema:
+            type: integer
       responses:
-        202:
-          description: "Archived"
-
+        "202":
+          description: Archived
   /chores/assignedfrequents:
     get:
       tags:
         - Frequent_Chores
       summary: Get all AssignedFrequentChores of All Users
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/AssignedFrequentChoreDTO"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignedFrequentChoreDTO"
   /chores/assignedfrequents/todo:
     get:
       tags:
         - Frequent_Chores
       summary: Get all AssignedFrequentChores of User that aren't Done
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/AssignedFrequentChoreDTO"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignedFrequentChoreDTO"
   /chores/assignedfrequents/my:
     get:
       tags:
         - Frequent_Chores
       summary: Get all AssignedFrequentChores of User that aren't Reassigned
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/AssignedFrequentChoreDTO"
-  /chores/assignedfrequent/{frequentChoreId}:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignedFrequentChoreDTO"
+  "/chores/assignedfrequent/{frequentChoreId}":
     patch:
       tags:
         - Frequent_Chores
@@ -486,44 +589,50 @@ paths:
         - name: frequentChoreId
           in: path
           description: FrequentChore Id
-          type: integer
           required: true
-      responses:
-        200:
-          description: OK
           schema:
-            type: object
-            $ref: "#/definitions/AssignedFrequentChoreDTO"
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignedFrequentChoreDTO"
   /manager/chores/frequentchores:
     get:
       tags:
         - Frequent_Chores
       summary: Get all FrequentChores
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/FrequentChoreDTO"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FrequentChoreDTO"
   /manager/chores/frequentchore:
     post:
       tags:
         - Frequent_Chores
       summary: Create new FrequentChores and assign to User
-      parameters:
-        - in: body
-          name: FrequentChoreCDTO
-          description: FrequentChore creation DTO  - Assign Date ISO 8601 "yyyy-MM-ddThh:mm:ss"
-          schema:
-            $ref: "#/definitions/FrequentChoreCDTO"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FrequentChoreCDTO"
+        description: FrequentChore creation DTO  - Assign Date ISO 8601
+          "yyyy-MM-ddThh:mm:ss"
       responses:
-        201:
+        "201":
           description: Created
-          schema:
-            type: object
-            $ref: "#/definitions/FrequentChoreDTO"
-  /manager/chores/frequentchore/{frequentChoreId}/archive:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FrequentChoreDTO"
+  "/manager/chores/frequentchore/{frequentChoreId}/archive":
     delete:
       tags:
         - Frequent_Chores
@@ -532,301 +641,302 @@ paths:
         - name: frequentChoreId
           in: path
           description: FrequentChore Id
-          type: integer
           required: true
-      responses:
-        202:
-          description: "Archived"
           schema:
-            type: object
-            $ref: "#/definitions/FrequentChoreDTO"
-
+            type: integer
+      responses:
+        "202":
+          description: Archived
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FrequentChoreDTO"
   /test/all:
     get:
       tags:
         - Role_Test
       summary: Testing public endpoint
-      produces:
-        - "text/plain"
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: string
+          content:
+            text/plain:
+              schema:
+                type: string
   /test/user:
     get:
       tags:
         - Role_Test
       summary: Testing endpoint for logged in users
-      produces:
-        - "text/plain"
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: "string"
+          content:
+            text/plain:
+              schema:
+                type: string
   /test/manager:
     get:
       tags:
         - Role_Test
       summary: Testing endpoint for ROLE_MANAGER
-      produces:
-        - "text/plain"
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: "string"
+          content:
+            text/plain:
+              schema:
+                type: string
   /test/admin:
     get:
       tags:
         - Role_Test
       summary: Testing endpoint for ROLE_ADMIN
-      produces:
-        - "text/plain"
       responses:
-        200:
+        "200":
           description: OK
-          schema:
-            type: string
-
-definitions:
-  QueueChoreDTO:
-    type:  object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      description:
-        type: string
-      archived:
-        type: boolean
-
-  QueueChoreCDTO:
-    type:  object
-    properties:
-      name:
-        type: string
-      description:
-        type: string
-      firstUser:
-        $ref: '#/definitions/UserNameDTO'
-
-  AssignedQueueChoreDTO:
-    type:  object
-    properties:
-      id:
-        type: integer
-      assignedUser:
-        $ref: '#/definitions/UserNameDTO'
-      queueChore:
-        $ref: '#/definitions/QueueChoreDTO'
-      assignDate:
-        type: string
-      done:
-        type: boolean
-      doneDate:
-        type: string
-
-  FrequentChoreDTO:
-    type:  object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      description:
-        type: string
-      durationDays:
-        type: integer
-      frequencyDays:
-        type: integer
-      archived:
-        type: boolean
-
-  FrequentChoreCDTO:
-    type:  object
-    properties:
-      name:
-        type: string
-      description:
-        type: string
-      durationDays:
-        type: integer
-      frequencyDays:
-        type: integer
-      user:
-        $ref: '#/definitions/UserNameDTO'
-      date:
-        type: string
-
-  AssignedFrequentChoreDTO:
-    type:  object
-    properties:
-      id:
-        type: integer
-      assignedUser:
-        $ref: '#/definitions/UserNameDTO'
-      fequentChore:
-        $ref: '#/definitions/FrequentChoreDTO'
-      assignDate:
-        type: string
-      reassigned:
-        type: boolean
-      done:
-        type: boolean
-      doneDate:
-        type: string
-
-  ExpenseListDTO:
-    type:  object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      isSettled:
-        type: boolean
-  ExpenseListCDTO:
-    type:  object
-    properties:
-      name:
-        type: string
-  ExpenseDTO:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      total:
-        type: integer
-      unequalType:
-        type: string
-      paidBy:
-        $ref: "#/definitions/UserNameDTO"
-      boughtDate:
-        type: string
-      description:
-        type: string
-      expenseUnequals:
-        type: array
-        items:
-          $ref: "#/definitions/ExpenseUnequalDTO"
-  ExpenseSettleUpDTO:
-    type: object
-    properties:
-      user:
-        $ref: "#/definitions/UserNameDTO"
-      total:
-        type: integer
-      transfer:
-        type: array
-        items:
+          content:
+            text/plain:
+              schema:
+                type: string
+servers:
+  - url: http://localhost:81
+    description: Development server
+  - url: https://pawelzych.pl/api
+    description: Production server
+components:
+  schemas:
+    QueueChoreDTO:
+      type: object
+      properties:
+        id:
           type: integer
-  ExpenseCDTO:
-    type: object
-    properties:
-      name:
-        type: string
-      total:
-        type: integer
-      unequalType:
-        type: string
-      description:
-        type: string
-      expenseUnequals:
-        type: array
-        items:
-          $ref: "#/definitions/ExpenseUnequalCDTO"
-  ExpenseUnequalDTO:
-    type: object
-    properties:
-      id:
-        type: integer
-      value:
-        type: integer
-      units:
-        type: integer
-      percent:
-        type: integer
-      usedBy:
-        $ref: "#/definitions/UserNameDTO"
-  ExpenseUnequalCDTO:
-    type: object
-    properties:
-      usedBy:
-        $ref: "#/definitions/UserNameDTO"
-      value:
-        type: integer
-      units:
-        type: integer
-      percent:
-        type: integer
-  ShoppingListDTO:
-    type:  object
-    properties:
-      id:
-        type:  integer
-      name:
-        type:  string
-      description:
-        type:  string
+        name:
+          type: string
+        description:
+          type: string
+        archived:
+          type: boolean
+    QueueChoreCDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        firstUser:
+          $ref: "#/components/schemas/UserNameDTO"
+    AssignedQueueChoreDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        assignedUser:
+          $ref: "#/components/schemas/UserNameDTO"
+        queueChore:
+          $ref: "#/components/schemas/QueueChoreDTO"
+        assignDate:
+          type: string
+        done:
+          type: boolean
+        doneDate:
+          type: string
+    FrequentChoreDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        durationDays:
+          type: integer
+        frequencyDays:
+          type: integer
+        archived:
+          type: boolean
+    FrequentChoreCDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        durationDays:
+          type: integer
+        frequencyDays:
+          type: integer
+        user:
+          $ref: "#/components/schemas/UserNameDTO"
+        date:
+          type: string
+    AssignedFrequentChoreDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        assignedUser:
+          $ref: "#/components/schemas/UserNameDTO"
+        fequentChore:
+          $ref: "#/components/schemas/FrequentChoreDTO"
+        assignDate:
+          type: string
+        reassigned:
+          type: boolean
+        done:
+          type: boolean
+        doneDate:
+          type: string
+    ExpenseListDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        isSettled:
+          type: boolean
+    ExpenseListCDTO:
+      type: object
+      properties:
+        name:
+          type: string
+    ExpenseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        total:
+          type: integer
+        unequalType:
+          type: string
+        paidBy:
+          $ref: "#/components/schemas/UserNameDTO"
+        boughtDate:
+          type: string
+        description:
+          type: string
+        expenseUnequals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExpenseUnequalDTO"
+    ExpenseSettleUpDTO:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/UserNameDTO"
+        total:
+          type: integer
+        transfer:
+          type: array
+          items:
+            type: integer
+    ExpenseCDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        total:
+          type: integer
+        unequalType:
+          type: string
+        description:
+          type: string
+        expenseUnequals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExpenseUnequalCDTO"
+    ExpenseUnequalDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        value:
+          type: integer
+        units:
+          type: integer
+        percent:
+          type: integer
+        usedBy:
+          $ref: "#/components/schemas/UserNameDTO"
+    ExpenseUnequalCDTO:
+      type: object
+      properties:
+        usedBy:
+          $ref: "#/components/schemas/UserNameDTO"
+        value:
+          type: integer
+        units:
+          type: integer
+        percent:
+          type: integer
+    ShoppingListDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    ShoppingListCDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    ShoppingItemDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    ShoppingEntryDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        shoppingItem:
+          $ref: "#/components/schemas/ShoppingItemDTO"
+        user:
+          $ref: "#/components/schemas/UserNameDTO"
+        isBought:
+          type: boolean
+    UserNameDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+    UserLoginDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    UserRegistrationDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
-  ShoppingListCDTO:
-    type:  object
-    properties:
-      name:
-        type:  string
-      description:
-        type:  string
-
-  ShoppingItemDTO:
-    type:  object
-    properties:
-      id:
-        type:  integer
-      name:
-        type:  string
-      description:
-        type:  string
-
-  ShoppingEntryDTO:
-    type: object
-    properties:
-      id:
-        type: integer
-      shoppingItem:
-        $ref: "#/definitions/ShoppingItemDTO"
-      user:
-        $ref: "#/definitions/UserNameDTO"
-      isBought:
-        type: boolean
-
-  UserNameDTO:
-    type:  object
-    properties:
-      id:
-        type: integer
-      username:
-        type: string
-
-  UserLoginDTO:
-    type: object
-    properties:
-      username:
-        type: string
-      password:
-        type: string
-
-  UserRegistrationDTO:
-    type: object
-    properties:
-      username:
-        type: string
-      password:
-        type: string
-      email:
-        type: string
-
+security:
+  - bearerAuth: []
