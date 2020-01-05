@@ -15,6 +15,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {getLoggedUser} from '../../utils/UserUtils';
+import FabSpacer from "../FabSpacer";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -28,6 +29,9 @@ const useStyles = makeStyles(theme => ({
         bottom: 50,
         left: "auto",
         position: "fixed"
+    },
+    minPadding: {
+        padding: 10
     }
 }));
 
@@ -82,7 +86,7 @@ function ExpensesDisplay() {
 
     const classes = useStyles();
     return (
-        <Container maxWidth="lg" className={"listTitleContainer"}>
+        <Container maxWidth="lg" className={classes.minPadding}>
             <Typography className={classes.title} variant={"h5"}>
                 Wydatki z listy {listId}
             </Typography>
@@ -111,6 +115,7 @@ function ExpensesDisplay() {
                  onClick={() => history.push("/expense/list/" + listId + "/create")}>
                 <AddIcon/>
             </Fab>
+            <FabSpacer/>
         </Container>
     );
 }

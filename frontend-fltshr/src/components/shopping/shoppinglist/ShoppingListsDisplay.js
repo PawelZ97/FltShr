@@ -15,6 +15,7 @@ import ShoppingList from "./ShoppingList";
 import {getLoggedUser} from "../../../utils/UserUtils";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import FabSpacer from "../../FabSpacer";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -114,6 +115,7 @@ function ShoppingListsDisplay() {
                  onClick={() => history.push("/shopping/lists/creation")}>
                 <AddIcon/>
             </Fab>
+            <FabSpacer/>
         </Container>
     );
 }

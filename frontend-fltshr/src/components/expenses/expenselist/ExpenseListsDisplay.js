@@ -20,6 +20,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
+import FabSpacer from "../../FabSpacer";
 
 
 const useStyles = makeStyles(theme => ({
@@ -123,6 +124,7 @@ function ExpenseListsDisplay() {
                  onClick={() => history.push("/expense/lists/create")}>
                 <AddIcon/>
             </Fab>
+            <FabSpacer/>
         </Container>
     );
 }

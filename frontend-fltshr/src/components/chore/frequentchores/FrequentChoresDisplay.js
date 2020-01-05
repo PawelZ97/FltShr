@@ -14,6 +14,7 @@ import PageViewHoc from "../../PageViewHoc";
 import FrequentChore from "./FrequentChore";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import FabSpacer from "../../FabSpacer";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -110,6 +111,7 @@ function FrequentChoresDisplay() {
                  onClick={() => history.push("/manager/chores/frequentchores/create")}>
                 <AddIcon/>
             </Fab>
+            <FabSpacer/>
         </Container>);
 }
 

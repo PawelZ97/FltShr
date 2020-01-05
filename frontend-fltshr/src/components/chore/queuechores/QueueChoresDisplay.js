@@ -14,6 +14,7 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import QueueChore from "./QueueChore";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import FabSpacer from "../../FabSpacer";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -110,6 +111,7 @@ function QueueChoresDisplay() {
                  onClick={() => history.push("/manager/chores/queuechores/create")}>
                 <AddIcon/>
             </Fab>
+            <FabSpacer/>
         </Container>
     );
 }

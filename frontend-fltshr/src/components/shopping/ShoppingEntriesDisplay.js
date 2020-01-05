@@ -15,6 +15,7 @@ import PageViewHoc from "../PageViewHoc";
 import ShoppingEntry from "./ShoppingEntry";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import FabSpacer from "../FabSpacer";
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -144,6 +145,7 @@ function ShoppingEntriesDisplay() {
                  onClick={() => history.push("/shopping/list/" + listId + "/entry/create")}>
                 <AddIcon/>
             </Fab>
+            <FabSpacer/>
         </Container>
     );
 }
