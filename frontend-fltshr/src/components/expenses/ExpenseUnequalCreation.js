@@ -20,7 +20,7 @@ function ExpenseUnequalCreation(props) {
 
     const [usersList, setUserList] = useState([]);
 
-    const [user, setUser] = useState();
+    const [user, setUser] = useState('');
     const [inputValue, setInputValue] = useState(0);
 
     useEffect(() => {
@@ -50,28 +50,30 @@ function ExpenseUnequalCreation(props) {
     };
 
     const handleAdd = () => {
-        let createdUnequal = {};
-        if (props.unequalType === "VALUE") {
-            createdUnequal = {
-                usedBy: user,
-                value: inputValue,
-            };
-        } else if (props.unequalType === "PERCENT") {
-            createdUnequal = {
-                usedBy: user,
-                percent: inputValue
-            };
-        } else if (props.unequalType === "UNIT") {
-            createdUnequal = {
-                usedBy: user,
-                units: inputValue
-            };
+        if (user !== '' && inputValue !== 0) {
+            let createdUnequal = {};
+            if (props.unequalType === "VALUE") {
+                createdUnequal = {
+                    usedBy: user,
+                    value: inputValue,
+                };
+            } else if (props.unequalType === "PERCENT") {
+                createdUnequal = {
+                    usedBy: user,
+                    percent: inputValue
+                };
+            } else if (props.unequalType === "UNIT") {
+                createdUnequal = {
+                    usedBy: user,
+                    units: inputValue
+                };
+            }
+            let expenseUnequalsCreate = [...props.expenseUnequals];
+            expenseUnequalsCreate.push(createdUnequal);
+            props.setExpenseUnequals(expenseUnequalsCreate);
+            setUser('');
+            setInputValue(0);
         }
-        let expenseUnequalsCreate = [...props.expenseUnequals];
-        expenseUnequalsCreate.push(createdUnequal);
-        props.setExpenseUnequals(expenseUnequalsCreate);
-        setUser({});
-        setInputValue(0);
     };
 
     function handleDelete(index) {
@@ -134,12 +136,16 @@ function ExpenseUnequalCreation(props) {
                     <TableRow key={"input"}>
                         <TableCell component="th" scope="row">
                             <Select
-                                labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={user}
                                 onChange={handleUserChange}
+                                displayEmpty
+                                autoFocus
                                 fullWidth
                             >
+                                <MenuItem value={''} disabled>
+                                    Wybierz
+                                </MenuItem>
                                 {usersList.map(user => (
                                     <MenuItem key={user.id} value={user}>{user.username}</MenuItem>))}
                             </Select>
@@ -148,7 +154,6 @@ function ExpenseUnequalCreation(props) {
                             <TextField
                                 onChange={event => setInputValue(event.target.value)}
                                 value={inputValue}
-                                autoFocus
                                 id="name"
                                 type="number"
                                 fullWidth
