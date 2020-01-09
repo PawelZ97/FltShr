@@ -13,13 +13,12 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DoneIcon from '@material-ui/icons/Done';
 import Grid from "@material-ui/core/Grid";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {getLoggedUser} from "../../../utils/UserUtils";
 import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 const useStyles = makeStyles(theme => ({
-    title: {
+    marginTitle: {
         marginTop: 20,
         marginBottom: 20
     }
@@ -80,7 +79,7 @@ function AssignedQueueChoresDisplay(props) {
             {getLoggedUser().roles === "ROLE_MANAGER" && (
                 <Grid container justify={"flex-end"}>
                     <Grid item xs={12} sm={6}>
-                        <Button variant="contained" color="primary" className={classes.title} fullWidth
+                        <Button variant="contained" color="primary" className={classes.marginTitle} fullWidth
                                 onClick={() => history.push("/manager/chores/queuechores")}>
                             Zarządzaj obowiązkami kolejkowymi
                         </Button>
@@ -88,18 +87,16 @@ function AssignedQueueChoresDisplay(props) {
                 </Grid>
             )}
             <Grid container justify={"space-between"} alignItems={"center"} direction={"row-reverse"}>
-                <Grid item xs={12} sm={3}>
-                    <FormControlLabel className={classes.title} control={
-                        <Switch checked={showHistory}
-                                onChange={() => setShowHistory(!showHistory)}
-                                value="checkedA"
-                                color="primary"
-                        />
-                    } label="Pokaż historię"
-                    />
+                <Grid item xs={12} sm={6}>
+                    <ButtonGroup color="primary" variant="contained" className={classes.marginTitle} fullWidth>
+                        <Button onClick={() => setShowHistory(false)}
+                                disabled={!showHistory}>Do zrobienia</Button>
+                        <Button onClick={() => setShowHistory(true)}
+                                disabled={showHistory}>Historia</Button>
+                    </ButtonGroup>
                 </Grid>
-                <Grid item xs={12} sm={9}>
-                    <Typography className={classes.title} variant={"h5"}>
+                <Grid item xs={12} sm={6}>
+                    <Typography className={classes.marginTitle} variant={"h5"}>
                         Twoje obowiązki w kolejce:
                     </Typography>
                 </Grid>

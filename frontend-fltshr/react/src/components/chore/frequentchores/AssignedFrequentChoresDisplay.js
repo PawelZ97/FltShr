@@ -21,12 +21,6 @@ const useStyles = makeStyles(theme => ({
     marginTitle: {
         marginTop: 20,
         marginBottom: 20
-    },
-    switch: {
-        padding: 20,
-    },
-    buttonManager: {
-        marginTop: 20
     }
 }));
 

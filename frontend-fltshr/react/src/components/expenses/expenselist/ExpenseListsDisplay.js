@@ -10,8 +10,6 @@ import Fab from "@material-ui/core/Fab"
 import {getLoggedUser} from "../../../utils/UserUtils";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
@@ -21,10 +19,12 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import FabSpacer from "../../FabSpacer";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 
 
 const useStyles = makeStyles(theme => ({
-    title: {
+    marginTitle: {
         marginTop: 20,
         marginBottom: 20
     },
@@ -79,17 +79,16 @@ function ExpenseListsDisplay() {
             <Grid container justify={"space-between"} alignItems={"center"} direction={direction}>
                 {getLoggedUser().roles === "ROLE_MANAGER" ? (
                     <Grid item xs={12} sm={6}>
-                        <FormControlLabel className={classes.title} control={
-                            <Switch checked={showSettled}
-                                    onChange={() => setShowSettled(!showSettled)}
-                                    value="checkedA"
-                                    color="primary"
-                            />
-                        } label="Pokaż wyrównane"/>
+                        <ButtonGroup color="primary" variant="contained" className={classes.marginTitle} fullWidth>
+                            <Button onClick={() => setShowSettled(false)}
+                                    disabled={!showSettled}>Aktywne</Button>
+                            <Button onClick={() => setShowSettled(true)}
+                                    disabled={showSettled}>Historia</Button>
+                        </ButtonGroup>
                     </Grid>
                 ) : null}
                 <Grid item xs={12} sm={6}>
-                    <Typography className={classes.title} variant={"h5"}>
+                    <Typography className={classes.marginTitle} variant={"h5"}>
                         Listy wydatków:
                     </Typography>
                 </Grid>
