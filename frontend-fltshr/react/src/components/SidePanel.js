@@ -82,7 +82,7 @@ function SidePanel(props) {
                         />
                     </ListItem>
                     <Divider/>
-                    <ListItem button onClick={() => history.push("/accountdelete")}>
+                    <ListItem button onClick={() => history.push("/requestaccountdelete")}>
                         <ListItemIcon>
                             <CancelTwoToneIcon/>
                         </ListItemIcon>

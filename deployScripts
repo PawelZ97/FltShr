@@ -5,7 +5,11 @@
 docker save  backend-fltshr:latest | gzip > backend-fltshr.tar.gz
 docker save  frontend-fltshr:latest | gzip > frontend-fltshr.tar.gz
 scp backend-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr
-scp frontend-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr)
+scp frontend-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr
+)
+(
+docker save proxy-fltshr:latest | gzip > proxy-fltshr.tar.gz
+scp proxy-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr
 )
 
 # Host
@@ -15,6 +19,7 @@ gunzip -c frontend-fltshr.tar.gz | docker load
 gunzip -c backend-fltshr.tar.gz | docker load
 docker-compose -f deploy-compose.yml up -d
 )
+gunzip -c proxy-fltshr.tar.gz | docker load
 
 # Host DB Reload
 (

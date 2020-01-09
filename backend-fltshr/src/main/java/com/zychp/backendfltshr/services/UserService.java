@@ -70,7 +70,7 @@ public class UserService {
         message.setTo(userRegistrationDTO.getEmail());
         message.setSubject("FltShr - Potwierdź swój email");
         message.setText("Cześć " + userRegistrationDTO.getUsername() + ". Aby zakończyć rejestrację kliknij: "
-                + "http://" + app_adress + "/register/emailconfirm?token=" + verify_token);
+                + app_adress + "/register/emailconfirm?token=" + verify_token);
         emailSender.send(message);
         log.info("registerNewUser(): userRegistrationDTO: {}", userRegistrationDTO);
         return "Verification Email Send";
