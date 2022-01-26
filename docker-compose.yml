@@ -29,7 +29,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
       APP_LOGIN_SECRET: ${APP_LOGIN_SECRET}
       SPRING_MAIL_PASSWORD: ${EMAIL_PASSWORD}
-      VERIFY_TOKEN_SECRET: ${VERIFY_TOKEN_SECRET}
+      EMAIL_VERIFY_TOKEN_SECRET: ${EMAIL_VERIFY_TOKEN_SECRET}
   frontend-fltshr:
     build: frontend-fltshr
     image: frontend-fltshr:latest

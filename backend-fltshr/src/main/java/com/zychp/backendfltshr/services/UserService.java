@@ -29,8 +29,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final JavaMailSender emailSender;
     private final static long TOKEN_EXPIRATION_TIME = 86_400_000;
-    @Value("${VERIFY_TOKEN_SECRET}")
-    private String token_secret;
+    @Value("${EMAIL_VERIFY_TOKEN_SECRET}")
+    private String email_verify_token_secret;
     @Value("${fltshr.address}")
     private String app_adress;
     @Autowired
@@ -63,7 +63,7 @@ public class UserService {
                 .setSubject(userRegistrationDTO.getUsername())
                 .setExpiration(new Date(TimeZoneOffsetUtils.getTimeZoneWithOffset() + TOKEN_EXPIRATION_TIME))
                 .setIssuer("FltShr")
-                .signWith(SignatureAlgorithm.HS512, token_secret)
+                .signWith(SignatureAlgorithm.HS512, email_verify_token_secret)
                 .compact();
 
         SimpleMailMessage message = new SimpleMailMessage();
@@ -80,7 +80,7 @@ public class UserService {
         Jws<Claims> jws;
         try {
             jws = Jwts.parser()
-                    .setSigningKey(token_secret)
+                    .setSigningKey(email_verify_token_secret)
                     .parseClaimsJws(token);
         } catch (JwtException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
