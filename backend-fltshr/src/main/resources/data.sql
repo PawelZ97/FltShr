@@ -1,21 +1,23 @@
+-- testingPassword: admin
 INSERT INTO users("username", "password", "request_deactivation",
                   "deactivated", "email", "email_verified", "role", "registration_date")
 VALUES ('admin', '$2a$04$CRiFUeohzOfqKIIPuLjK5eeWyb/s6hd2EkMutkFHXXvizBq1ltCiq',
         false, false, 'admin@fltshr.com', true, 'ROLE_ADMIN', '2019-11-08 23:00:00');
 
+-- testingPassword: 123456
 INSERT INTO users("username", "password", "request_deactivation",
                   "deactivated", "email", "email_verified", "role", "registration_date")
-VALUES ('Paweł', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+VALUES ('Paweł', '$2a$10$Z0DthQr8NLGd/iZo2Xv8Q..FdP4XN8SsmtTrmvmKOAuLQGv/BrEWG',
         false, false, 'pawel@fltshr.com', true, 'ROLE_MANAGER', '2019-11-01 10:10:10');
 
 INSERT INTO users("username", "password", "request_deactivation",
                   "deactivated", "email", "email_verified", "role", "registration_date")
-VALUES ('Michał', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+VALUES ('Michał', '$2a$10$Z0DthQr8NLGd/iZo2Xv8Q..FdP4XN8SsmtTrmvmKOAuLQGv/BrEWG',
         false, false, 'michal@fltshr.com', true, 'ROLE_USER', '2019-11-02 11:11:11');
 
 INSERT INTO users("username", "password", "request_deactivation",
                   "deactivated", "email", "email_verified", "role", "registration_date")
-VALUES ('Darek', '$2a$04$HudGx6JPB57nO6lfP23gC.MHToo1.I3JK9AE.DSPsXdHc205VU6R6',
+VALUES ('Darek', '$2a$10$Z0DthQr8NLGd/iZo2Xv8Q..FdP4XN8SsmtTrmvmKOAuLQGv/BrEWG',
         false, false, 'darek@fltshr.com', true, 'ROLE_USER', '2019-11-03 12:12:12');
 
 INSERT INTO shopping_items("name", "description")
