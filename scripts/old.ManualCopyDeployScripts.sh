@@ -1,18 +1,18 @@
-# Dev
+# Development Env
 (
 ./backRebuild.sh
 ./frontRebuild.sh
 docker save  backend-fltshr:latest | gzip > backend-fltshr.tar.gz
 docker save  frontend-fltshr:latest | gzip > frontend-fltshr.tar.gz
-scp backend-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr
-scp frontend-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr
+scp backend-fltshr.tar.gz OracleArm:/home/ubuntu/FltShr
+scp frontend-fltshr.tar.gz OracleArm:/home/ubuntu/FltShr
 )
 (
 docker save proxy-fltshr:latest | gzip > proxy-fltshr.tar.gz
-scp proxy-fltshr.tar.gz fltshr.pl:/home/zychp/FltShr
+scp proxy-fltshr.tar.gz OracleArm:/home/ubuntu/FltShr
 )
 
-# Host
+# Deployment Env
 (
 docker-compose -f deploy-compose.yml down
 gunzip -c frontend-fltshr.tar.gz | docker load
@@ -20,11 +20,3 @@ gunzip -c backend-fltshr.tar.gz | docker load
 docker-compose -f deploy-compose.yml up -d
 )
 gunzip -c proxy-fltshr.tar.gz | docker load
-
-# Host DB Reload
-(
-docker-compose -f deploy-compose.yml down
-docker volume rm fltshr_postgres_data
-docker-compose -f deploy-compose.yml up -d
-psql -h 172.17.0.1 -p 5432 -U postgres -d postgres -a -f data.sql
-)

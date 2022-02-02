@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
   backend-fltshr:
-    image: backend-fltshr:latest
+    image: pawelzi/backend-fltshr:latest
     container_name: "backend-fltshr"
     depends_on:
       - database-fltshr
@@ -24,12 +24,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
       APP_LOGIN_SECRET: ${APP_LOGIN_SECRET}
       SPRING_MAIL_PASSWORD: ${EMAIL_PASSWORD}
-      VERIFY_TOKEN_SECRET: ${VERIFY_TOKEN_SECRET}
+      EMAIL_VERIFY_TOKEN_SECRET: ${EMAIL_VERIFY_TOKEN_SECRET}
   frontend-fltshr:
-    image: frontend-fltshr:latest
+    image: pawelzi/frontend-fltshr:latest
     container_name: "frontend-fltshr"
   proxy-fltshr:
-    image: proxy-fltshr:latest
+    image: pawelzi/proxy-fltshr:latest
     container_name: "proxy-fltshr"
     volumes:
       - letsencrypt_certs:/etc/letsencrypt
