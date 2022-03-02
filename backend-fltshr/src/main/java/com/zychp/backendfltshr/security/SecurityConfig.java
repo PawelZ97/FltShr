@@ -35,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Bean
@@ -57,25 +58,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .csrf().disable().cors()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/test/all").permitAll()
-                .antMatchers("/register/**").permitAll()
-//                .antMatchers("/users/**").permitAll()
-//                .antMatchers("/shopping/**").permitAll()
-//                .antMatchers("/expense/**").permitAll()
-//                .antMatchers("/chores/**").permitAll()
-//                .antMatchers("/manager/**").permitAll()
-                .antMatchers(HttpMethod.POST, AuthConstants.LOGIN_URL).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(new JwtLoginFilter(authenticationManager()))
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()));
+        http.csrf().disable()
+            .cors()
+            .and()
+            .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/test/all").permitAll()
+            .antMatchers("/demo").permitAll()
+            .antMatchers("/register/**").permitAll()
+//            .antMatchers("/users/**").permitAll()
+//            .antMatchers("/shopping/**").permitAll()
+//            .antMatchers("/expense/**").permitAll()
+//            .antMatchers("/chores/**").permitAll()
+//            .antMatchers("/manager/**").permitAll()
+            .antMatchers(HttpMethod.POST, AuthConstants.LOGIN_URL).permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilter(new JwtLoginFilter(authenticationManager()))
+            .addFilter(new JwtAuthenticationFilter(authenticationManager()));
     }
 }

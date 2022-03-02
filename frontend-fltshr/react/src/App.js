@@ -3,6 +3,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import SignIn from "./components/account/SignIn";
 import SignUp from "./components/account/SignUp";
+import Demo from './components/account/Demo';
 import DisplayExpenseLists from "./components/expenses/expenselist/ExpenseListsDisplay";
 import ExpensesDisplay from "./components/expenses/ExpensesDisplay";
 import DisplayAssignedQueueChores from "./components/chore/queuechores/AssignedQueueChoresDisplay";
@@ -31,6 +32,7 @@ function App() {
             <Switch>
                 <Route exact path="/signin" component={SignIn}/>
                 <Route exact path="/signup" component={SignUp}/>
+                <Route exact path="/demo" component={Demo}/>
                 <Route exact path="/changepassword" component={ChangePassword}/>
                 <Route exact path="/requestaccountdelete" component={RequestAccountDelete}/>
                 <Route exact path="/admin/accountdelete" component={AccountDelete}/>
